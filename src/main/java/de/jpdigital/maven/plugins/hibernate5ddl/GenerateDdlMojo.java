@@ -29,9 +29,9 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.hibernate.tool.schema.TargetType;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -45,6 +45,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -282,8 +283,9 @@ public class GenerateDdlMojo extends AbstractMojo {
 
         final Metadata metadata = metadataSources.buildMetadata();
 
-        final SchemaExport export = new SchemaExport(
-            (MetadataImplementor) metadata, true);
+        final SchemaExport export = new SchemaExport();
+//        final SchemaExport export = new SchemaExport(
+//            (MetadataImplementor) metadata, true);
         export.setDelimiter(";");
 
         final Path tmpDir;
@@ -300,9 +302,13 @@ public class GenerateDdlMojo extends AbstractMojo {
                 Locale.ENGLISH)));
         export.setFormat(true);
         if (createDropStatments) {
-            export.execute(true, false, false, false);
+              export.execute(EnumSet.of(TargetType.SCRIPT),
+                             SchemaExport.Action.BOTH, 
+                             metadata);
         } else {
-            export.execute(true, false, false, true);
+              export.execute(EnumSet.of(TargetType.SCRIPT), 
+                             SchemaExport.Action.CREATE, 
+                             metadata);
         }
 
         writeOutputFile(dialect, tmpDir);
