@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jens Pelzetter <jens@jp-digital.de>
+ * Copyright (C) 2014 Jens Pelzetter <jens.pelzetter@googlemail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ package de.jpdigital.maven.plugins.hibernate5ddl;
  * This enumeration provides constants for all dialects supported by Hibernate.
  *
  * The dialects supported by Hibernate can be found in the 
- * <a href="http://docs.jboss.org/hibernate/orm/4.3/manual/en-US/html_single/#configuration-optional-dialects">
+ * <a href="http://docs.jboss.org/hibernate/orm/5.1/userguide/html_single/Hibernate_User_Guide.html#database-dialect">
  * Hibernate documentation</a>.
  * Also this enumeration provides the convenient method
  * {@link #getDialectClass()} for getting the class name of the Hibernate

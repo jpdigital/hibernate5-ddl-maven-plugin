@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jens Pelzetter <jens@jp-digital.de>
+ * Copyright (C) 2014 Jens Pelzetter <jens.pelzetter@googlemail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

@@ -22,7 +22,7 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author Jens Pelzetter <jens@jp-digital.de>
+ * @author Jens Pelzetter <jens.pelzetter@googlemail.com>
  */
 @Embeddable
 public class TextMixin implements Serializable {

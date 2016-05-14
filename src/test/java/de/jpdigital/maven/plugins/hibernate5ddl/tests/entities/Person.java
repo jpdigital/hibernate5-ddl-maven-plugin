@@ -28,7 +28,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Jens Pelzetter <jens@jp-digital.de>
+ * @author Jens Pelzetter <jens.pelzetter@googlemail.com>
  */
 @Entity
 @Table(name = "persons")
