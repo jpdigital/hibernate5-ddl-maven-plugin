@@ -1,0 +1,154 @@
+    -----------------------------------
+    DDL Generator for Hibernate 5 Usage
+    -----------------------------------
+    Jens Pelzetter
+    -----------------------------------
+    2016-05-14
+
+Usage
+
+* General usage
+
+** Include the plugin into Maven
+
+    To use the plugin add it the the build pluings in your POM:
+
++------------------------------------------------------------------------------+
+<project>
+    [...]
+    <build>
+        [...]
+        <plugin>
+            <groupId>de.jpdigital</groupId>
+            <artifactId>hibernate5-ddl-maven-plugin</artifactId>
+            <version>1.0.0</version> <!-- Change to latest version available -->
+            <configuration>
+                <dialects>
+                    <param>postgresql9</param>
+                </dialects>
+                <packages>
+                    <param>org.example.entities</param>
+                </packages>
+            </configuration>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>gen-ddl</goal>
+                    </goals>
+                    <phase>process-classes</phase>
+                </execution>
+            </executions>
+        </plugin>
+        [...]
+    </build>
+    [...]
+</project>
++------------------------------------------------------------------------------+
+
+* Configuration parameters
+
+    The plugin has two mandatory configuration parameters. The first on are the 
+    dialects for which DDL scripts will be generated. For a list of supported 
+    dialects refer to the JavaDoc of the 
+    {{{Dialect}apidocs/index.html?de/jpdigital/maven/plugins/hibernate5ddl/Dialect.html}} 
+    enumeration.
+
+    The second parameter are the packages which contain the entity classes.
+
+    If you use Envers in your project you have to add a third parameter to 
+    create the additional tables required by Envers:
+
++------------------------------------------------------------------------------+
+<project>
+    [...]
+    <build>
+        [...]
+        <plugin>
+            <groupId>de.jpdigital</groupId>
+            <artifactId>hibernate5-ddl-maven-plugin</artifactId>
+            <version>1.0.0</version> <!-- Change to latest version available -->
+            <configuration>
+                <dialects>
+                    <param>postgresql9</param>
+                </dialects>
+                <useEnvers>true</useEnvers>
+                <packages>
+                    <param>org.example.entities</param>
+                </packages>
+            </configuration>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>gen-ddl</goal>
+                    </goals>
+                    <phase>process-classes</phase>
+                </execution>
+            </executions>
+        </plugin>
+        [...]
+    </build>
+    [...]
+</project>
++------------------------------------------------------------------------------+
+
+* Maven repository
+
+    The plugin is available from the Maven Central repository, therefore so
+    special configuration is needed.
+
+* Include generated SQL scripts into project archive
+
+    The default output directory for the SQL DDL scripts is 
+    <<<${project.build.directory}/generated-resources/sql/ddl/auto>>>. 
+    <<<${project-build.directory} is usually the <<<target>>> directory of your
+    project. To include the SQL scripts into the project archive you must add the
+    directory in the <<<resources>>> element inside the your build configuration, 
+    for example like this:
+
++------------------------------------------------------------------------------+
+<project>
+    [...]
+    <build>
+        [...]
+        <resources>
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+            </resource>
+        </resources>
+        [...]
+    </build>
+    [...]
+</project>
++------------------------------------------------------------------------------+
+
+* Using generated SQL scripts in the tests
+
+    If you want to use the generated SQL DDL scripts in your tests you must also
+    add the <<<generated-resources>>> directory to the test classpath:
+
++------------------------------------------------------------------------------+
+<project>
+    [...]
+    <build>
+        [...]
+        <plugins>
+            [...]
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    [...]
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>${project.build.directory}/generated-resources</additionalClasspathElement>
+                    </additionalClasspathElements>
+                    [...]
+                 </configuration>
+            </plugin>
+            [...]
+        </plugins>
+        [...]
+    </build>
+    [...]
+</project>
++------------------------------------------------------------------------------+

@@ -95,7 +95,8 @@ public class GenerateDdlMojo extends AbstractMojo {
      * DDL file.
      */
     @Parameter(required = false)
-    private boolean createDropStatments;
+    @SuppressWarnings("PMD.LongVariable")
+    private boolean createDropStatements;
 
     /**
      * The {@code persistence.xml} file to use to read properties etc. Default
@@ -183,12 +184,13 @@ public class GenerateDdlMojo extends AbstractMojo {
         this.dialects = Arrays.copyOf(dialects, dialects.length);
     }
 
-    public boolean isCreateDropStatments() {
-        return createDropStatments;
+    public boolean isCreateDropStatements() {
+        return createDropStatements;
     }
 
+    @SuppressWarnings("PMD.LongVariable")
     public void setCreateDropStatements(final boolean createDropStatments) {
-        this.createDropStatments = createDropStatments;
+        this.createDropStatements = createDropStatments;
     }
 
     public File getPersistenceXml() {
@@ -262,7 +264,7 @@ public class GenerateDdlMojo extends AbstractMojo {
                                                  = new StandardServiceRegistryBuilder();
         processPersistenceXml(registryBuilder);
 
-        if (createDropStatments) {
+        if (createDropStatements) {
             registryBuilder.applySetting("hibernate.hbm2ddl.auto",
                                          "create-drop");
         } else {
@@ -281,8 +283,6 @@ public class GenerateDdlMojo extends AbstractMojo {
             metadataSources.addAnnotatedClass(entityClass);
         }
 
-        final Metadata metadata = metadataSources.buildMetadata();
-
         final SchemaExport export = new SchemaExport();
 //        final SchemaExport export = new SchemaExport(
 //            (MetadataImplementor) metadata, true);
@@ -295,20 +295,22 @@ public class GenerateDdlMojo extends AbstractMojo {
             throw new MojoFailureException("Failed to create work dir.", ex);
         }
 
+        final Metadata metadata = metadataSources.buildMetadata();
+
         export.setOutputFile(String.format(
             "%s/%s.sql",
             tmpDir.toString(),
             dialect.name().toLowerCase(
                 Locale.ENGLISH)));
         export.setFormat(true);
-        if (createDropStatments) {
-              export.execute(EnumSet.of(TargetType.SCRIPT),
-                             SchemaExport.Action.BOTH, 
-                             metadata);
+        if (createDropStatements) {
+            export.execute(EnumSet.of(TargetType.SCRIPT),
+                           SchemaExport.Action.BOTH,
+                           metadata);
         } else {
-              export.execute(EnumSet.of(TargetType.SCRIPT), 
-                             SchemaExport.Action.CREATE, 
-                             metadata);
+            export.execute(EnumSet.of(TargetType.SCRIPT),
+                           SchemaExport.Action.CREATE,
+                           metadata);
         }
 
         writeOutputFile(dialect, tmpDir);
@@ -341,7 +343,7 @@ public class GenerateDdlMojo extends AbstractMojo {
 
     private class PersistenceXmlHandler extends DefaultHandler {
 
-        private final StandardServiceRegistryBuilder registryBuilder;
+        private final transient StandardServiceRegistryBuilder registryBuilder;
 
         public PersistenceXmlHandler(
             final StandardServiceRegistryBuilder registryBuilder) {

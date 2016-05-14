@@ -1,0 +1,15 @@
+    -----------------------------
+    DDL Generator for Hibernate 5
+    -----------------------------
+    Jens Pelzetter
+    -----------------------------
+    2016-05-14
+
+Introduction
+
+    This plugin for Maven provides an wrapper around the SchemaExport class of 
+    Hibernate 5. Using parameters it is possible to configure the plugin from 
+    the POM. This plugin requires Java 7 and Maven 3.
+
+    The goals of this plugin are described at the Goals page. The Usage page
+    provides informations about how the plugin is used.
