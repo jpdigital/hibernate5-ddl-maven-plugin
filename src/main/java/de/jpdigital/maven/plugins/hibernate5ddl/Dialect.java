@@ -19,24 +19,32 @@ package de.jpdigital.maven.plugins.hibernate5ddl;
 /**
  * This enumeration provides constants for all dialects supported by Hibernate.
  *
- * The dialects supported by Hibernate can be found in the 
+ * The dialects supported by Hibernate can be found in the
  * <a href="http://docs.jboss.org/hibernate/orm/5.1/userguide/html_single/Hibernate_User_Guide.html#database-dialect">
- * Hibernate documentation</a>.
- * Also this enumeration provides the convenient method
- * {@link #getDialectClass()} for getting the class name of the Hibernate
+ * Hibernate documentation</a>. Also this enumeration provides the convenient
+ * method {@link #getDialectClass()} for getting the class name of the Hibernate
  * dialect.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public enum Dialect {
 
+    ABSTRACT_HANA("org.hibernate.dialect.AbstractHANADialect"),
+    CACHE71("org.hibernate.dialect.Cache71Dialect"),
     CUBRID("org.hibernate.dialect.CUBRIDDialect"),
     DB2("org.hibernate.dialect.DB2Dialect"),
+    DB3900("org.hibernate.dialect.DB2390Dialect"),
+    DB2400("org.hibernate.dialect.DB2400Dialect"),
     DB2_AS400("org.hibernate.dialect.DB2400Dialect"),
     DB2_OS390("org.hibernate.dialect.DB2390Dialect"),
+    DERBY_10_5("org.hibernate.dialect.DerbyTenFiveDialect"),
+    DERBY_10_6("org.hibernate.dialect.DerbyTenSixDialect"),
+    DERBY_10_7("org.hibernate.dialect.DerbyTenSevenDialect"),
     FIREBIRD("org.hibernate.dialect.FirebirdDialect"),
     FRONTBASE("org.hibernate.dialect.FrontBaseDialect"),
     H2("org.hibernate.dialect.H2Dialect"),
+    HANA_COLUMN_STORE("org.hibernate.dialect.HanaColumnStoreDialect"),
+    HANA_ROW_STORE("org.hibernate.dialect.HanaRowStoreDialect"),
     HSQL("org.hibernate.dialect.HSQLDialect"),
     INFORMIX("org.hibernate.dialect.InformixDialect"),
     INGRES("org.hibernate.dialect.IngresDialect"),
@@ -46,10 +54,6 @@ public enum Dialect {
     INTERSYSTEMS_CACHE("org.hibernate.dialect.Cache71Dialect"),
     JDATASTORE("org.hibernate.dialect.JDataStoreDialect"),
     MCKOISQL("org.hibernate.dialect.MckoiDialect"),
-    SQLSERVER2000("org.hibernate.dialect.SQLServerDialect"),
-    SQLSERVER2005("org.hibernate.dialect.SQLServer2005Dialect"),
-    SQLSERVER2008("org.hibernate.dialect.SQLServer2008Dialect"),
-    SQLSERVER2012("org.hibernate.dialect.SQLServer2012Dialect"),
     MIMERSQL("org.hibernate.dialect.MimerSQLDialect"),
     MYSQL("org.hibernate.dialect.MySQLDialect"),
     MYSQL_INNODB("org.hibernate.dialect.MySQLInnoDBDialect"),
@@ -59,8 +63,10 @@ public enum Dialect {
     ORACLE8I("org.hibernate.dialect.Oracle8iDialect"),
     ORACLE9I("org.hibernate.dialect.Oracle9iDialect"),
     ORACLE10G("org.hibernate.dialect.Oracle10gDialect"),
+    ORACLE12C("org.hibernate.dialect.Oracle12cDialect"),
     ORACLE_TIMES_TEN("org.hibernate.dialect.TimesTenDialect"),
     POINTBASE("org.hibernate.dialect.PointbaseDialect"),
+    POSTGRES_PLUS("org.hibernate.dialect.PostgresPlusDialect"),
     POSTGRESQL81("org.hibernate.dialect.PostgreSQL81Dialect"),
     POSTGRESQL82("org.hibernate.dialect.PostgreSQL82Dialect"),
     POSTGRESQL9("org.hibernate.dialect.PostgreSQL9Dialect"),
@@ -68,6 +74,10 @@ public enum Dialect {
     SAP_DB("org.hibernate.dialect.SAPDBDialect"),
     SAP_HANA_COL("org.hibernate.dialect.HANAColumnStoreDialect"),
     SAP_HANA_ROW("org.hibernate.dialect.HANARowStoreDialect"),
+    SQLSERVER2000("org.hibernate.dialect.SQLServerDialect"),
+    SQLSERVER2005("org.hibernate.dialect.SQLServer2005Dialect"),
+    SQLSERVER2008("org.hibernate.dialect.SQLServer2008Dialect"),
+    SQLSERVER2012("org.hibernate.dialect.SQLServer2012Dialect"),
     SYBASE("org.hibernate.dialect.SybaseDialect"),
     SYBASE11("org.hibernate.dialect.Sybase11Dialect"),
     SYBASE_ASE155("org.hibernate.dialect.SybaseASE15Dialect"),
