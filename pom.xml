@@ -7,7 +7,7 @@
 
     <groupId>de.jpdigital</groupId>
     <artifactId>hibernate5-ddl-maven-plugin</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1-hibernate-5.1.2.Final</version>
     <packaging>maven-plugin</packaging>
 
     <name>Maven DDL generator plugin for Hibernate 5</name>
