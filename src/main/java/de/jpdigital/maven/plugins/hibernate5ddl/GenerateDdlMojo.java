@@ -19,7 +19,6 @@ package de.jpdigital.maven.plugins.hibernate5ddl;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -39,6 +38,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -111,7 +111,7 @@ public class GenerateDdlMojo extends AbstractMojo {
         required = false)
     private File persistenceXml;
 
-    @Component
+    @Parameter(defaultValue = "${project}", readonly = true)
     private transient MavenProject project;
 
     /**
@@ -320,16 +320,18 @@ public class GenerateDdlMojo extends AbstractMojo {
     private void processPersistenceXml(
         final StandardServiceRegistryBuilder registryBuilder) {
         if (persistenceXml != null) {
-            getLog()
-                .info("persistence.xml available, locking for properties...");
-
             try (InputStream inStream = new FileInputStream(persistenceXml)) {
+                getLog()
+                  .info("persistence.xml available, looking for properties...");
+
                 final SAXParser parser;
 
                 parser = SAXParserFactory.newInstance().newSAXParser();
 
                 parser.parse(inStream,
                              new PersistenceXmlHandler(registryBuilder));
+            } catch (FileNotFoundException ex) {
+                getLog().warn("persistence.xml not present; ignoring.");
             } catch (IOException ex) {
                 getLog().error(
                     "Failed to open persistence.xml. Not processing properties.",
