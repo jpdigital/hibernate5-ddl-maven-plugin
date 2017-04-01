@@ -110,7 +110,7 @@ public class GenerateDdlMojo extends AbstractMojo {
         required = false)
     private File persistenceXml;
 
-    @Component
+    @Parameter( defaultValue = "${project}", readonly = true )
     private transient MavenProject project;
 
     /**
