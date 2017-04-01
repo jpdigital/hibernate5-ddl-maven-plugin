@@ -114,18 +114,23 @@ public class DdlMojoTest {
     }
 
     /**
-     * Check that no Exception is thrown when a non-existant file is injected
-     * into {@link GenerateDdlMojo::setPersistenceXml} and then executed.
+     * Check that no Exception is thrown when a file that does not exist is injected
+     * into {@link GenerateDdlMojo#persistenceXml and then executed.
+     *
+     * @throws org.apache.maven.plugin.MojoExecutionException
+     * @throws org.apache.maven.plugin.MojoFailureException
+     * @throws java.io.IOException
      */
     @Test
     public void persistenceXmlDoesntExist() throws MojoExecutionException,
                                                    MojoFailureException,
                                                    IOException {
+        
         mojo.setOutputDirectory(new File(TEST_DIR));
 
         final String[] packages = new String[]{
-          "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-          "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
         };
         mojo.setPackages(packages);
 
@@ -333,7 +338,7 @@ public class DdlMojoTest {
             final String path = String.format("%s/%s.sql",
                                               TEST_DIR,
                                               dialect
-                                              .toLowerCase(Locale.ENGLISH));
+                                                  .toLowerCase(Locale.ENGLISH));
 
             assertTrue(String.format("DDL file '%s' was not generated.", path),
                        fileExists(path));
@@ -408,7 +413,7 @@ public class DdlMojoTest {
             final String path = String.format("%s/%s.sql",
                                               TEST_DIR,
                                               dialect
-                                              .toLowerCase(Locale.ENGLISH));
+                                                  .toLowerCase(Locale.ENGLISH));
 
             assertTrue(String.format("DDL file '%s' was not generated.", path),
                        fileExists(path));
@@ -595,9 +600,9 @@ public class DdlMojoTest {
         return sql.toLowerCase(Locale.ENGLISH).contains(
             "drop table if exists persons")
                    || sql.toLowerCase(Locale.ENGLISH).contains(
-            "drop table persons if exists")
+                "drop table persons if exists")
                    || sql.toLowerCase(Locale.ENGLISH).contains(
-            "drop table persons");
+                "drop table persons");
     }
 
     private boolean fileContainsReportEntity(final String path) throws
@@ -616,9 +621,9 @@ public class DdlMojoTest {
         return sql.toLowerCase(Locale.ENGLISH).contains(
             "drop table if exists reports")
                    || sql.toLowerCase(Locale.ENGLISH).contains(
-            "drop table reports if exists")
+                "drop table reports if exists")
                    || sql.toLowerCase(Locale.ENGLISH).contains(
-            "drop table reports");
+                "drop table reports");
 
     }
 
@@ -648,9 +653,9 @@ public class DdlMojoTest {
         return sql.toLowerCase(Locale.ENGLISH).contains(
             "drop table if exists companies")
                    || sql.toLowerCase(Locale.ENGLISH).contains(
-            "drop table companies if exists")
+                "drop table companies if exists")
                    || sql.toLowerCase(Locale.ENGLISH).contains(
-            "drop table companies");
+                "drop table companies");
     }
 
     /**

@@ -19,6 +19,7 @@ package de.jpdigital.maven.plugins.hibernate5ddl;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -28,7 +29,6 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.schema.TargetType;
@@ -320,26 +320,33 @@ public class GenerateDdlMojo extends AbstractMojo {
     private void processPersistenceXml(
         final StandardServiceRegistryBuilder registryBuilder) {
         if (persistenceXml != null) {
-            try (InputStream inStream = new FileInputStream(persistenceXml)) {
-                getLog()
-                  .info("persistence.xml available, looking for properties...");
 
-                final SAXParser parser;
+            if (Files.exists(persistenceXml.toPath())) {
+                try (final InputStream inputStream = new FileInputStream(
+                    persistenceXml)) {
+                    getLog().info("persistence.xml found, "
+                                      + "looking for properties...");
 
-                parser = SAXParserFactory.newInstance().newSAXParser();
+                    final SAXParser parser;
 
-                parser.parse(inStream,
-                             new PersistenceXmlHandler(registryBuilder));
-            } catch (FileNotFoundException ex) {
-                getLog().warn("persistence.xml not present; ignoring.");
-            } catch (IOException ex) {
-                getLog().error(
-                    "Failed to open persistence.xml. Not processing properties.",
-                    ex);
-            } catch (ParserConfigurationException | SAXException ex) {
-                getLog().error(
-                    "Error parsing persistence.xml. Not processing properties",
-                    ex);
+                    parser = SAXParserFactory.newInstance().newSAXParser();
+
+                    parser.parse(inputStream,
+                                 new PersistenceXmlHandler(registryBuilder));
+
+                } catch (IOException ex) {
+                    getLog().error("Failed to open persistence.xml. "
+                                       + "Not processing properties.",
+                                   ex);
+                } catch (ParserConfigurationException | SAXException ex) {
+                    getLog().error("Error parsing persistence.xml. "
+                                       + "Not processing properties",
+                                   ex);
+                }
+            } else {
+                getLog().warn(String.format("persistence.xml file '%s' does "
+                                                + "not exist. Ignoring.",
+                                            persistenceXml.getPath()));
             }
         }
     }
