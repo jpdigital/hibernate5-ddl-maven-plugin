@@ -84,8 +84,8 @@ final class EntityFinder {
             }
             final List<URL> classPathUrls = new ArrayList<>();
             for (final String classPathElem : classPathElems) {
-                log.info(String
-                    .format("Adding classpath elemement '%s'...", classPathElem));
+                log.info(String.format("Adding classpath elemement '%s'...",
+                                       classPathElem));
                 classPathUrls.add(classPathElemToUrl(classPathElem));
             }
 
@@ -94,11 +94,11 @@ final class EntityFinder {
                 log.info(String.format("\t%s", url.toString()));
             }
 
-            //Here we have to do some classloader magic to ensure that the Reflections instance
-            //uses the correct class loader. Which is the one which has access to the compiled 
-            //classes
-            final ClassLoader classLoader = AccessController.doPrivileged(
-                new ClassLoaderCreator(classPathUrls));
+            //Here we have to do some classloader magic to ensure that the 
+            //Reflections instance uses the correct class loader. Which is the 
+            //one which has access to the compiled classes
+            final ClassLoader classLoader = AccessController
+                .doPrivileged(new ClassLoaderCreator(classPathUrls));
 
             reflections = new Reflections(
                 ClasspathHelper.forPackage(packageName, classLoader));
@@ -159,7 +159,8 @@ final class EntityFinder {
         return url;
     }
 
-    private static class ClassLoaderCreator implements PrivilegedAction<ClassLoader> {
+    private static class ClassLoaderCreator implements
+        PrivilegedAction<ClassLoader> {
 
         private final transient List<URL> classPathUrls;
 
