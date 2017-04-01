@@ -64,8 +64,6 @@ public class DdlMojoTest {
      */
     private GenerateDdlMojo mojo;
 
-    ;
-    
     public DdlMojoTest() {
     }
 
@@ -113,6 +111,32 @@ public class DdlMojoTest {
             //Delete the (now empty) test directory.
             Files.deleteIfExists(testDir);
         }
+    }
+
+    /**
+     * Check that no Exception is thrown when a non-existant file is injected
+     * into {@link GenerateDdlMojo::setPersistenceXml} and then executed.
+     */
+    @Test
+    public void persistenceXmlDoesntExist() throws MojoExecutionException,
+                                                   MojoFailureException,
+                                                   IOException {
+        mojo.setOutputDirectory(new File(TEST_DIR));
+
+        final String[] packages = new String[]{
+          "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+          "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+        };
+        mojo.setPackages(packages);
+
+        final String[] dialects = new String[]{
+            "mysql5"
+        };
+        mojo.setDialects(dialects);
+
+        mojo.setPersistenceXml(new File("file/doesnt/exist"));
+
+        mojo.execute();
     }
 
     /**
