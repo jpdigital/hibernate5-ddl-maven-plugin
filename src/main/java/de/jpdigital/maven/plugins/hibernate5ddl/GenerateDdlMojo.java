@@ -111,7 +111,7 @@ public class GenerateDdlMojo extends AbstractMojo {
         required = false)
     private File persistenceXml;
 
-    @Parameter(defaultValue = "${project}", readonly = true)
+    @Component
     private transient MavenProject project;
 
     /**
