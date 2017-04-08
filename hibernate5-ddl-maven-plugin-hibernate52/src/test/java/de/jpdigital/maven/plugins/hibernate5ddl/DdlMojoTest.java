@@ -14,9 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.jpdigital.maven.plugins.hibernate5ddl.tests;
-
-import de.jpdigital.maven.plugins.hibernate5ddl.GenerateDdlMojo;
+package de.jpdigital.maven.plugins.hibernate5ddl;
 
 import java.io.File;
 import java.io.IOException;
@@ -114,8 +112,8 @@ public class DdlMojoTest {
     }
 
     /**
-     * Check that no Exception is thrown when a file that does not exist is injected
-     * into {@link GenerateDdlMojo#persistenceXml and then executed.
+     * Check that no Exception is thrown when a file that does not exist is
+     * injected into {@link GenerateDdlMojo#persistenceXml and then executed.
      *
      * @throws org.apache.maven.plugin.MojoExecutionException
      * @throws org.apache.maven.plugin.MojoFailureException
@@ -125,7 +123,7 @@ public class DdlMojoTest {
     public void persistenceXmlDoesntExist() throws MojoExecutionException,
                                                    MojoFailureException,
                                                    IOException {
-        
+
         mojo.setOutputDirectory(new File(TEST_DIR));
 
         final String[] packages = new String[]{
@@ -727,6 +725,7 @@ public class DdlMojoTest {
      *                                Mojo.
      * @throws InterruptedException   If the test thread could not be
      *                                interrupted.
+     * @throws java.io.IOException    if the access to the file system fails
      */
     @Test
     public void overwriteFileIfContentChanges() throws MojoExecutionException,

@@ -19,40 +19,24 @@ package de.jpdigital.maven.plugins.hibernate5ddl;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
-import org.hibernate.tool.schema.TargetType;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.ServiceLoader;
 import java.util.Set;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Goal which creates DDL SQL files for the JPA entities in the project (using
@@ -110,7 +94,7 @@ public class GenerateDdlMojo extends AbstractMojo {
         required = false)
     private File persistenceXml;
 
-    @Parameter( defaultValue = "${project}", readonly = true )
+    @Parameter(defaultValue = "${project}", readonly = true)
     private transient MavenProject project;
 
     /**
@@ -154,9 +138,21 @@ public class GenerateDdlMojo extends AbstractMojo {
         getLog().info(String.format("Found %d entities.",
                                     entityClasses.size()));
 
+        final ServiceLoader<DdlGenerator> serviceLoader = ServiceLoader
+            .load(DdlGenerator.class);
+        final DdlGenerator ddlGenerator;
+        if (serviceLoader.iterator().hasNext()) {
+            ddlGenerator = serviceLoader.iterator().next();
+        } else {
+            throw new MojoFailureException(String.format(
+                "No implementation of '%s' is available.",
+                DdlGenerator.class.getName()));
+        }
+
         //Generate the SQL scripts
         for (final Dialect dialect : dialectsList) {
-            generateDdl(dialect, entityClasses);
+//            generateDdl(dialect, entityClasses);
+            ddlGenerator.generateDdl(dialect, entityClasses, this);
         }
     }
 
@@ -256,145 +252,148 @@ public class GenerateDdlMojo extends AbstractMojo {
      *
      * @throws MojoFailureException if something goes wrong.
      */
-    private void generateDdl(final Dialect dialect,
-                             final Set<Class<?>> entityClasses)
-        throws MojoFailureException {
-
-        final StandardServiceRegistryBuilder registryBuilder
-                                                 = new StandardServiceRegistryBuilder();
-        processPersistenceXml(registryBuilder);
-
-        if (createDropStatements) {
-            registryBuilder.applySetting("hibernate.hbm2ddl.auto",
-                                         "create-drop");
-        } else {
-            registryBuilder.applySetting("hibernate.hbm2ddl.auto", "create");
-        }
-
-        registryBuilder.applySetting("hibernate.dialect",
-                                     dialect.getDialectClass());
-
-        final StandardServiceRegistry standardRegistry = registryBuilder.build();
-
-        final MetadataSources metadataSources = new MetadataSources(
-            standardRegistry);
-
-        for (final Class<?> entityClass : entityClasses) {
-            metadataSources.addAnnotatedClass(entityClass);
-        }
-
-        final SchemaExport export = new SchemaExport();
-//        final SchemaExport export = new SchemaExport(
-//            (MetadataImplementor) metadata, true);
-        export.setDelimiter(";");
-
-        final Path tmpDir;
-        try {
-            tmpDir = Files.createTempDirectory("maven-hibernate5-ddl-plugin");
-        } catch (IOException ex) {
-            throw new MojoFailureException("Failed to create work dir.", ex);
-        }
-
-        final Metadata metadata = metadataSources.buildMetadata();
-
-        export.setOutputFile(String.format(
-            "%s/%s.sql",
-            tmpDir.toString(),
-            dialect.name().toLowerCase(
-                Locale.ENGLISH)));
-        export.setFormat(true);
-        if (createDropStatements) {
-            export.execute(EnumSet.of(TargetType.SCRIPT),
-                           SchemaExport.Action.BOTH,
-                           metadata);
-        } else {
-            export.execute(EnumSet.of(TargetType.SCRIPT),
-                           SchemaExport.Action.CREATE,
-                           metadata);
-        }
-
-        writeOutputFile(dialect, tmpDir);
-    }
-
-    private void processPersistenceXml(
-        final StandardServiceRegistryBuilder registryBuilder) {
-        if (persistenceXml != null) {
-
-            if (Files.exists(persistenceXml.toPath())) {
-                try (final InputStream inputStream = new FileInputStream(
-                    persistenceXml)) {
-                    getLog().info("persistence.xml found, "
-                                      + "looking for properties...");
-
-                    final SAXParser parser;
-
-                    parser = SAXParserFactory.newInstance().newSAXParser();
-
-                    parser.parse(inputStream,
-                                 new PersistenceXmlHandler(registryBuilder));
-
-                } catch (IOException ex) {
-                    getLog().error("Failed to open persistence.xml. "
-                                       + "Not processing properties.",
-                                   ex);
-                } catch (ParserConfigurationException | SAXException ex) {
-                    getLog().error("Error parsing persistence.xml. "
-                                       + "Not processing properties",
-                                   ex);
-                }
-            } else {
-                getLog().warn(String.format("persistence.xml file '%s' does "
-                                                + "not exist. Ignoring.",
-                                            persistenceXml.getPath()));
-            }
-        }
-    }
-
-    private class PersistenceXmlHandler extends DefaultHandler {
-
-        private final transient StandardServiceRegistryBuilder registryBuilder;
-
-        public PersistenceXmlHandler(
-            final StandardServiceRegistryBuilder registryBuilder) {
-            this.registryBuilder = registryBuilder;
-        }
-
-        @Override
-        public void startElement(final String uri,
-                                 final String localName,
-                                 final String qName,
-                                 final Attributes attributes) {
-            getLog().info(String.format(
-                "Found element with uri = '%s', localName = '%s', qName = '%s'...",
-                uri,
-                localName,
-                qName));
-
-            if ("property".equals(qName)) {
-                final String propertyName = attributes.getValue("name");
-                final String propertyValue = attributes.getValue("value");
-
-                if (propertyName != null && !propertyName.isEmpty()
-                        && propertyValue != null && !propertyValue.isEmpty()) {
-                    getLog().info(String.format(
-                        "Found property %s = %s in persistence.xml",
-                        propertyName,
-                        propertyValue));
-                    registryBuilder.applySetting(propertyName, propertyValue);
-                }
-            }
-        }
-
-    }
-
+//    private void generateDdl(final Dialect dialect,
+//                             final Set<Class<?>> entityClasses)
+//        throws MojoFailureException {
+//
+//        final StandardServiceRegistryBuilder registryBuilder
+//                                                 = new StandardServiceRegistryBuilder();
+//        processPersistenceXml(registryBuilder);
+//
+//        if (createDropStatements) {
+//            registryBuilder.applySetting("hibernate.hbm2ddl.auto",
+//                                         "create-drop");
+//        } else {
+//            registryBuilder.applySetting("hibernate.hbm2ddl.auto", "create");
+//        }
+//
+//        registryBuilder.applySetting("hibernate.dialect",
+//                                     dialect.getDialectClass());
+//
+//        final StandardServiceRegistry standardRegistry = registryBuilder.build();
+//
+//        final MetadataSources metadataSources = new MetadataSources(
+//            standardRegistry);
+//
+//        for (final Class<?> entityClass : entityClasses) {
+//            metadataSources.addAnnotatedClass(entityClass);
+//        }
+//
+//        final SchemaExport export = new SchemaExport();
+////        final SchemaExport export = new SchemaExport(
+////            (MetadataImplementor) metadata, true);
+//        export.setDelimiter(";");
+//
+//        final Path tmpDir;
+//        try {
+//            tmpDir = Files.createTempDirectory("maven-hibernate5-ddl-plugin");
+//        } catch (IOException ex) {
+//            throw new MojoFailureException("Failed to create work dir.", ex);
+//        }
+//
+//        final Metadata metadata = metadataSources.buildMetadata();
+//
+//        export.setOutputFile(String.format(
+//            "%s/%s.sql",
+//            tmpDir.toString(),
+//            dialect.name().toLowerCase(
+//                Locale.ENGLISH)));
+//        export.setFormat(true);
+//        if (createDropStatements) {
+//            export.execute(EnumSet.of(TargetType.SCRIPT),
+//                           SchemaExport.Action.BOTH,
+//                           metadata);
+//        } else {
+//            export.execute(EnumSet.of(TargetType.SCRIPT),
+//                           SchemaExport.Action.CREATE,
+//                           metadata);
+//        }
+//
+//        writeOutputFile(dialect, tmpDir);
+//    }
+//    private void processPersistenceXml(
+//        final StandardServiceRegistryBuilder registryBuilder) {
+//        if (persistenceXml != null) {
+//
+//            if (Files.exists(persistenceXml.toPath())) {
+//                try (final InputStream inputStream = new FileInputStream(
+//                    persistenceXml)) {
+//                    getLog().info("persistence.xml found, "
+//                                      + "looking for properties...");
+//
+//                    final SAXParser parser;
+//
+//                    parser = SAXParserFactory.newInstance().newSAXParser();
+//
+//                    parser.parse(inputStream,
+//                                 new PersistenceXmlHandler(registryBuilder));
+//
+//                } catch (IOException ex) {
+//                    getLog().error("Failed to open persistence.xml. "
+//                                       + "Not processing properties.",
+//                                   ex);
+//                } catch (ParserConfigurationException | SAXException ex) {
+//                    getLog().error("Error parsing persistence.xml. "
+//                                       + "Not processing properties",
+//                                   ex);
+//                }
+//            } else {
+//                getLog().warn(String.format("persistence.xml file '%s' does "
+//                                                + "not exist. Ignoring.",
+//                                            persistenceXml.getPath()));
+//            }
+//        }
+//    }
+//    private class PersistenceXmlHandler extends DefaultHandler {
+//
+//        private final transient StandardServiceRegistryBuilder registryBuilder;
+//
+//        public PersistenceXmlHandler(
+//            final StandardServiceRegistryBuilder registryBuilder) {
+//            this.registryBuilder = registryBuilder;
+//        }
+//
+//        @Override
+//        public void startElement(final String uri,
+//                                 final String localName,
+//                                 final String qName,
+//                                 final Attributes attributes) {
+//            getLog().info(String.format(
+//                "Found element with uri = '%s', localName = '%s', qName = '%s'...",
+//                uri,
+//                localName,
+//                qName));
+//
+//            if ("property".equals(qName)) {
+//                final String propertyName = attributes.getValue("name");
+//                final String propertyValue = attributes.getValue("value");
+//
+//                if (propertyName != null && !propertyName.isEmpty()
+//                        && propertyValue != null && !propertyValue.isEmpty()) {
+//                    getLog().info(String.format(
+//                        "Found property %s = %s in persistence.xml",
+//                        propertyName,
+//                        propertyValue));
+//                    registryBuilder.applySetting(propertyName, propertyValue);
+//                }
+//            }
+//        }
+//
+//    }
     /**
      * Helper method for writing the output files if necessary. The
-     * {@link #generateDdl(Dialect, Set)} method writes the output to temporary
-     * files. This method checks of the output files have changed and copies the
-     * files if necessary.
+     * {@link DdlGenerator#generateDdl(de.jpdigital.maven.plugins.hibernate5ddl.Dialect, java.util.Set, de.jpdigital.maven.plugins.hibernate5ddl.GenerateDdlMojo) } method writes the output
+     * to temporary files. This method checks of the output files have changed
+     * and copies the files if necessary.
+     *
+     * @param dialect The dialect to write to output file for.
+     * @param tmpDir  The temporary directory
+     *
+     * @throws org.apache.maven.plugin.MojoFailureException If anything goes
+     *                                                      wrong.
      */
-    private void writeOutputFile(final Dialect dialect,
-                                 final Path tmpDir)
+    protected void writeOutputFile(final Dialect dialect,
+                                   final Path tmpDir)
         throws MojoFailureException {
 //        final Path outputDir = outputDirectory.toPath();
 //        if (Files.exists(outputDir)) {
