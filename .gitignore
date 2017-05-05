@@ -1,2 +1,4 @@
 /target/
 /hibernate5-ddl-maven-plugin-hibernate52/target/
+/hibernate5-ddl-maven-plugin-core/target/
+/hibernate5-ddl-maven-plugin-hibernate51/target/
