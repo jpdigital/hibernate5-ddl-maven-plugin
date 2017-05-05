@@ -30,14 +30,13 @@ import org.apache.maven.plugin.logging.Log;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
-import org.hibernate.tool.schema.TargetType;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.EnumSet;
 import java.util.Locale;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -48,18 +47,18 @@ import javax.xml.parsers.SAXParserFactory;
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
-public class DdlGeneratorHibernate52 implements DdlGenerator {
+public class DdlGeneratorHibernate50 implements DdlGenerator {
 
     @Override
     public void generateDdl(final Dialect dialect,
                             final Set<Class<?>> entityClasses,
-                           final GenerateDdlMojo mojo)
+                            final GenerateDdlMojo mojo)
         throws MojoFailureException {
 
         final StandardServiceRegistryBuilder registryBuilder
                                                  = new StandardServiceRegistryBuilder();
-        processPersistenceXml(registryBuilder, 
-                              mojo.getPersistenceXml(), 
+        processPersistenceXml(registryBuilder,
+                              mojo.getPersistenceXml(),
                               mojo.getLog());
 
         if (mojo.isCreateDropStatements()) {
@@ -81,9 +80,10 @@ public class DdlGeneratorHibernate52 implements DdlGenerator {
             metadataSources.addAnnotatedClass(entityClass);
         }
 
-        final SchemaExport export = new SchemaExport();
-//        final SchemaExport export = new SchemaExport(
-//            (MetadataImplementor) metadata, true);
+        final Metadata metadata = metadataSources.buildMetadata();
+
+        final SchemaExport export = new SchemaExport(
+            (MetadataImplementor) metadata, true);
         export.setDelimiter(";");
 
         final Path tmpDir;
@@ -93,8 +93,6 @@ public class DdlGeneratorHibernate52 implements DdlGenerator {
             throw new MojoFailureException("Failed to create work dir.", ex);
         }
 
-        final Metadata metadata = metadataSources.buildMetadata();
-
         export.setOutputFile(String.format(
             "%s/%s.sql",
             tmpDir.toString(),
@@ -102,16 +100,12 @@ public class DdlGeneratorHibernate52 implements DdlGenerator {
                 Locale.ENGLISH)));
         export.setFormat(true);
         if (mojo.isCreateDropStatements()) {
-            export.execute(EnumSet.of(TargetType.SCRIPT),
-                           SchemaExport.Action.BOTH,
-                           metadata);
+            export.execute(true, false, false, false);
         } else {
-            export.execute(EnumSet.of(TargetType.SCRIPT),
-                           SchemaExport.Action.CREATE,
-                           metadata);
+            export.execute(true, false, false, true);
         }
 
-        mojo. writeOutputFile(dialect, tmpDir);
+        mojo.writeOutputFile(dialect, tmpDir);
     }
 
     private void processPersistenceXml(

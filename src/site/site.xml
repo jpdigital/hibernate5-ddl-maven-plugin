@@ -6,7 +6,7 @@
     <body>
         <menu name="Overview">
             <item name="Overview" href="index.html"/>
-       </menu>
+        </menu>
         
         <menu ref="modules"/>
         <menu ref="reports"/>
@@ -16,6 +16,15 @@
         <artifactId>maven-fluido-skin</artifactId>
         <version>1.6</version>
     </skin>
+    <custom>
+        <fluidoSkin>
+            <gitHub>
+                <projectId>jpdigital/hibernate5-ddl-maven-plugin</projectId>
+                <ribbonOrientation>right</ribbonOrientation>
+                <ribbonColor>darkblue</ribbonColor>
+            </gitHub>
+        </fluidoSkin>
+    </custom>
     
 </project>
 
