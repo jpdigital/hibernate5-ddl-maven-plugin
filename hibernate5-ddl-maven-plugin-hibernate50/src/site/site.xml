@@ -9,6 +9,12 @@
             <item name="Maven DDL generator plugin" href="../index.html"/>
         </menu>
 
+        <menu name="Overview">
+            <item name="Overview" href="index.html"/>
+            <item name="Goals" href="plugin-info.html"/>
+            
+        </menu>
+
         <menu ref="reports" />
     </body>
 </project>
