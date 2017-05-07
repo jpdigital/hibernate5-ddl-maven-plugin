@@ -17,16 +17,36 @@
 package de.jpdigital.maven.plugins.hibernate5ddl;
 
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
 
+import java.util.ServiceLoader;
 import java.util.Set;
 
 /**
+ * Interface for the {@code DdlGenerator} which generates the SQL DDL files.
+ *
+ * The {@link GenerateDdlMojo} will use the {@link ServiceLoader} from the Java
+ * Standard API to find the implementation to use. Therefore an implementation
+ * of this interface must be accompanied by a file called
+ * {@code de.jpdigital.maven.plugins.hibernate5ddl.DdlGenerator} in the
+ * {@code META-INF/services} directory.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public interface DdlGenerator {
 
+    /**
+     * Generates a SQL DDL file for a specific SQL dialect.
+     *
+     * @param dialect       The SQL dialect to use.
+     * @param entityClasses The entity classes for which SQL DDL statements will
+     *                      be created.
+     * @param mojo          The {@link GenerateDdlMojo} which calls the method.
+     *
+     * @throws MojoFailureException If an error occurs while creating the DDL
+     *                              file.
+     *
+     * @see Dialect
+     */
     void generateDdl(Dialect dialect,
                      Set<Class<?>> entityClasses,
                      GenerateDdlMojo mojo)

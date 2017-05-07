@@ -20,10 +20,13 @@ package de.jpdigital.maven.plugins.hibernate5ddl;
  * This enumeration provides constants for all dialects supported by Hibernate.
  *
  * The dialects supported by Hibernate can be found in the
- * <a href="http://docs.jboss.org/hibernate/orm/5.1/userguide/html_single/Hibernate_User_Guide.html#database-dialect">
+ * <a href="http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#database-dialect">
  * Hibernate documentation</a>. Also this enumeration provides the convenient
  * method {@link #getDialectClass()} for getting the class name of the Hibernate
  * dialect.
+ * 
+ * Please note that not all supported Hibernate versions support every of these
+ * dialects.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
@@ -33,7 +36,8 @@ public enum Dialect {
     CACHE71("org.hibernate.dialect.Cache71Dialect"),
     CUBRID("org.hibernate.dialect.CUBRIDDialect"),
     DB2("org.hibernate.dialect.DB2Dialect"),
-    DB3900("org.hibernate.dialect.DB2390Dialect"),
+    DB297("org.hibernate.dialect.DB207"),
+    DB2900("org.hibernate.dialect.DB2390Dialect"),
     DB2400("org.hibernate.dialect.DB2400Dialect"),
     DB2_AS400("org.hibernate.dialect.DB2400Dialect"),
     DB2_OS390("org.hibernate.dialect.DB2390Dialect"),
@@ -60,6 +64,7 @@ public enum Dialect {
     MYSQL_MYISAM("org.hibernate.dialect.MySQLMyISAMDialect"),
     MYSQL5("org.hibernate.dialect.MySQL5Dialect"),
     MYSQL5_INNODB("org.hibernate.dialect.MySQL5InnoDBDialect"),
+    MYSQL57_INNODB("org.hibernate.dialect.MySQL57InnoDBDialect"),
     ORACLE8I("org.hibernate.dialect.Oracle8iDialect"),
     ORACLE9I("org.hibernate.dialect.Oracle9iDialect"),
     ORACLE10G("org.hibernate.dialect.Oracle10gDialect"),

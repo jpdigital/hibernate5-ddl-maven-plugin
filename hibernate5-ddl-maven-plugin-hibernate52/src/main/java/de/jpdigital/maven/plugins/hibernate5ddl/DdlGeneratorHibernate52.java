@@ -45,6 +45,8 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 /**
+ * Implementation of the {@link DdlGenerator} interface for Hibernate
+ * {@literal 5.1}.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
@@ -53,13 +55,13 @@ public class DdlGeneratorHibernate52 implements DdlGenerator {
     @Override
     public void generateDdl(final Dialect dialect,
                             final Set<Class<?>> entityClasses,
-                           final GenerateDdlMojo mojo)
+                            final GenerateDdlMojo mojo)
         throws MojoFailureException {
 
         final StandardServiceRegistryBuilder registryBuilder
                                                  = new StandardServiceRegistryBuilder();
-        processPersistenceXml(registryBuilder, 
-                              mojo.getPersistenceXml(), 
+        processPersistenceXml(registryBuilder,
+                              mojo.getPersistenceXml(),
                               mojo.getLog());
 
         if (mojo.isCreateDropStatements()) {
@@ -82,8 +84,6 @@ public class DdlGeneratorHibernate52 implements DdlGenerator {
         }
 
         final SchemaExport export = new SchemaExport();
-//        final SchemaExport export = new SchemaExport(
-//            (MetadataImplementor) metadata, true);
         export.setDelimiter(";");
 
         final Path tmpDir;
@@ -111,9 +111,18 @@ public class DdlGeneratorHibernate52 implements DdlGenerator {
                            metadata);
         }
 
-        mojo. writeOutputFile(dialect, tmpDir);
+        mojo.writeOutputFile(dialect, tmpDir);
     }
 
+    /**
+     * Helper method for processing the {@code persistence.xml} file.
+     *
+     * @param registryBuilder {@link StandardServiceRegistryBuilder} from
+     *                        Hibernate.
+     * @param persistenceXml  The {@code persistence.xml} file to process
+     * @param log             Maven {@link Log} instance to use for printing
+     *                        what is done.
+     */
     private void processPersistenceXml(
         final StandardServiceRegistryBuilder registryBuilder,
         final File persistenceXml,
@@ -152,6 +161,10 @@ public class DdlGeneratorHibernate52 implements DdlGenerator {
         }
     }
 
+    /**
+     * A SAX Handler for processing the {@code persistence.xml} file. Used by
+     * {@link #processPersistenceXml(org.hibernate.boot.registry.StandardServiceRegistryBuilder, java.io.File, org.apache.maven.plugin.logging.Log)}.
+     */
     private class PersistenceXmlHandler extends DefaultHandler {
 
         private final transient StandardServiceRegistryBuilder registryBuilder;

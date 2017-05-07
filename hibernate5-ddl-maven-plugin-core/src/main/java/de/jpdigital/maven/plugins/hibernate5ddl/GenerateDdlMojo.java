@@ -132,12 +132,11 @@ public class GenerateDdlMojo extends AbstractMojo {
             final Set<Class<?>> packageEntities = EntityFinder.forPackage(
                 project, getLog(), packageName).findEntities();
             entityClasses.addAll(packageEntities);
-
-            //findEntitiesForPackage(packageName, entityClasses);
         }
         getLog().info(String.format("Found %d entities.",
                                     entityClasses.size()));
 
+        // Find the DDL generator implementation to use.
         final ServiceLoader<DdlGenerator> serviceLoader = ServiceLoader
             .load(DdlGenerator.class);
         final DdlGenerator ddlGenerator;
@@ -151,7 +150,6 @@ public class GenerateDdlMojo extends AbstractMojo {
 
         //Generate the SQL scripts
         for (final Dialect dialect : dialectsList) {
-//            generateDdl(dialect, entityClasses);
             ddlGenerator.generateDdl(dialect, entityClasses, this);
         }
     }
@@ -233,199 +231,12 @@ public class GenerateDdlMojo extends AbstractMojo {
         }
     }
 
-    /**
-     * Helper method for generating the DDL classes for a specific dialect. This
-     * is place for the real work is done. The method first creates an instance
-     * of the {@link Configuration} class from Hibernate an puts the appropriate
-     * values into it. It then creates an instance of the {@link SchemaExport}
-     * class from the Hibernate API, configured this class, for example by
-     * setting {@code format} to {@code true} so that the generated SQL files
-     * are formatted nicely. After that it calls the
-     * {@link SchemaExport#execute(boolean, boolean, boolean, boolean)} method
-     * which will create the SQL script file. The method is called in a way
-     * which requires <em>no</em> database connection.
-     *
-     *
-     * @param dialect       The dialect for which the DDL files is generated.
-     * @param entityClasses The entity classes for which the DDL file is
-     *                      generated.
-     *
-     * @throws MojoFailureException if something goes wrong.
-     */
-//    private void generateDdl(final Dialect dialect,
-//                             final Set<Class<?>> entityClasses)
-//        throws MojoFailureException {
-//
-//        final StandardServiceRegistryBuilder registryBuilder
-//                                                 = new StandardServiceRegistryBuilder();
-//        processPersistenceXml(registryBuilder);
-//
-//        if (createDropStatements) {
-//            registryBuilder.applySetting("hibernate.hbm2ddl.auto",
-//                                         "create-drop");
-//        } else {
-//            registryBuilder.applySetting("hibernate.hbm2ddl.auto", "create");
-//        }
-//
-//        registryBuilder.applySetting("hibernate.dialect",
-//                                     dialect.getDialectClass());
-//
-//        final StandardServiceRegistry standardRegistry = registryBuilder.build();
-//
-//        final MetadataSources metadataSources = new MetadataSources(
-//            standardRegistry);
-//
-//        for (final Class<?> entityClass : entityClasses) {
-//            metadataSources.addAnnotatedClass(entityClass);
-//        }
-//
-//        final SchemaExport export = new SchemaExport();
-////        final SchemaExport export = new SchemaExport(
-////            (MetadataImplementor) metadata, true);
-//        export.setDelimiter(";");
-//
-//        final Path tmpDir;
-//        try {
-//            tmpDir = Files.createTempDirectory("maven-hibernate5-ddl-plugin");
-//        } catch (IOException ex) {
-//            throw new MojoFailureException("Failed to create work dir.", ex);
-//        }
-//
-//        final Metadata metadata = metadataSources.buildMetadata();
-//
-//        export.setOutputFile(String.format(
-//            "%s/%s.sql",
-//            tmpDir.toString(),
-//            dialect.name().toLowerCase(
-//                Locale.ENGLISH)));
-//        export.setFormat(true);
-//        if (createDropStatements) {
-//            export.execute(EnumSet.of(TargetType.SCRIPT),
-//                           SchemaExport.Action.BOTH,
-//                           metadata);
-//        } else {
-//            export.execute(EnumSet.of(TargetType.SCRIPT),
-//                           SchemaExport.Action.CREATE,
-//                           metadata);
-//        }
-//
-//        writeOutputFile(dialect, tmpDir);
-//    }
-//    private void processPersistenceXml(
-//        final StandardServiceRegistryBuilder registryBuilder) {
-//        if (persistenceXml != null) {
-//
-//            if (Files.exists(persistenceXml.toPath())) {
-//                try (final InputStream inputStream = new FileInputStream(
-//                    persistenceXml)) {
-//                    getLog().info("persistence.xml found, "
-//                                      + "looking for properties...");
-//
-//                    final SAXParser parser;
-//
-//                    parser = SAXParserFactory.newInstance().newSAXParser();
-//
-//                    parser.parse(inputStream,
-//                                 new PersistenceXmlHandler(registryBuilder));
-//
-//                } catch (IOException ex) {
-//                    getLog().error("Failed to open persistence.xml. "
-//                                       + "Not processing properties.",
-//                                   ex);
-//                } catch (ParserConfigurationException | SAXException ex) {
-//                    getLog().error("Error parsing persistence.xml. "
-//                                       + "Not processing properties",
-//                                   ex);
-//                }
-//            } else {
-//                getLog().warn(String.format("persistence.xml file '%s' does "
-//                                                + "not exist. Ignoring.",
-//                                            persistenceXml.getPath()));
-//            }
-//        }
-//    }
-//    private class PersistenceXmlHandler extends DefaultHandler {
-//
-//        private final transient StandardServiceRegistryBuilder registryBuilder;
-//
-//        public PersistenceXmlHandler(
-//            final StandardServiceRegistryBuilder registryBuilder) {
-//            this.registryBuilder = registryBuilder;
-//        }
-//
-//        @Override
-//        public void startElement(final String uri,
-//                                 final String localName,
-//                                 final String qName,
-//                                 final Attributes attributes) {
-//            getLog().info(String.format(
-//                "Found element with uri = '%s', localName = '%s', qName = '%s'...",
-//                uri,
-//                localName,
-//                qName));
-//
-//            if ("property".equals(qName)) {
-//                final String propertyName = attributes.getValue("name");
-//                final String propertyValue = attributes.getValue("value");
-//
-//                if (propertyName != null && !propertyName.isEmpty()
-//                        && propertyValue != null && !propertyValue.isEmpty()) {
-//                    getLog().info(String.format(
-//                        "Found property %s = %s in persistence.xml",
-//                        propertyName,
-//                        propertyValue));
-//                    registryBuilder.applySetting(propertyName, propertyValue);
-//                }
-//            }
-//        }
-//
-//    }
-    /**
-     * Helper method for writing the output files if necessary. The
-     * {@link DdlGenerator#generateDdl(de.jpdigital.maven.plugins.hibernate5ddl.Dialect, java.util.Set, de.jpdigital.maven.plugins.hibernate5ddl.GenerateDdlMojo) } method writes the output
-     * to temporary files. This method checks of the output files have changed
-     * and copies the files if necessary.
-     *
-     * @param dialect The dialect to write to output file for.
-     * @param tmpDir  The temporary directory
-     *
-     * @throws org.apache.maven.plugin.MojoFailureException If anything goes
-     *                                                      wrong.
-     */
     protected void writeOutputFile(final Dialect dialect,
                                    final Path tmpDir)
         throws MojoFailureException {
-//        final Path outputDir = outputDirectory.toPath();
-//        if (Files.exists(outputDir)) {
-//            if (!Files.isDirectory(outputDir)) {
-//                throw new MojoFailureException("A file with the name of the "
-//                                                   + "output directory already "
-//                                                   + "exists but is not a "
-//                                                   + "directory.");
-//            }
-//        } else {
-//            try {
-//                Files.createDirectory(outputDir);
-//            } catch (IOException ex) {
-//                throw new MojoFailureException(
-//                    String.format("Failed to create the output directory: %s",
-//                                  ex.getMessage()),
-//                    ex);
-//            }
-//        }
 
         createOutputDir();
 
-//        final String dirPath;
-//        if (outputDirectory.getAbsolutePath().endsWith("/")) {
-//            dirPath = outputDirectory.getAbsolutePath().substring(
-//                0, outputDirectory.getAbsolutePath().length());
-//        } else {
-//            dirPath = outputDirectory.getAbsolutePath();
-//        }
-//
-//        final Path outputFilePath = Paths.get(String.format(
-//            "%s/%s.sql", dirPath, dialect.name().toLowerCase(Locale.ENGLISH)));
         final Path outputFilePath = createOutputFilePath(dialect);
         final Path tmpFilePath = Paths.get(String.format(
             "%s/%s.sql",
@@ -505,6 +316,12 @@ public class GenerateDdlMojo extends AbstractMojo {
         }
     }
 
+    /**
+     * Create method for creating the output file path.
+     * 
+     * @param dialect The dialect of the output file.
+     * @return The {@link Path} for the output file.
+     */
     private Path createOutputFilePath(final Dialect dialect) {
         final String dirPath;
         if (outputDirectory.getAbsolutePath().endsWith("/")) {
