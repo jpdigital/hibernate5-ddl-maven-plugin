@@ -3,7 +3,7 @@
     -----------------------------------
     Jens Pelzetter
     -----------------------------------
-    2016-05-14
+    2017-05-07
 
 Usage
 
@@ -20,8 +20,8 @@ Usage
         [...]
         <plugin>
             <groupId>de.jpdigital</groupId>
-            <artifactId>hibernate5-ddl-maven-plugin</artifactId>
-            <version>1.0.0</version> <!-- Change to latest version available -->
+            <artifactId>hibernate5-ddl-maven-plugin-hibernate52</artifactId> <!-- Change to match your Hibernate version -->
+            <version>2.0.0</version> <!-- Change to latest version available -->
             <configuration>
                 <dialects>
                     <param>postgresql9</param>
@@ -50,7 +50,7 @@ Usage
     The plugin has two mandatory configuration parameters. The first on are the 
     dialects for which DDL scripts will be generated. For a list of supported 
     dialects refer to the JavaDoc of the 
-    {{{Dialect}apidocs/index.html?de/jpdigital/maven/plugins/hibernate5ddl/Dialect.html}} 
+    {{{Dialect}hibernate5-ddl-maven-plugin-core/apidocs/index.html?de/jpdigital/maven/plugins/hibernate5ddl/Dialect.html}} 
     enumeration.
 
     The second parameter are the packages which contain the entity classes.
@@ -65,8 +65,8 @@ Usage
         [...]
         <plugin>
             <groupId>de.jpdigital</groupId>
-            <artifactId>hibernate5-ddl-maven-plugin</artifactId>
-            <version>1.0.0</version> <!-- Change to latest version available -->
+            <artifactId>hibernate5-ddl-maven-plugin-hibernate52</artifactId> <!-- Change to match your Hibernate version -->
+            <version>2.0.0</version> <!-- Change to latest version available -->
             <configuration>
                 <dialects>
                     <param>postgresql9</param>

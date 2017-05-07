@@ -6,6 +6,7 @@
     <body>
         <menu name="Overview">
             <item name="Overview" href="index.html"/>
+            <item name="Usage" href="usage.html"/>
         </menu>
         
         <menu ref="modules"/>
