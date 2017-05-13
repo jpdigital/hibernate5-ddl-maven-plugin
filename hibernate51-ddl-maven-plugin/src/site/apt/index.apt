@@ -1,0 +1,8 @@
+            --------------------------------------------
+            Maven DDL generator plugin for Hibernate 5.1
+            --------------------------------------------
+
+Overview
+
+    Provides the implementation of the plugin linked against Hibernate 5.1.
+
