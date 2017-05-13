@@ -85,9 +85,9 @@
 
     <modules>
         <module>hibernate5-ddl-maven-plugin-core</module>
-        <module>hibernate5-ddl-maven-plugin-hibernate50</module>
-        <module>hibernate5-ddl-maven-plugin-hibernate51</module>
-        <module>hibernate5-ddl-maven-plugin-hibernate52</module>
+        <module>hibernate50-ddl-maven-plugin</module>
+        <module>hibernate51-ddl-maven-plugin</module>
+        <module>hibernate52-ddl-maven-plugin</module>
   </modules>
 
     <dependencyManagement>

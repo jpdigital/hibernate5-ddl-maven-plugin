@@ -158,7 +158,7 @@
     </dependencies>
 
     <build>
-        <finalName>hibernate5-ddl-maven-plugin-core-${project.version}</finalName>
+        <finalName>hibernate5-ddl-maven-plugin-core</finalName>
 
         <plugins>
             <plugin>

@@ -3,3 +3,6 @@
 /hibernate5-ddl-maven-plugin-core/target/
 /hibernate5-ddl-maven-plugin-hibernate51/target/
 /hibernate5-ddl-maven-plugin-hibernate50/target/
+/hibernate50-ddl-maven-plugin/target/
+/hibernate51-ddl-maven-plugin/target/
+/hibernate52-ddl-maven-plugin/target/
