@@ -58,6 +58,9 @@ public class GenerateDdlMojo extends AbstractMojo {
                property = "outputDir",
                required = true)
     private File outputDirectory;
+    
+    @Parameter(required = true)
+    private String outputFileName;
 
     /**
      * Packages containing the entity files for which the SQL DDL scripts shall
@@ -329,6 +332,7 @@ public class GenerateDdlMojo extends AbstractMojo {
                 0, outputDirectory.getAbsolutePath().length());
         } else {
             dirPath = outputDirectory.getAbsolutePath();
+            return Paths.get(String.format("%s/%s.sql", dirPath, outputFileName.toLowerCase(Locale.ENGLISH)));
         }
 
         return Paths.get(String.format(
