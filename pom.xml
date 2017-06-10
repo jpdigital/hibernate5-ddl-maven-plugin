@@ -27,11 +27,11 @@
   </scm>
     
     <distributionManagement>
-        <site>
+        <!--<site>
             <id>hibernate5-ddl-maven-plugin-site</id>
             <name>Maven DDL generator plugin for Hibernate 5</name>
             <url>http://jpdigital.github.io/hibernate5-ddl-maven-plugin/</url>
-        </site>
+        </site>-->
         <snapshotRepository>
             <id>ossrh</id>
             <url>https://oss.sonetype.org/content/repositories/snapshots</url>
