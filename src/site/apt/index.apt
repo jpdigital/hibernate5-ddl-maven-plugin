@@ -13,9 +13,10 @@ The Maven DDL plugin for Hibernate 5
     the POM. This plugin requires Java 8 and Maven 3.
 
     Starting with version 2.0.0 the plugin is provided in different variants 
-    build against the most current Hibernate versions. The suffix of the version 
-    is the version of Hibernate the plugin is linked against. It is the 
-    recommended to use the plugin for the same version branch as the Hibernate
+    build against the most current Hibernate versions. The version of 
+    Hibernate is part the artifact name. For example the 
+    hibernate50-ddl-maven-plugin uses the latest version of the 5.0 branch of 
+    Hibernate. It is recommended to use the plugin for the same version branch as the Hibernate
     version you project uses. 
 
     The goals of this plugin are described at the Goals page. The Usage page
