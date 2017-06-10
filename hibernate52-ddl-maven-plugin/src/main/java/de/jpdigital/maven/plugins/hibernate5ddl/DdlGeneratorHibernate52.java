@@ -165,7 +165,7 @@ public class DdlGeneratorHibernate52 implements DdlGenerator {
      * A SAX Handler for processing the {@code persistence.xml} file. Used by
      * {@link #processPersistenceXml(org.hibernate.boot.registry.StandardServiceRegistryBuilder, java.io.File, org.apache.maven.plugin.logging.Log)}.
      */
-    private class PersistenceXmlHandler extends DefaultHandler {
+    private static class PersistenceXmlHandler extends DefaultHandler {
 
         private final transient StandardServiceRegistryBuilder registryBuilder;
 
