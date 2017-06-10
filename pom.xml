@@ -18,8 +18,10 @@
     </issueManagement>
     
     <scm>
-        <connection>scm:git:git@github.com:jpdigital/hibernate5-ddl-maven-plugin</connection>
-        <developerConnection>scm:git:git@github.com:jpdigital/hibernate5-ddl-maven-plugin</developerConnection>
+        <!--<connection>scm:git:git@github.com:jpdigital/hibernate5-ddl-maven-plugin</connection>
+        <developerConnection>scm:git:git@github.com:jpdigital/hibernate5-ddl-maven-plugin</developerConnection>-->
+        <connection>scm:git:https://github.com/jpdigital/hibernate5-ddl-maven-plugin</connection>
+        <developerConnection>scm:git:https://github.com/jpdigital/hibernate5-ddl-maven-plugin</developerConnection>
         <url>git@github.com:jpdigital/hibernate5-ddl-maven-plugin</url>
     </scm>
     
