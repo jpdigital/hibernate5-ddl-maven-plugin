@@ -7,9 +7,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Jens Pelzetter" />
+    <meta name="Date-Creation-yyyymmdd" content="20170507" />
     <meta name="Date-Revision-yyyymmdd" content="20170610" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>Maven DDL generator plugin for Hibernate 5.2 &#x2013; Maven DDL generator plugin for Hibernate 5.2</title>
+    <title>Maven DDL generator plugin for Hibernate 5 &#x2013; Overview</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.6.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -23,7 +25,7 @@
     </a>
       <div class="container-fluid">
       <div id="banner">
-        <div class="pull-left"><div id="bannerLeft"><h2>Maven DDL generator plugin for Hibernate 5.2</h2>
+        <div class="pull-left"><div id="bannerLeft"><h2>Maven DDL generator plugin for Hibernate 5</h2>
 </div>
 </div>
         <div class="pull-right"></div>
@@ -41,15 +43,17 @@
         <div id="leftColumn" class="span2">
           <div class="well sidebar-nav">
 <ul class="nav nav-list">
-          <li class="nav-header">Parent project</li>
-    <li><a href="../index.html" title="Maven DDL generator plugin"><span class="none"></span>Maven DDL generator plugin</a>  </li>
           <li class="nav-header">Overview</li>
     <li class="active"><a href="#"><span class="none"></span>Overview</a>
   </li>
-    <li><a href="plugin-info.html" title="Goals"><span class="none"></span>Goals</a>  </li>
+    <li><a href="usage.html" title="Usage"><span class="none"></span>Usage</a>  </li>
+          <li class="nav-header">Modules</li>
+    <li><a href="hibernate5-ddl-maven-plugin-core/index.html" title="Maven DDL generator plugin for Hibernate 5 Core"><span class="none"></span>Maven DDL generator plugin for Hibernate 5 Core</a>  </li>
+    <li><a href="hibernate50-ddl-maven-plugin/index.html" title="Maven DDL generator plugin for Hibernate 5.0"><span class="none"></span>Maven DDL generator plugin for Hibernate 5.0</a>  </li>
+    <li><a href="hibernate51-ddl-maven-plugin/index.html" title="Maven DDL generator plugin for Hibernate 5.1"><span class="none"></span>Maven DDL generator plugin for Hibernate 5.1</a>  </li>
+    <li><a href="hibernate52-ddl-maven-plugin/index.html" title="Maven DDL generator plugin for Hibernate 5.2"><span class="none"></span>Maven DDL generator plugin for Hibernate 5.2</a>  </li>
           <li class="nav-header">Project Documentation</li>
     <li><a href="project-info.html" title="Project Information"><span class="icon-chevron-right"></span>Project Information</a>  </li>
-    <li><a href="project-reports.html" title="Project Reports"><span class="icon-chevron-right"></span>Project Reports</a>  </li>
   </ul>
           <hr />
           <div id="poweredBy">
@@ -63,8 +67,11 @@
         </div>
         <div id="bodyColumn"  class="span10" >
 <div class="section">
-<h2><a name="Overview"></a>Overview</h2>
-<p>Provides the implementation of the plugin linked against Hibernate 5.2.</p></div>
+<h2><a name="The_Maven_DDL_plugin_for_Hibernate_5"></a>The Maven DDL plugin for Hibernate 5</h2>
+<p>This plugin for Maven provides an wrapper around the SchemaExport class of Hibernate 5. Using parameters it is possible to configure the plugin from the POM. This plugin requires Java 8 and Maven 3.</p>
+<p>Starting with version 2.0.0 the plugin is provided in different variants build against the most current Hibernate versions. The version of Hibernate is part the artifact name. For example the hibernate50-ddl-maven-plugin uses the latest version of the 5.0 branch of Hibernate. It is recommended to use the plugin for the same version branch as the Hibernate version you project uses. </p>
+<p>The goals of this plugin are described at the Goals page. The Usage page provides informations about how the plugin is used.</p>
+<p>Please note that this plugin is *not* an official Hibernate tool. It was created because I needed the functionality provided by this plugin for several of my own projects.</p></div>
         </div>
       </div>
     </div>
