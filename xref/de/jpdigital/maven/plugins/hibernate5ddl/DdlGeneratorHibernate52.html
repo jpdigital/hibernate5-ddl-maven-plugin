@@ -1,11 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<title>DdlGeneratorHibernate51 xref</title>
+<title>DdlGeneratorHibernate52 xref</title>
 <link type="text/css" rel="stylesheet" href="../../../../../stylesheet.css" />
 </head>
 <body>
-<div id="overview"><a href="../../../../../../apidocs/de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate51.html">View Javadoc</a></div><pre>
+<div id="overview"><a href="../../../../../../apidocs/de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate52.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
 <a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (C) 2017 Jens Pelzetter</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
@@ -58,7 +58,7 @@
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment"> * @author &lt;a href="<a href="mailto:jens.pelzetter@googlemail.com" target="alexandria_uri">mailto:jens.pelzetter@googlemail.com</a>"&gt;Jens Pelzetter&lt;/a&gt;</em>
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate51.html">DdlGeneratorHibernate51</a> <strong class="jxr_keyword">implements</strong> DdlGenerator {
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate52.html">DdlGeneratorHibernate52</a> <strong class="jxr_keyword">implements</strong> DdlGenerator {
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>      @Override
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> generateDdl(<strong class="jxr_keyword">final</strong> Dialect dialect,
@@ -149,7 +149,7 @@
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>                     parser = SAXParserFactory.newInstance().newSAXParser();
 <a class="jxr_linenumber" name="L142" href="#L142">142</a> 
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>                     parser.parse(inputStream,
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>                                  <strong class="jxr_keyword">new</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate51.html">PersistenceXmlHandler</a>(registryBuilder,
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>                                  <strong class="jxr_keyword">new</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate52.html">PersistenceXmlHandler</a>(registryBuilder,
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>                                                            log));
 <a class="jxr_linenumber" name="L146" href="#L146">146</a> 
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>                 } <strong class="jxr_keyword">catch</strong> (IOException ex) {
@@ -173,13 +173,13 @@
 <a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     * A SAX Handler for processing the {@code persistence.xml} file. Used by</em>
 <a class="jxr_linenumber" name="L166" href="#L166">166</a> <em class="jxr_javadoccomment">     * {@link #processPersistenceXml(org.hibernate.boot.registry.StandardServiceRegistryBuilder, java.io.File, org.apache.maven.plugin.logging.Log)}.</em>
 <a class="jxr_linenumber" name="L167" href="#L167">167</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate51.html">PersistenceXmlHandler</a> <strong class="jxr_keyword">extends</strong> DefaultHandler {
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate52.html">PersistenceXmlHandler</a> <strong class="jxr_keyword">extends</strong> DefaultHandler {
 <a class="jxr_linenumber" name="L169" href="#L169">169</a> 
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> StandardServiceRegistryBuilder registryBuilder;
 <a class="jxr_linenumber" name="L171" href="#L171">171</a> 
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> Log log;
 <a class="jxr_linenumber" name="L173" href="#L173">173</a> 
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate51.html">PersistenceXmlHandler</a>(
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate52.html">PersistenceXmlHandler</a>(
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>             <strong class="jxr_keyword">final</strong> StandardServiceRegistryBuilder registryBuilder,
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>             <strong class="jxr_keyword">final</strong> Log log) {
 <a class="jxr_linenumber" name="L177" href="#L177">177</a> 
