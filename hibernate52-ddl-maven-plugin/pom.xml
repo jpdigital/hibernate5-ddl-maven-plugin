@@ -711,6 +711,7 @@
                         <configuration>
                             <message>Updated project site for ${project.version}</message>
                             <repositoryName>hibernate5-ddl-maven-plugin</repositoryName>
+                            <path>hibernate51-ddl-maven-plugin</path>
                         </configuration>
                         <executions>
                             <execution>
