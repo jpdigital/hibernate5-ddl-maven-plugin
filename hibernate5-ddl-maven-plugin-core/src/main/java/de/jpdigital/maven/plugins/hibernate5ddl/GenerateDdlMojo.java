@@ -39,8 +39,9 @@ import java.util.Set;
 
 
 /**
- * Goal which creates DDL SQL files for the JPA entities in the project (using
- * the Hibernate 5 SchemaExport class}.
+ * Base class the the Mojo class providing the {@code gen-ddl} goal. In the 
+ * plugins it should be enough to create an empty class which extends this class
+ * and is annotated with the {@link Mojo} annotation.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */

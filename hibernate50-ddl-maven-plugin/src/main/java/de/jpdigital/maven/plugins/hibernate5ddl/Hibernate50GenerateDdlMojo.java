@@ -16,12 +16,23 @@
  */
 package de.jpdigital.maven.plugins.hibernate5ddl;
 
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.ResolutionScope;
+
 /**
- * An empty class for the Mojo which extends {@link GenerateDdlMojo}. Without
- * this class the {@code maven-plugin-plugin} does not find the Mojo.
+ * Provides a goal which creates DDL SQL files for the JPA entities in the
+ * project (using the Hibernate 5 SchemaExport class}.
+ * 
+ * The actual logic is in {@link GenerateDdlMojo}, but without this class Maven
+ * does not find the goal.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
+@Mojo(name = "gen-ddl",
+      defaultPhase = LifecyclePhase.PROCESS_CLASSES,
+      requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME,
+      threadSafe = true)
 public class Hibernate50GenerateDdlMojo extends GenerateDdlMojo {
 
 }
