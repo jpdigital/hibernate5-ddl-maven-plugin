@@ -459,15 +459,14 @@ public class DdlMojoTest {
     }
 
     /**
-     * Check if {@link MojoExecutionException} is thrown if an illegal dialect
-     * if configured.
+     * Checks if {@link MojoFailureException} is thrown if an illegal dialect if
+     * configured.
      *
      * @throws MojoExecutionException if the Mojo can't be executed.
      * @throws MojoFailureException   if the execution of the Mojo fails
      *                                (expected here)
      */
-    @Test(expected
-              = MojoFailureException.class)
+    @Test(expected = MojoFailureException.class)
     public void illegalDialect() throws MojoExecutionException,
                                         MojoFailureException {
         mojo.setOutputDirectory(new File(TEST_DIR));
