@@ -37,9 +37,8 @@ import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
 
-
 /**
- * Base class the the Mojo class providing the {@code gen-ddl} goal. In the 
+ * Base class the the Mojo class providing the {@code gen-ddl} goal. In the
  * plugins it should be enough to create an empty class which extends this class
  * and is annotated with the {@link Mojo} annotation.
  *
@@ -59,6 +58,29 @@ public class GenerateDdlMojo extends AbstractMojo {
                property = "outputDir",
                required = true)
     private File outputDirectory;
+
+    /**
+     * If set each name of an output file will be prefixed with the value of
+     * this parameter.
+     */
+    @Parameter(required = false)
+    private String outputFileNamePrefix;
+
+    /**
+     * If set the value of this parameter will be appended to the name of each
+     * output file.
+     */
+    @Parameter(required = false)
+    private String outputFileNameSuffix;
+
+    /**
+     * If set to true <strong>and</strong> if only one dialect is configured
+     * <strong>and</strong> either {@link #outputFileNamePrefix} or
+     * {@link outputFileNameSuffix} are set the dialect name will be omitted
+     * from the name of the DDL file.
+     */
+    @Parameter(required = false)
+    private boolean omitDialectFromFileName;
 
     /**
      * Packages containing the entity files for which the SQL DDL scripts shall
@@ -161,6 +183,30 @@ public class GenerateDdlMojo extends AbstractMojo {
 
     public void setOutputDirectory(final File outputDirectory) {
         this.outputDirectory = outputDirectory;
+    }
+
+    public String getOutputFileNamePrefix() {
+        return outputFileNamePrefix;
+    }
+
+    public void setOutputFileNamePrefix(final String outputFileNamePrefix) {
+        this.outputFileNamePrefix = outputFileNamePrefix;
+    }
+
+    public String getOutputFileNameSuffix() {
+        return outputFileNameSuffix;
+    }
+
+    public void setOutputFileNameSuffix(final String outputFileNameSuffix) {
+        this.outputFileNameSuffix = outputFileNameSuffix;
+    }
+
+    public boolean isOmitDialectFromFileName() {
+        return omitDialectFromFileName;
+    }
+
+    public void setOmitDialectFromFileName(final boolean omitDialectFromFileName) {
+        this.omitDialectFromFileName = omitDialectFromFileName;
     }
 
     public String[] getPackages() {
@@ -319,8 +365,9 @@ public class GenerateDdlMojo extends AbstractMojo {
 
     /**
      * Create method for creating the output file path.
-     * 
+     *
      * @param dialect The dialect of the output file.
+     *
      * @return The {@link Path} for the output file.
      */
     private Path createOutputFilePath(final Dialect dialect) {
@@ -332,8 +379,36 @@ public class GenerateDdlMojo extends AbstractMojo {
             dirPath = outputDirectory.getAbsolutePath();
         }
 
+        final StringBuffer fileNameBuffer = new StringBuffer();
+        if (outputFileNamePrefix != null
+                && !outputFileNamePrefix.trim().isEmpty()) {
+            fileNameBuffer.append(outputFileNamePrefix);
+        }
+        if (!omitDialectFromFileName
+                || dialects.length > 1
+                || (isFileNamePrefixEmpty()
+                    && isFileNameSuffixEmpty())) {
+            fileNameBuffer.append(dialect.name().toLowerCase(Locale.ENGLISH));
+        }
+        if (outputFileNameSuffix != null
+                && !outputFileNameSuffix.trim().isEmpty()) {
+            fileNameBuffer.append(outputFileNameSuffix);
+        }
+
+//         return Paths.get(String.format(
+//            "%s/%s.sql", dirPath, dialect.name().toLowerCase(Locale.ENGLISH)));
         return Paths.get(String.format(
-            "%s/%s.sql", dirPath, dialect.name().toLowerCase(Locale.ENGLISH)));
+            "%s/%s.sql", dirPath, fileNameBuffer.toString()));
+    }
+
+    private boolean isFileNamePrefixEmpty() {
+        return outputFileNamePrefix == null
+                   || outputFileNamePrefix.trim().isEmpty();
+    }
+
+    private boolean isFileNameSuffixEmpty() {
+        return outputFileNameSuffix == null
+                   || outputFileNameSuffix.trim().isEmpty();
     }
 
 }
