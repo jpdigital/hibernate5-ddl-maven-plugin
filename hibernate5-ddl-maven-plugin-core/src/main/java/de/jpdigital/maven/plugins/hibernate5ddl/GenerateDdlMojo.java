@@ -16,15 +16,6 @@
  */
 package de.jpdigital.maven.plugins.hibernate5ddl;
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.plugins.annotations.ResolutionScope;
-import org.apache.maven.project.MavenProject;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -36,6 +27,15 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.apache.maven.project.MavenProject;
 
 
 /**
@@ -213,19 +213,18 @@ public class GenerateDdlMojo extends AbstractMojo {
         throws MojoFailureException {
 
         try {
-            dialectsList.add(Dialect
-                .valueOf(dialect.toUpperCase(Locale.ENGLISH)));
+            dialectsList.add(new Dialect(dialect));
         } catch (IllegalArgumentException ex) {
             final StringBuffer buffer = new StringBuffer();
-            for (final Dialect avilable : Dialect.values()) {
-                buffer.append(avilable.toString()).append('\n');
+            for (final String avilable : Dialect.values()) {
+                buffer.append(avilable).append('\n');
             }
 
             throw new MojoFailureException(
                 String.format(
                     "Can't convert the configured dialect '%s' to a dialect classname. "
                     + "Available dialects are:%n"
-                        + "%s",
+                        + "%s or specify correct className like org.hibernate.dialect.H2Dialect",
                     dialect,
                     buffer.toString()),
                 ex);
