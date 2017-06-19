@@ -48,7 +48,7 @@ public class Dialect {
 		map.put("DB2400","org.hibernate.dialect.DB2400Dialect");
 		map.put("DB2_AS400","org.hibernate.dialect.DB2400Dialect");
 		map.put("DB2_OS390","org.hibernate.dialect.DB2390Dialect");
-		map.put("DERBY","org.hibernate.dialect.DertyDialect.class.getName()");
+		map.put("DERBY","org.hibernate.dialect.DerbyDialect");
 		map.put("DERBY_10_5","org.hibernate.dialect.DerbyTenFiveDialect");
 		map.put("DERBY_10_6","org.hibernate.dialect.DerbyTenSixDialect");
 		map.put("DERBY_10_7","org.hibernate.dialect.DerbyTenSevenDialect");
