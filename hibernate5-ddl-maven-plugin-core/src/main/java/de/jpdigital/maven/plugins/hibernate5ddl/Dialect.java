@@ -98,6 +98,7 @@ public class Dialect {
 		map.put("UNISYS_OS_2200_RDMS", "org.hibernate.dialect.RDMSOS2200Dialect");
 	}
 
+
 	/**
 	 * Property for holding the name of the Hibernate dialect class.
 	 */
