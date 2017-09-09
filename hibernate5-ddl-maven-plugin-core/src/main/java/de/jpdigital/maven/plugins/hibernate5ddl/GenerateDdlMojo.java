@@ -97,6 +97,9 @@ public class GenerateDdlMojo extends AbstractMojo {
     @Parameter(required = true)
     private String[] dialects;
 
+    @Parameter(required = false)
+    private String[] customDialects;
+
     /**
      * Set this to {@code true} to include drop statements into the generated
      * DDL file.
@@ -145,8 +148,10 @@ public class GenerateDdlMojo extends AbstractMojo {
 
         //Read the dialects from the parameter and convert them to instances of the dialect enum.
         final Set<Dialect> dialectsList = new HashSet<>();
-        for (final String dialect : dialects) {
-            convertDialect(dialect, dialectsList);
+        if (dialects != null) {
+            for (final String dialect : dialects) {
+                convertDialect(dialect, dialectsList);
+            }
         }
 
         //Find the entity classes in the packages.
@@ -171,9 +176,14 @@ public class GenerateDdlMojo extends AbstractMojo {
                 DdlGenerator.class.getName()));
         }
 
-        //Generate the SQL scripts
         for (final Dialect dialect : dialectsList) {
             ddlGenerator.generateDdl(dialect, entityClasses, this);
+        }
+
+        if (customDialects != null) {
+            for (final String customDialect : customDialects) {
+                ddlGenerator.generateDdl(customDialect, entityClasses, this);
+            }
         }
     }
 
@@ -223,6 +233,15 @@ public class GenerateDdlMojo extends AbstractMojo {
 
     public void setDialects(final String... dialects) {
         this.dialects = Arrays.copyOf(dialects, dialects.length);
+    }
+
+    public String[] getCustomDialects() {
+        return Arrays.copyOf(customDialects, customDialects.length);
+    }
+
+    public void setCustomDialects(final String... customDialects) {
+        this.customDialects = Arrays.copyOf(customDialects,
+                                            customDialects.length);
     }
 
     public boolean isCreateDropStatements() {
@@ -278,18 +297,17 @@ public class GenerateDdlMojo extends AbstractMojo {
         }
     }
 
-    protected void writeOutputFile(final Dialect dialect,
+    protected void writeOutputFile(final String dialectClassName,
                                    final Path tmpDir)
         throws MojoFailureException {
 
         createOutputDir();
 
-        final Path outputFilePath = createOutputFilePath(dialect);
+        final Path outputFilePath = createOutputFilePath(dialectClassName);
         final Path tmpFilePath = Paths.get(String.format(
             "%s/%s.sql",
             tmpDir.toString(),
-            dialect.name().toLowerCase(
-                Locale.ENGLISH)));
+            getDialectNameFromClassName(dialectClassName)));
 
         if (Files.exists(outputFilePath)) {
 
@@ -363,14 +381,29 @@ public class GenerateDdlMojo extends AbstractMojo {
         }
     }
 
+    public String getDialectNameFromClassName(final String dialectClassName) {
+
+        final int pos = dialectClassName.lastIndexOf(".");
+
+        if (dialectClassName.toLowerCase().endsWith("dialect")) {
+            return dialectClassName
+                .substring(pos + 1,
+                           dialectClassName.length() - "dialect".length())
+                .toLowerCase();
+        } else {
+            return dialectClassName.substring(pos + 1)
+                .toLowerCase();
+        }
+    }
+
     /**
      * Create method for creating the output file path.
      *
-     * @param dialect The dialect of the output file.
+     * @param dialectClassName The dialect of the output file.
      *
      * @return The {@link Path} for the output file.
      */
-    private Path createOutputFilePath(final Dialect dialect) {
+    private Path createOutputFilePath(final String dialectClassName) {
         final String dirPath;
         if (outputDirectory.getAbsolutePath().endsWith("/")) {
             dirPath = outputDirectory.getAbsolutePath().substring(
@@ -388,7 +421,7 @@ public class GenerateDdlMojo extends AbstractMojo {
                 || dialects.length > 1
                 || (isFileNamePrefixEmpty()
                     && isFileNameSuffixEmpty())) {
-            fileNameBuffer.append(dialect.name().toLowerCase(Locale.ENGLISH));
+            fileNameBuffer.append(getDialectNameFromClassName(dialectClassName));
         }
         if (outputFileNameSuffix != null
                 && !outputFileNameSuffix.trim().isEmpty()) {

@@ -5,12 +5,12 @@
     <parent>
         <groupId>de.jpdigital</groupId>
         <artifactId>hibernate5-ddl-maven-plugin</artifactId>
-        <version>2.0.5-SNAPSHOT</version>
+        <version>2.1.0-SNAPSHOT</version>
     </parent>
 
     <groupId>de.jpdigital</groupId>
     <artifactId>hibernate5-ddl-maven-plugin-core</artifactId>
-    <version>2.0.5-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
     <!--<version>1.0.1-hibernate-5.1.2.Final</version>-->
     <!--<version>1.0.1-hibernate-5.2.4.Final</version>-->
     <packaging>jar</packaging>
@@ -42,7 +42,7 @@
     </distributionManagement>
 
     <prerequisites>
-        <maven>3.0.0</maven>
+        <maven>3.0.4</maven>
     </prerequisites>
 
     <inceptionYear>2016</inceptionYear>
@@ -80,7 +80,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
-        <hibernate.version>5.2.9.Final</hibernate.version>
     </properties>
 
     <dependencies>
@@ -168,7 +167,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.6.2</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -193,7 +192,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.0.0-M1</version>
                 <executions>
                     <execution>
                         <id>attach-javadoc-plugin</id>
@@ -312,7 +311,6 @@
                 <configuration>
                     <links>
                         <link>http://docs.oracle.com/javase/7/docs/api/</link>
-                        <link>http://docs.jboss.org/hibernate/orm/4.3/javadocs/</link>
                     </links>
                     <show>private</show>
                     <docfilessubdirs>true</docfilessubdirs>

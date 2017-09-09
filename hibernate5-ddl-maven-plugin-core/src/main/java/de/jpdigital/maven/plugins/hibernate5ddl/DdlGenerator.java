@@ -52,4 +52,23 @@ public interface DdlGenerator {
                      GenerateDdlMojo mojo)
         throws MojoFailureException;
 
+    /**
+     * Generates a SQL DDL file for a specific SQL dialect. This method accepts
+     * a string a is called by {@link GenerateDdlMojo} for processing custom
+     * dialects.
+     *
+     * @param dialect       The SQL dialect to use.
+     * @param entityClasses The entity classes for which SQL DDL statements will
+     *                      be created.
+     * @param mojo          The {@link GenerateDdlMojo} which calls the method.
+     *
+     * @throws MojoFailureException If an error occurs while creating the DDL
+     *                              file.
+     *
+     */
+    void generateDdl(String dialect,
+                     Set<Class<?>> entityClasses,
+                     GenerateDdlMojo mojo)
+        throws MojoFailureException;
+
 }

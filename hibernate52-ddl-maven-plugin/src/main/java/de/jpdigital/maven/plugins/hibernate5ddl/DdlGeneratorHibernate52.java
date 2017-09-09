@@ -53,7 +53,7 @@ import javax.xml.parsers.SAXParserFactory;
 public class DdlGeneratorHibernate52 implements DdlGenerator {
 
     @Override
-    public void generateDdl(final Dialect dialect,
+    public void generateDdl(final String dialectClassName,
                             final Set<Class<?>> entityClasses,
                             final GenerateDdlMojo mojo)
         throws MojoFailureException {
@@ -71,8 +71,7 @@ public class DdlGeneratorHibernate52 implements DdlGenerator {
             registryBuilder.applySetting("hibernate.hbm2ddl.auto", "create");
         }
 
-        registryBuilder.applySetting("hibernate.dialect",
-                                     dialect.getDialectClass());
+        registryBuilder.applySetting("hibernate.dialect", dialectClassName);
 
         final StandardServiceRegistry standardRegistry = registryBuilder.build();
 
@@ -98,8 +97,7 @@ public class DdlGeneratorHibernate52 implements DdlGenerator {
         export.setOutputFile(String.format(
             "%s/%s.sql",
             tmpDir.toString(),
-            dialect.name().toLowerCase(
-                Locale.ENGLISH)));
+            mojo.getDialectNameFromClassName(dialectClassName)));
         export.setFormat(true);
         if (mojo.isCreateDropStatements()) {
             export.execute(EnumSet.of(TargetType.SCRIPT),
@@ -111,7 +109,71 @@ public class DdlGeneratorHibernate52 implements DdlGenerator {
                            metadata);
         }
 
-        mojo.writeOutputFile(dialect, tmpDir);
+        mojo.writeOutputFile(dialectClassName, tmpDir);
+    }
+
+    @Override
+    public void generateDdl(final Dialect dialect,
+                            final Set<Class<?>> entityClasses,
+                            final GenerateDdlMojo mojo)
+        throws MojoFailureException {
+
+        generateDdl(dialect.getDialectClassName(), entityClasses, mojo);
+        
+//        final StandardServiceRegistryBuilder registryBuilder
+//                                                 = new StandardServiceRegistryBuilder();
+//        processPersistenceXml(registryBuilder,
+//                              mojo.getPersistenceXml(),
+//                              mojo.getLog());
+//
+//        if (mojo.isCreateDropStatements()) {
+//            registryBuilder.applySetting("hibernate.hbm2ddl.auto",
+//                                         "create-drop");
+//        } else {
+//            registryBuilder.applySetting("hibernate.hbm2ddl.auto", "create");
+//        }
+//
+//        registryBuilder.applySetting("hibernate.dialect",
+//                                     dialect.getDialectClass());
+//
+//        final StandardServiceRegistry standardRegistry = registryBuilder.build();
+//
+//        final MetadataSources metadataSources = new MetadataSources(
+//            standardRegistry);
+//
+//        for (final Class<?> entityClass : entityClasses) {
+//            metadataSources.addAnnotatedClass(entityClass);
+//        }
+//
+//        final SchemaExport export = new SchemaExport();
+//        export.setDelimiter(";");
+//
+//        final Path tmpDir;
+//        try {
+//            tmpDir = Files.createTempDirectory("maven-hibernate5-ddl-plugin");
+//        } catch (IOException ex) {
+//            throw new MojoFailureException("Failed to create work dir.", ex);
+//        }
+//
+//        final Metadata metadata = metadataSources.buildMetadata();
+//
+//        export.setOutputFile(String.format(
+//            "%s/%s.sql",
+//            tmpDir.toString(),
+//            dialect.name().toLowerCase(
+//                Locale.ENGLISH)));
+//        export.setFormat(true);
+//        if (mojo.isCreateDropStatements()) {
+//            export.execute(EnumSet.of(TargetType.SCRIPT),
+//                           SchemaExport.Action.BOTH,
+//                           metadata);
+//        } else {
+//            export.execute(EnumSet.of(TargetType.SCRIPT),
+//                           SchemaExport.Action.CREATE,
+//                           metadata);
+//        }
+//
+//        mojo.writeOutputFile(dialect, tmpDir);
     }
 
     /**

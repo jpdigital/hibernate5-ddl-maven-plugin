@@ -22,7 +22,7 @@ package de.jpdigital.maven.plugins.hibernate5ddl;
  * The dialects supported by Hibernate can be found in the
  * <a href="http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#database-dialect">
  * Hibernate documentation</a>. Also this enumeration provides the convenient
- * method {@link #getDialectClass()} for getting the class name of the Hibernate
+ * method {@link #getDialectClassName()} for getting the class name of the Hibernate
  * dialect.
  * 
  * Please note that not all supported Hibernate versions support every of these
@@ -116,7 +116,7 @@ public enum Dialect {
     /**
      * Property for holding the name of the Hibernate dialect class.
      */
-    private final String dialectClass;
+    private final String dialectClassName;
 
     /**
      * Private constructor, used to create the Enum instances for each dialect.
@@ -124,7 +124,7 @@ public enum Dialect {
      * @param dialectClass The dialect class for the specific dialect.
      */
     private Dialect(final String dialectClass) {
-        this.dialectClass = dialectClass;
+        this.dialectClassName = dialectClass;
     }
 
     /**
@@ -134,8 +134,8 @@ public enum Dialect {
      *         {@code org.hibernate.dialect.PostgreSQL9Dialect} for
      *         {@link #POSTGRESQL9}.
      */
-    public String getDialectClass() {
-        return dialectClass;
+    public String getDialectClassName() {
+        return dialectClassName;
     }
 
 }

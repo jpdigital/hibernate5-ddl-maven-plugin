@@ -782,4 +782,83 @@ public class DdlMojoTest {
         }
     }
 
+    /**
+     * Check if the DDL files are generated and have the expected content if a
+     * custom dialect is used.
+     *
+     * @throws MojoExecutionException if something wants wrong when executing
+     *                                the Mojo.
+     * @throws MojoFailureException   if something wants wrong when executing
+     *                                the Mojo.
+     * @throws IOException            if the test directory can't be opened or
+     *                                created.
+     */
+    @Test
+    public void generateDdlForCustomDialect() throws MojoExecutionException,
+                                                     MojoFailureException,
+                                                     IOException {
+
+        mojo.setOutputDirectory(new File(TEST_DIR));
+
+        final String[] packages = new String[]{
+            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+        };
+        mojo.setPackages(packages);
+
+        final String[] customDialects = new String[]{
+            "org.hibernate.dialect.PostgreSQL92Dialect"
+        };
+        mojo.setCustomDialects(customDialects);
+
+        mojo.execute();
+
+        for (final String dialectClassName : customDialects) {
+            final String path = String.format(
+                "%s/%s.sql",
+                TEST_DIR,
+                mojo.getDialectNameFromClassName(dialectClassName));
+
+            assertTrue(String.format("DDL file '%s' was not generated.", path),
+                       fileExists(path));
+
+            assertTrue(String.format(
+                "DDL file '%s' does not contain 'create table' statement for "
+                    + "persons entity",
+                path),
+                       fileContainsPersonEntity(path));
+
+            assertTrue(String.format(
+                "DDL file '%s' does not contain 'create table' statement for "
+                    + "company entity",
+                path),
+                       fileContainsCompanyEntity(path));
+
+            assertTrue(String.format(
+                "DDL file '%s' does not contains 'create table' statement for "
+                    + "reports entity",
+                path),
+                       fileContainsReportEntity(path));
+
+            //Drop statements have not been enabled and should be generated.
+            assertFalse(String.format(
+                "DDL file '%s' contains 'drop table' statement for table "
+                    + "persons but should not.",
+                path),
+                        fileContainsDropPersonTable(path));
+
+            assertFalse(String.format(
+                "DDL file '%s' contains 'drop table' statement for table "
+                    + "companies but should not.",
+                path),
+                        fileContainsDropCompaniesTable(path));
+
+            assertFalse(String.format(
+                "DDL file '%s' contains 'drop table' statement for table "
+                    + "reports but should not.",
+                path),
+                        fileContainsDropReportsTable(path));
+        }
+    }
+
 }
