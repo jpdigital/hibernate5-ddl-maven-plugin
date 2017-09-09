@@ -184,7 +184,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.6.1</version>
+                    <version>3.6.2</version>
                     <configuration>
                         <source>1.8</source>
                         <target>1.8</target>
@@ -286,7 +286,7 @@
                     <configuration>
                         <linkXref>true</linkXref>
                         <sourceEncoding>utf-8</sourceEncoding>
-                        <targetJdk>1.7</targetJdk>
+                        <targetJdk>1.8</targetJdk>
                         <rulesets>
                             <ruleset>/rulesets/java/basic.xml</ruleset>
                             <ruleset>/rulesets/java/braces.xml</ruleset>
@@ -413,10 +413,10 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.6.1</version>
+                        <version>3.6.2</version>
                         <configuration>
-                            <source>1.7</source>
-                            <target>1.7</target>
+                            <source>1.8</source>
+                            <target>1.8</target>
                             <optimize>true</optimize>
                             <debug>true</debug>
                             <encoding>${project.build.sourceEncoding}</encoding>
@@ -458,7 +458,7 @@
                         <configuration>
                             <linkXref>true</linkXref>
                             <sourceEncoding>utf-8</sourceEncoding>
-                            <targetJdk>1.7</targetJdk>
+                            <targetJdk>1.8</targetJdk>
                             <rulesets>
                                 <ruleset>/rulesets/java/basic.xml</ruleset>
                                 <ruleset>/rulesets/java/braces.xml</ruleset>
@@ -583,7 +583,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.6.1</version>
+                        <version>3.6.2</version>
                         <configuration>
                             <source>1.7</source>
                             <target>1.7</target>
