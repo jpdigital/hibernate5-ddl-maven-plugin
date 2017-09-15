@@ -60,38 +60,39 @@ public class GenerateDdlMojo extends AbstractMojo {
     private File outputDirectory;
 
     /**
-     * If set each name of an output file will be prefixed with the value of
-     * this parameter.
+     * If set each name of an output file will be prefixed with the 
+     * value of this parameter.
      */
     @Parameter(required = false)
     private String outputFileNamePrefix;
 
     /**
-     * If set the value of this parameter will be appended to the name of each
-     * output file.
+     * If set the value of this parameter will be appended to the name 
+     * of each output file.
      */
     @Parameter(required = false)
     private String outputFileNameSuffix;
 
     /**
-     * If set to true <strong>and</strong> if only one dialect is configured
-     * <strong>and</strong> either {@link #outputFileNamePrefix} or
-     * {@link outputFileNameSuffix} are set the dialect name will be omitted
-     * from the name of the DDL file.
+     * If set to true <strong>and</strong> if only one dialect is 
+     * configured <strong>and</strong> either 
+     * {@link #outputFileNamePrefix} or {@link outputFileNameSuffix} 
+     * are set the dialect name will be omitted from the name of the DDL 
+     * file.
      */
     @Parameter(required = false)
     private boolean omitDialectFromFileName;
 
     /**
-     * Packages containing the entity files for which the SQL DDL scripts shall
-     * be generated.
+     * Packages containing the entity files for which the SQL DDL 
+     * scripts shall be generated.
      */
     @Parameter(required = true)
     private String[] packages;
 
     /**
-     * Database dialects for which create scripts shall be generated. For
-     * available dialects refer to the documentation the {@link Dialect}
+     * Database dialects for which create scripts shall be generated. 
+     * For available dialects refer to the documentation the {@link Dialect}
      * enumeration.
      */
     @Parameter(required = true)
@@ -101,8 +102,8 @@ public class GenerateDdlMojo extends AbstractMojo {
     private String[] customDialects;
 
     /**
-     * Set this to {@code true} to include drop statements into the generated
-     * DDL file.
+     * Set this to {@code true} to include drop statements into the 
+     * generated DDL file.
      */
     @Parameter(required = false)
     @SuppressWarnings("PMD.LongVariable")
