@@ -10,11 +10,14 @@ because I needed the functionality provided by this plugin for several projects.
 
 # News
 
-## 2017-09-16: Version 2.1.0 Beta
+## 2017-09-16: Version 2.1.0-beta.1
 
 This release adds some features requested by users of the plugin. The first
 new feature is the option to use custom dialects. Also it is now possible
 to customise the name of the output files and the output path (Issue #11).
+
+This release is a beta version which means that there might be some bugs. Also
+there are things in the code which need to be addressed before the final release.
 
 ## 2017-06-10: Version 2.0.0
 
