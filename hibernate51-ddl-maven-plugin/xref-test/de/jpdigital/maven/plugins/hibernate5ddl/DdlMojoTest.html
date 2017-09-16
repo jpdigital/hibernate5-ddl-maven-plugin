@@ -791,7 +791,86 @@
 <a class="jxr_linenumber" name="L783" href="#L783">783</a>         }
 <a class="jxr_linenumber" name="L784" href="#L784">784</a>     }
 <a class="jxr_linenumber" name="L785" href="#L785">785</a> 
-<a class="jxr_linenumber" name="L786" href="#L786">786</a> }
+<a class="jxr_linenumber" name="L786" href="#L786">786</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L787" href="#L787">787</a> <em class="jxr_javadoccomment">     * Check if the DDL files are generated and have the expected content if a</em>
+<a class="jxr_linenumber" name="L788" href="#L788">788</a> <em class="jxr_javadoccomment">     * custom dialect is used.</em>
+<a class="jxr_linenumber" name="L789" href="#L789">789</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L790" href="#L790">790</a> <em class="jxr_javadoccomment">     * @throws MojoExecutionException if something wants wrong when executing</em>
+<a class="jxr_linenumber" name="L791" href="#L791">791</a> <em class="jxr_javadoccomment">     *                                the Mojo.</em>
+<a class="jxr_linenumber" name="L792" href="#L792">792</a> <em class="jxr_javadoccomment">     * @throws MojoFailureException   if something wants wrong when executing</em>
+<a class="jxr_linenumber" name="L793" href="#L793">793</a> <em class="jxr_javadoccomment">     *                                the Mojo.</em>
+<a class="jxr_linenumber" name="L794" href="#L794">794</a> <em class="jxr_javadoccomment">     * @throws IOException            if the test directory can't be opened or</em>
+<a class="jxr_linenumber" name="L795" href="#L795">795</a> <em class="jxr_javadoccomment">     *                                created.</em>
+<a class="jxr_linenumber" name="L796" href="#L796">796</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L797" href="#L797">797</a>     @Test
+<a class="jxr_linenumber" name="L798" href="#L798">798</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> generateDdlForCustomDialect() <strong class="jxr_keyword">throws</strong> MojoExecutionException,
+<a class="jxr_linenumber" name="L799" href="#L799">799</a>                                                      MojoFailureException,
+<a class="jxr_linenumber" name="L800" href="#L800">800</a>                                                      IOException {
+<a class="jxr_linenumber" name="L801" href="#L801">801</a> 
+<a class="jxr_linenumber" name="L802" href="#L802">802</a>         mojo.setOutputDirectory(<strong class="jxr_keyword">new</strong> File(TEST_DIR));
+<a class="jxr_linenumber" name="L803" href="#L803">803</a> 
+<a class="jxr_linenumber" name="L804" href="#L804">804</a>         <strong class="jxr_keyword">final</strong> String[] packages = <strong class="jxr_keyword">new</strong> String[]{
+<a class="jxr_linenumber" name="L805" href="#L805">805</a>             <span class="jxr_string">"de.jpdigital.maven.plugins.hibernate5ddl.tests.entities"</span>,
+<a class="jxr_linenumber" name="L806" href="#L806">806</a>             <span class="jxr_string">"de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"</span>
+<a class="jxr_linenumber" name="L807" href="#L807">807</a>         };
+<a class="jxr_linenumber" name="L808" href="#L808">808</a>         mojo.setPackages(packages);
+<a class="jxr_linenumber" name="L809" href="#L809">809</a> 
+<a class="jxr_linenumber" name="L810" href="#L810">810</a>         <strong class="jxr_keyword">final</strong> String[] customDialects = <strong class="jxr_keyword">new</strong> String[]{
+<a class="jxr_linenumber" name="L811" href="#L811">811</a>             <span class="jxr_string">"org.hibernate.dialect.PostgreSQL92Dialect"</span>
+<a class="jxr_linenumber" name="L812" href="#L812">812</a>         };
+<a class="jxr_linenumber" name="L813" href="#L813">813</a>         mojo.setCustomDialects(customDialects);
+<a class="jxr_linenumber" name="L814" href="#L814">814</a> 
+<a class="jxr_linenumber" name="L815" href="#L815">815</a>         mojo.execute();
+<a class="jxr_linenumber" name="L816" href="#L816">816</a> 
+<a class="jxr_linenumber" name="L817" href="#L817">817</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String dialectClassName : customDialects) {
+<a class="jxr_linenumber" name="L818" href="#L818">818</a>             <strong class="jxr_keyword">final</strong> String path = String.format(
+<a class="jxr_linenumber" name="L819" href="#L819">819</a>                 <span class="jxr_string">"%s/%s.sql"</span>,
+<a class="jxr_linenumber" name="L820" href="#L820">820</a>                 TEST_DIR,
+<a class="jxr_linenumber" name="L821" href="#L821">821</a>                 mojo.getDialectNameFromClassName(dialectClassName));
+<a class="jxr_linenumber" name="L822" href="#L822">822</a> 
+<a class="jxr_linenumber" name="L823" href="#L823">823</a>             assertTrue(String.format(<span class="jxr_string">"DDL file '%s' was not generated."</span>, path),
+<a class="jxr_linenumber" name="L824" href="#L824">824</a>                        fileExists(path));
+<a class="jxr_linenumber" name="L825" href="#L825">825</a> 
+<a class="jxr_linenumber" name="L826" href="#L826">826</a>             assertTrue(String.format(
+<a class="jxr_linenumber" name="L827" href="#L827">827</a>                 <span class="jxr_string">"DDL file '%s' does not contain 'create table' statement for "</span>
+<a class="jxr_linenumber" name="L828" href="#L828">828</a>                     + <span class="jxr_string">"persons entity"</span>,
+<a class="jxr_linenumber" name="L829" href="#L829">829</a>                 path),
+<a class="jxr_linenumber" name="L830" href="#L830">830</a>                        fileContainsPersonEntity(path));
+<a class="jxr_linenumber" name="L831" href="#L831">831</a> 
+<a class="jxr_linenumber" name="L832" href="#L832">832</a>             assertTrue(String.format(
+<a class="jxr_linenumber" name="L833" href="#L833">833</a>                 <span class="jxr_string">"DDL file '%s' does not contain 'create table' statement for "</span>
+<a class="jxr_linenumber" name="L834" href="#L834">834</a>                     + <span class="jxr_string">"company entity"</span>,
+<a class="jxr_linenumber" name="L835" href="#L835">835</a>                 path),
+<a class="jxr_linenumber" name="L836" href="#L836">836</a>                        fileContainsCompanyEntity(path));
+<a class="jxr_linenumber" name="L837" href="#L837">837</a> 
+<a class="jxr_linenumber" name="L838" href="#L838">838</a>             assertTrue(String.format(
+<a class="jxr_linenumber" name="L839" href="#L839">839</a>                 <span class="jxr_string">"DDL file '%s' does not contains 'create table' statement for "</span>
+<a class="jxr_linenumber" name="L840" href="#L840">840</a>                     + <span class="jxr_string">"reports entity"</span>,
+<a class="jxr_linenumber" name="L841" href="#L841">841</a>                 path),
+<a class="jxr_linenumber" name="L842" href="#L842">842</a>                        fileContainsReportEntity(path));
+<a class="jxr_linenumber" name="L843" href="#L843">843</a> 
+<a class="jxr_linenumber" name="L844" href="#L844">844</a>             <em class="jxr_comment">//Drop statements have not been enabled and should be generated.</em>
+<a class="jxr_linenumber" name="L845" href="#L845">845</a>             assertFalse(String.format(
+<a class="jxr_linenumber" name="L846" href="#L846">846</a>                 <span class="jxr_string">"DDL file '%s' contains 'drop table' statement for table "</span>
+<a class="jxr_linenumber" name="L847" href="#L847">847</a>                     + <span class="jxr_string">"persons but should not."</span>,
+<a class="jxr_linenumber" name="L848" href="#L848">848</a>                 path),
+<a class="jxr_linenumber" name="L849" href="#L849">849</a>                         fileContainsDropPersonTable(path));
+<a class="jxr_linenumber" name="L850" href="#L850">850</a> 
+<a class="jxr_linenumber" name="L851" href="#L851">851</a>             assertFalse(String.format(
+<a class="jxr_linenumber" name="L852" href="#L852">852</a>                 <span class="jxr_string">"DDL file '%s' contains 'drop table' statement for table "</span>
+<a class="jxr_linenumber" name="L853" href="#L853">853</a>                     + <span class="jxr_string">"companies but should not."</span>,
+<a class="jxr_linenumber" name="L854" href="#L854">854</a>                 path),
+<a class="jxr_linenumber" name="L855" href="#L855">855</a>                         fileContainsDropCompaniesTable(path));
+<a class="jxr_linenumber" name="L856" href="#L856">856</a> 
+<a class="jxr_linenumber" name="L857" href="#L857">857</a>             assertFalse(String.format(
+<a class="jxr_linenumber" name="L858" href="#L858">858</a>                 <span class="jxr_string">"DDL file '%s' contains 'drop table' statement for table "</span>
+<a class="jxr_linenumber" name="L859" href="#L859">859</a>                     + <span class="jxr_string">"reports but should not."</span>,
+<a class="jxr_linenumber" name="L860" href="#L860">860</a>                 path),
+<a class="jxr_linenumber" name="L861" href="#L861">861</a>                         fileContainsDropReportsTable(path));
+<a class="jxr_linenumber" name="L862" href="#L862">862</a>         }
+<a class="jxr_linenumber" name="L863" href="#L863">863</a>     }
+<a class="jxr_linenumber" name="L864" href="#L864">864</a> 
+<a class="jxr_linenumber" name="L865" href="#L865">865</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2016&#x2013;2017 <a href="http://www.jp-digital.de">Jens Pelzetter</a>. All rights reserved.</div>

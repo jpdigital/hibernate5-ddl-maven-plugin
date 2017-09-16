@@ -30,7 +30,7 @@
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment"> * The dialects supported by Hibernate can be found in the</em>
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment"> * &lt;a href="<a href="http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html" target="alexandria_uri">http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html</a>#database-dialect"&gt;</em>
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment"> * Hibernate documentation&lt;/a&gt;. Also this enumeration provides the convenient</em>
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment"> * method {@link #getDialectClass()} for getting the class name of the Hibernate</em>
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment"> * method {@link #getDialectClassName()} for getting the class name of the Hibernate</em>
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment"> * dialect.</em>
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment"> * Please note that not all supported Hibernate versions support every of these</em>
@@ -43,88 +43,110 @@
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>      ABSTRACT_HANA(<span class="jxr_string">"org.hibernate.dialect.AbstractHANADialect"</span>),
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>      CACHE71(<span class="jxr_string">"org.hibernate.dialect.Cache71Dialect"</span>),
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      CUBRID(<span class="jxr_string">"org.hibernate.dialect.CUBRIDDialect"</span>),
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>      DB2(<span class="jxr_string">"org.hibernate.dialect.DB2Dialect"</span>),
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>      DB297(<span class="jxr_string">"org.hibernate.dialect.DB207"</span>),
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>      DB2900(<span class="jxr_string">"org.hibernate.dialect.DB2390Dialect"</span>),
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>      DB2400(<span class="jxr_string">"org.hibernate.dialect.DB2400Dialect"</span>),
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>      DB2_AS400(<span class="jxr_string">"org.hibernate.dialect.DB2400Dialect"</span>),
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>      DB2_OS390(<span class="jxr_string">"org.hibernate.dialect.DB2390Dialect"</span>),
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>      DERBY_10_5(<span class="jxr_string">"org.hibernate.dialect.DerbyTenFiveDialect"</span>),
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>      DERBY_10_6(<span class="jxr_string">"org.hibernate.dialect.DerbyTenSixDialect"</span>),
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>      DERBY_10_7(<span class="jxr_string">"org.hibernate.dialect.DerbyTenSevenDialect"</span>),
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>      FIREBIRD(<span class="jxr_string">"org.hibernate.dialect.FirebirdDialect"</span>),
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      FRONTBASE(<span class="jxr_string">"org.hibernate.dialect.FrontBaseDialect"</span>),
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>      H2(<span class="jxr_string">"org.hibernate.dialect.H2Dialect"</span>),
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      HANA_COLUMN_STORE(<span class="jxr_string">"org.hibernate.dialect.HanaColumnStoreDialect"</span>),
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      HANA_ROW_STORE(<span class="jxr_string">"org.hibernate.dialect.HanaRowStoreDialect"</span>),
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      HSQL(<span class="jxr_string">"org.hibernate.dialect.HSQLDialect"</span>),
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>      INFORMIX(<span class="jxr_string">"org.hibernate.dialect.InformixDialect"</span>),
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>      INGRES(<span class="jxr_string">"org.hibernate.dialect.IngresDialect"</span>),
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>      INGRES9(<span class="jxr_string">"org.hibernate.dialect.Ingres9Dialect"</span>),
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>      INGRES10(<span class="jxr_string">"org.hibernate.dialect.Ingres10Dialect"</span>),
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      INTERBASE(<span class="jxr_string">"org.hibernate.dialect.InterbaseDialect"</span>),
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      INTERSYSTEMS_CACHE(<span class="jxr_string">"org.hibernate.dialect.Cache71Dialect"</span>),
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>      JDATASTORE(<span class="jxr_string">"org.hibernate.dialect.JDataStoreDialect"</span>),
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      MCKOISQL(<span class="jxr_string">"org.hibernate.dialect.MckoiDialect"</span>),
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>      MIMERSQL(<span class="jxr_string">"org.hibernate.dialect.MimerSQLDialect"</span>),
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>      MYSQL(<span class="jxr_string">"org.hibernate.dialect.MySQLDialect"</span>),
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      MYSQL_INNODB(<span class="jxr_string">"org.hibernate.dialect.MySQLInnoDBDialect"</span>),
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      MYSQL_MYISAM(<span class="jxr_string">"org.hibernate.dialect.MySQLMyISAMDialect"</span>),
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      MYSQL5(<span class="jxr_string">"org.hibernate.dialect.MySQL5Dialect"</span>),
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>      MYSQL5_INNODB(<span class="jxr_string">"org.hibernate.dialect.MySQL5InnoDBDialect"</span>),
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>      MYSQL57_INNODB(<span class="jxr_string">"org.hibernate.dialect.MySQL57InnoDBDialect"</span>),
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>      ORACLE8I(<span class="jxr_string">"org.hibernate.dialect.Oracle8iDialect"</span>),
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      ORACLE9I(<span class="jxr_string">"org.hibernate.dialect.Oracle9iDialect"</span>),
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>      ORACLE10G(<span class="jxr_string">"org.hibernate.dialect.Oracle10gDialect"</span>),
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>      ORACLE12C(<span class="jxr_string">"org.hibernate.dialect.Oracle12cDialect"</span>),
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>      ORACLE_TIMES_TEN(<span class="jxr_string">"org.hibernate.dialect.TimesTenDialect"</span>),
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      POINTBASE(<span class="jxr_string">"org.hibernate.dialect.PointbaseDialect"</span>),
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>      POSTGRES_PLUS(<span class="jxr_string">"org.hibernate.dialect.PostgresPlusDialect"</span>),
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      POSTGRESQL81(<span class="jxr_string">"org.hibernate.dialect.PostgreSQL81Dialect"</span>),
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      POSTGRESQL82(<span class="jxr_string">"org.hibernate.dialect.PostgreSQL82Dialect"</span>),
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>      POSTGRESQL9(<span class="jxr_string">"org.hibernate.dialect.PostgreSQL9Dialect"</span>),
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>      PROGRESS(<span class="jxr_string">"org.hibernate.dialect.ProgressDialect"</span>),
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>      SAP_DB(<span class="jxr_string">"org.hibernate.dialect.SAPDBDialect"</span>),
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>      SAP_HANA_COL(<span class="jxr_string">"org.hibernate.dialect.HANAColumnStoreDialect"</span>),
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      SAP_HANA_ROW(<span class="jxr_string">"org.hibernate.dialect.HANARowStoreDialect"</span>),
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>      SQLSERVER2000(<span class="jxr_string">"org.hibernate.dialect.SQLServerDialect"</span>),
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>      SQLSERVER2005(<span class="jxr_string">"org.hibernate.dialect.SQLServer2005Dialect"</span>),
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>      SQLSERVER2008(<span class="jxr_string">"org.hibernate.dialect.SQLServer2008Dialect"</span>),
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>      SQLSERVER2012(<span class="jxr_string">"org.hibernate.dialect.SQLServer2012Dialect"</span>),
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>      SYBASE(<span class="jxr_string">"org.hibernate.dialect.SybaseDialect"</span>),
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>      SYBASE11(<span class="jxr_string">"org.hibernate.dialect.Sybase11Dialect"</span>),
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>      SYBASE_ASE155(<span class="jxr_string">"org.hibernate.dialect.SybaseASE15Dialect"</span>),
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>      SYBASE_ASE157(<span class="jxr_string">"org.hibernate.dialect.SybaseASE157Dialect"</span>),
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>      SYBASE_ANYWHERE(<span class="jxr_string">"org.hibernate.dialect.SybaseAnywhereDialect"</span>),
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>      TERADATA(<span class="jxr_string">"org.hibernate.dialect.TeradataDialect"</span>),
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>      UNISYS_OS_2200_RDMS(<span class="jxr_string">"org.hibernate.dialect.RDMSOS2200Dialect"</span>);
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>  
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>  <em class="jxr_javadoccomment">     * Property for holding the name of the Hibernate dialect class.</em>
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String dialectClass;
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>  
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L100" href="#L100">100</a> <em class="jxr_javadoccomment">     * Private constructor, used to create the Enum instances for each dialect.</em>
-<a class="jxr_linenumber" name="L101" href="#L101">101</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L102" href="#L102">102</a> <em class="jxr_javadoccomment">     * @param dialectClass The dialect class for the specific dialect.</em>
-<a class="jxr_linenumber" name="L103" href="#L103">103</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/Dialect.html">Dialect</a>(<strong class="jxr_keyword">final</strong> String dialectClass) {
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>         <strong class="jxr_keyword">this</strong>.dialectClass = dialectClass;
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>     }
-<a class="jxr_linenumber" name="L107" href="#L107">107</a> 
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L109" href="#L109">109</a> <em class="jxr_javadoccomment">     * Getter for the dialect class.</em>
-<a class="jxr_linenumber" name="L110" href="#L110">110</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_javadoccomment">     * @return The name of the dialect class, for example</em>
-<a class="jxr_linenumber" name="L112" href="#L112">112</a> <em class="jxr_javadoccomment">     *         {@code org.hibernate.dialect.PostgreSQL9Dialect} for</em>
-<a class="jxr_linenumber" name="L113" href="#L113">113</a> <em class="jxr_javadoccomment">     *         {@link #POSTGRESQL9}.</em>
-<a class="jxr_linenumber" name="L114" href="#L114">114</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>     <strong class="jxr_keyword">public</strong> String getDialectClass() {
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>         <strong class="jxr_keyword">return</strong> dialectClass;
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>     }
-<a class="jxr_linenumber" name="L118" href="#L118">118</a> 
-<a class="jxr_linenumber" name="L119" href="#L119">119</a> }
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>      DATA_DIRECT_ORACLE9(<span class="jxr_string">"org.hibernate.dialect.DataDirectOracle9Dialect"</span>),
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>      DB2(<span class="jxr_string">"org.hibernate.dialect.DB2Dialect"</span>),
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>      DB297(<span class="jxr_string">"org.hibernate.dialect.DB207"</span>),
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      DB2390(<span class="jxr_string">"org.hibernate.dialect.DB2390Dialect"</span>),
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      DB2400(<span class="jxr_string">"org.hibernate.dialect.DB2400Dialect"</span>),
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>      DB2_AS400(<span class="jxr_string">"org.hibernate.dialect.DB2400Dialect"</span>),
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      DB2_OS390(<span class="jxr_string">"org.hibernate.dialect.DB2390Dialect"</span>),
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      DERBY(<span class="jxr_string">"org.hibernate.dialect.DertyDialect.class.getName()"</span>),
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      DERBY_10_5(<span class="jxr_string">"org.hibernate.dialect.DerbyTenFiveDialect"</span>),
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      DERBY_10_6(<span class="jxr_string">"org.hibernate.dialect.DerbyTenSixDialect"</span>),
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      DERBY_10_7(<span class="jxr_string">"org.hibernate.dialect.DerbyTenSevenDialect"</span>),
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>      FIREBIRD(<span class="jxr_string">"org.hibernate.dialect.FirebirdDialect"</span>),
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      FRONTBASE(<span class="jxr_string">"org.hibernate.dialect.FrontBaseDialect"</span>),
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      H2(<span class="jxr_string">"org.hibernate.dialect.H2Dialect"</span>),
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      HANA_COLUMN_STORE(<span class="jxr_string">"org.hibernate.dialect.HanaColumnStoreDialect"</span>),
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>      HANA_ROW_STORE(<span class="jxr_string">"org.hibernate.dialect.HanaRowStoreDialect"</span>),
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      HSQL(<span class="jxr_string">"org.hibernate.dialect.HSQLDialect"</span>),
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      INFORMIX(<span class="jxr_string">"org.hibernate.dialect.InformixDialect"</span>),
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>      INFORMIX10(<span class="jxr_string">"org.hibernate.dialect.Informix10Dialect"</span>),
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      INGRES(<span class="jxr_string">"org.hibernate.dialect.IngresDialect"</span>),
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      INGRES9(<span class="jxr_string">"org.hibernate.dialect.Ingres9Dialect"</span>),
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>      INGRES10(<span class="jxr_string">"org.hibernate.dialect.Ingres10Dialect"</span>),
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      INTERBASE(<span class="jxr_string">"org.hibernate.dialect.InterbaseDialect"</span>),
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>      INTERSYSTEMS_CACHE(<span class="jxr_string">"org.hibernate.dialect.Cache71Dialect"</span>),
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>      JDATASTORE(<span class="jxr_string">"org.hibernate.dialect.JDataStoreDialect"</span>),
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      MARIADB(<span class="jxr_string">"org.hibernate.dialect.MariaDBDialect"</span>),
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>      MARIADB53(<span class="jxr_string">"org.hibernate.dialect.MariaDB53Dialect"</span>),
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      MCKOISQL(<span class="jxr_string">"org.hibernate.dialect.MckoiDialect"</span>),
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      MIMERSQL(<span class="jxr_string">"org.hibernate.dialect.MimerSQLDialect"</span>),
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      MYSQL(<span class="jxr_string">"org.hibernate.dialect.MySQLDialect"</span>),
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      MYSQL_INNODB(<span class="jxr_string">"org.hibernate.dialect.MySQLInnoDBDialect"</span>),
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      MYSQL_MYISAM(<span class="jxr_string">"org.hibernate.dialect.MySQLMyISAMDialect"</span>),
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      MYSQL5(<span class="jxr_string">"org.hibernate.dialect.MySQL5Dialect"</span>),
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      MYSQL5_SPATIAL(<span class="jxr_string">"org.hibernate.spatial.dialect.mysql.MySQL5SpatialDialect"</span>),
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>      MYSQL5_INNODB_SPATIAL(<span class="jxr_string">"org.hibernate.spatial.dialect.mysql.MySQL5InnoDBSpatialDialect"</span>),
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      MYSQL5_INNODB(<span class="jxr_string">"org.hibernate.dialect.MySQL5InnoDBDialect"</span>),
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      MYSQL55(<span class="jxr_string">"org.hibernate.dialect.MySQL55Dialect"</span>),
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      MYSQL57(<span class="jxr_string">"org.hibernate.dialect.MySQL57Dialect"</span>),
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      MYSQL57_INNODB(<span class="jxr_string">"org.hibernate.dialect.MySQL57InnoDBDialect"</span>),
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>      ORACLE(<span class="jxr_string">"org.hibernate.dialect.OracleDialect"</span>),
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>      ORACLE8I(<span class="jxr_string">"org.hibernate.dialect.Oracle8iDialect"</span>),
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      ORACLE9(<span class="jxr_string">"org.hibernate.dialect.Oracle9Dialect"</span>),
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      ORACLE9I(<span class="jxr_string">"org.hibernate.dialect.Oracle9iDialect"</span>),
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>      ORACLE10G(<span class="jxr_string">"org.hibernate.dialect.Oracle10gDialect"</span>),
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>      ORACLE12C(<span class="jxr_string">"org.hibernate.dialect.Oracle12cDialect"</span>),
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      ORACLE_SPATIAL_10G(<span class="jxr_string">"org.hibernate.spatial.dialect.oracle.OracleSpatial10gDialect"</span>),
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>      ORACLE_SPATIAL_SDO_10G(<span class="jxr_string">"org.hibernate.spatial.dialect.oracle.OracleSpatialSDO10gDialect"</span>),
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>      ORACLE_TIMES_TEN(<span class="jxr_string">"org.hibernate.dialect.TimesTenDialect"</span>),
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>      POINTBASE(<span class="jxr_string">"org.hibernate.dialect.PointbaseDialect"</span>),
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>      POSTGIS_PG82(<span class="jxr_string">"org.hibernate.spatial.dialect.postgis.PostgisPG82Dialect"</span>),
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>      POSTGIS_PG9(<span class="jxr_string">"org.hibernate.spatial.dialect.postgis.PostgisPG9Dialect"</span>),
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>      POSTGIS_PG91(<span class="jxr_string">"org.hibernate.spatial.dialect.postgis.PostgisPG91Dialect"</span>),
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>      POSTGRES_PLUS(<span class="jxr_string">"org.hibernate.dialect.PostgresPlusDialect"</span>),
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>      POSTGRESQL(<span class="jxr_string">"org.hibernate.dialect.PostgreSQLDialect"</span>),
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>      POSTGRESQL81(<span class="jxr_string">"org.hibernate.dialect.PostgreSQL81Dialect"</span>),
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>      POSTGRESQL82(<span class="jxr_string">"org.hibernate.dialect.PostgreSQL82Dialect"</span>),
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>      POSTGRESQL9(<span class="jxr_string">"org.hibernate.dialect.PostgreSQL9Dialect"</span>),
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>      POSTGRESQL91(<span class="jxr_string">"org.hibernate.dialect.PostgreSQL91Dialect"</span>),
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>      POSTGRESQL92(<span class="jxr_string">"org.hibernate.dialect.PostgreSQL92Dialect"</span>),
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>      PROGRESS(<span class="jxr_string">"org.hibernate.dialect.ProgressDialect"</span>),
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>      RDMSOS2200(<span class="jxr_string">"org.hibernate.dialect.RDMSOS2200Dialect"</span>),
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>      SAP_DB(<span class="jxr_string">"org.hibernate.dialect.SAPDBDialect"</span>),
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>     SAP_HANA_COL(<span class="jxr_string">"org.hibernate.dialect.HANAColumnStoreDialect"</span>),
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>     SAP_HANA_ROW(<span class="jxr_string">"org.hibernate.dialect.HANARowStoreDialect"</span>),
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>     SQLSERVER2000(<span class="jxr_string">"org.hibernate.dialect.SQLServerDialect"</span>),
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>     SQLSERVER2005(<span class="jxr_string">"org.hibernate.dialect.SQLServer2005Dialect"</span>),
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>     SQLSERVER2008(<span class="jxr_string">"org.hibernate.dialect.SQLServer2008Dialect"</span>),
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>     SQLSERVER2008_SPATIAL(<span class="jxr_string">"org.hibernate.dialect.SQLServer2008SpatialDialect"</span>),
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>     SQLSERVER2012(<span class="jxr_string">"org.hibernate.dialect.SQLServer2012Dialect"</span>),
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     SYBASE(<span class="jxr_string">"org.hibernate.dialect.SybaseDialect"</span>),
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>     SYBASE11(<span class="jxr_string">"org.hibernate.dialect.Sybase11Dialect"</span>),
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>     SYBASE_ASE155(<span class="jxr_string">"org.hibernate.dialect.SybaseASE15Dialect"</span>),
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>     SYBASE_ASE157(<span class="jxr_string">"org.hibernate.dialect.SybaseASE157Dialect"</span>),
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>     SYBASE_ANYWHERE(<span class="jxr_string">"org.hibernate.dialect.SybaseAnywhereDialect"</span>),
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>     TERADATA(<span class="jxr_string">"org.hibernate.dialect.TeradataDialect"</span>),
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>     TERADATA14(<span class="jxr_string">"org.hibernate.dialect.Teradata14Dialect"</span>),
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>     UNISYS_OS_2200_RDMS(<span class="jxr_string">"org.hibernate.dialect.RDMSOS2200Dialect"</span>);
+<a class="jxr_linenumber" name="L115" href="#L115">115</a> 
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L117" href="#L117">117</a> <em class="jxr_javadoccomment">     * Property for holding the name of the Hibernate dialect class.</em>
+<a class="jxr_linenumber" name="L118" href="#L118">118</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String dialectClassName;
+<a class="jxr_linenumber" name="L120" href="#L120">120</a> 
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L122" href="#L122">122</a> <em class="jxr_javadoccomment">     * Private constructor, used to create the Enum instances for each dialect.</em>
+<a class="jxr_linenumber" name="L123" href="#L123">123</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L124" href="#L124">124</a> <em class="jxr_javadoccomment">     * @param dialectClass The dialect class for the specific dialect.</em>
+<a class="jxr_linenumber" name="L125" href="#L125">125</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/Dialect.html">Dialect</a>(<strong class="jxr_keyword">final</strong> String dialectClass) {
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>         <strong class="jxr_keyword">this</strong>.dialectClassName = dialectClass;
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>     }
+<a class="jxr_linenumber" name="L129" href="#L129">129</a> 
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L131" href="#L131">131</a> <em class="jxr_javadoccomment">     * Getter for the dialect class.</em>
+<a class="jxr_linenumber" name="L132" href="#L132">132</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L133" href="#L133">133</a> <em class="jxr_javadoccomment">     * @return The name of the dialect class, for example</em>
+<a class="jxr_linenumber" name="L134" href="#L134">134</a> <em class="jxr_javadoccomment">     *         {@code org.hibernate.dialect.PostgreSQL9Dialect} for</em>
+<a class="jxr_linenumber" name="L135" href="#L135">135</a> <em class="jxr_javadoccomment">     *         {@link #POSTGRESQL9}.</em>
+<a class="jxr_linenumber" name="L136" href="#L136">136</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>     <strong class="jxr_keyword">public</strong> String getDialectClassName() {
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>         <strong class="jxr_keyword">return</strong> dialectClassName;
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>     }
+<a class="jxr_linenumber" name="L140" href="#L140">140</a> 
+<a class="jxr_linenumber" name="L141" href="#L141">141</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2016&#x2013;2017 <a href="http://www.jp-digital.de">Jens Pelzetter</a>. All rights reserved.</div>
