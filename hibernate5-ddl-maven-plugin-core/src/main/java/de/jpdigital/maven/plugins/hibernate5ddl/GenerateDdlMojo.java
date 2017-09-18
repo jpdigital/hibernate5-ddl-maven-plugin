@@ -58,6 +58,9 @@ public class GenerateDdlMojo extends AbstractMojo {
                property = "outputDir",
                required = true)
     private File outputDirectory;
+    
+    @Parameter(required = true)
+    private String outputFileName;
 
     /**
      * If set each name of an output file will be prefixed with the 
@@ -411,6 +414,7 @@ public class GenerateDdlMojo extends AbstractMojo {
                 0, outputDirectory.getAbsolutePath().length());
         } else {
             dirPath = outputDirectory.getAbsolutePath();
+            return Paths.get(String.format("%s/%s.sql", dirPath, outputFileName.toLowerCase(Locale.ENGLISH)));
         }
 
         final StringBuffer fileNameBuffer = new StringBuffer();
