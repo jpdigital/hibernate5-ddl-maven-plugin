@@ -48,6 +48,7 @@ import java.util.Set;
       defaultPhase = LifecyclePhase.PROCESS_CLASSES,
       requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME,
       threadSafe = true)
+@SuppressWarnings({"PMD.GodClass", "PMD.LongVariable"})
 public class GenerateDdlMojo extends AbstractMojo {
 
     /**
@@ -60,53 +61,51 @@ public class GenerateDdlMojo extends AbstractMojo {
     private File outputDirectory;
 
     /**
-     * If set each name of an output file will be prefixed with the 
-     * value of this parameter.
+     * If set each name of an output file will be prefixed with the value of
+     * this parameter.
      */
-    @Parameter(required = false)
-    private String outputFileNamePrefix;
+    @Parameter(required = false, defaultValue = "")
+    private String outputFileNamePrefix = "";
 
     /**
-     * If set the value of this parameter will be appended to the name 
-     * of each output file.
+     * If set the value of this parameter will be appended to the name of each
+     * output file.
      */
-    @Parameter(required = false)
-    private String outputFileNameSuffix;
+    @Parameter(required = false, defaultValue = "")
+    private String outputFileNameSuffix = "";
 
     /**
-     * If set to true <strong>and</strong> if only one dialect is 
-     * configured <strong>and</strong> either 
-     * {@link #outputFileNamePrefix} or {@link outputFileNameSuffix} 
-     * are set the dialect name will be omitted from the name of the DDL 
-     * file.
+     * If set to true <strong>and</strong> if only one dialect is configured
+     * <strong>and</strong> either {@link #outputFileNamePrefix} or
+     * {@link outputFileNameSuffix} are set the dialect name will be omitted
+     * from the name of the DDL file.
      */
     @Parameter(required = false)
     private boolean omitDialectFromFileName;
 
     /**
-     * Packages containing the entity files for which the SQL DDL 
-     * scripts shall be generated.
+     * Packages containing the entity files for which the SQL DDL scripts shall
+     * be generated.
      */
     @Parameter(required = true)
     private String[] packages;
 
     /**
-     * Database dialects for which create scripts shall be generated. 
-     * For available dialects refer to the documentation the {@link Dialect}
+     * Database dialects for which create scripts shall be generated. For
+     * available dialects refer to the documentation the {@link Dialect}
      * enumeration.
      */
-    @Parameter(required = true)
+    @Parameter(required = false)
     private String[] dialects;
 
     @Parameter(required = false)
     private String[] customDialects;
 
     /**
-     * Set this to {@code true} to include drop statements into the 
-     * generated DDL file.
+     * Set this to {@code true} to include drop statements into the generated
+     * DDL file.
      */
     @Parameter(required = false)
-    @SuppressWarnings("PMD.LongVariable")
     private boolean createDropStatements;
 
     /**
@@ -147,14 +146,6 @@ public class GenerateDdlMojo extends AbstractMojo {
             }
         }
 
-        //Read the dialects from the parameter and convert them to instances of the dialect enum.
-        final Set<Dialect> dialectsList = new HashSet<>();
-        if (dialects != null) {
-            for (final String dialect : dialects) {
-                convertDialect(dialect, dialectsList);
-            }
-        }
-
         //Find the entity classes in the packages.
         final Set<Class<?>> entityClasses = new HashSet<>();
         for (final String packageName : packages) {
@@ -177,7 +168,7 @@ public class GenerateDdlMojo extends AbstractMojo {
                 DdlGenerator.class.getName()));
         }
 
-        for (final Dialect dialect : dialectsList) {
+        for (final Dialect dialect : convertDialects()) {
             ddlGenerator.generateDdl(dialect, entityClasses, this);
         }
 
@@ -260,6 +251,25 @@ public class GenerateDdlMojo extends AbstractMojo {
 
     public void setPersistenceXml(final File persistenceXml) {
         this.persistenceXml = persistenceXml;
+    }
+
+    /**
+     * Helper method which reads the dialects from the parameter and converts them
+     * into instances of the {@link Dialect} enumeration.
+     * 
+     * @return A list of all dialects to use
+     * 
+     * @throws MojoFailureException If an error occurs.
+     */
+    private Set<Dialect> convertDialects() throws MojoFailureException {
+
+        final Set<Dialect> dialectsList = new HashSet<>();
+        if (dialects != null) {
+            for (final String dialect : dialects) {
+                convertDialect(dialect, dialectsList);
+            }
+        }
+        return dialectsList;
     }
 
     /**
@@ -384,16 +394,16 @@ public class GenerateDdlMojo extends AbstractMojo {
 
     public String getDialectNameFromClassName(final String dialectClassName) {
 
-        final int pos = dialectClassName.lastIndexOf(".");
+        final int pos = dialectClassName.lastIndexOf('.');
 
-        if (dialectClassName.toLowerCase().endsWith("dialect")) {
+        if (dialectClassName.toLowerCase(Locale.ROOT).endsWith("dialect")) {
             return dialectClassName
                 .substring(pos + 1,
                            dialectClassName.length() - "dialect".length())
-                .toLowerCase();
+                .toLowerCase(Locale.ROOT);
         } else {
             return dialectClassName.substring(pos + 1)
-                .toLowerCase();
+                .toLowerCase(Locale.ROOT);
         }
     }
 
@@ -405,44 +415,57 @@ public class GenerateDdlMojo extends AbstractMojo {
      * @return The {@link Path} for the output file.
      */
     private Path createOutputFilePath(final String dialectClassName) {
+
         final String dirPath;
         if (outputDirectory.getAbsolutePath().endsWith("/")) {
-            dirPath = outputDirectory.getAbsolutePath().substring(
-                0, outputDirectory.getAbsolutePath().length());
+            dirPath = outputDirectory
+                .getAbsolutePath()
+                .substring(0, outputDirectory.getAbsolutePath().length());
         } else {
             dirPath = outputDirectory.getAbsolutePath();
         }
 
         final StringBuffer fileNameBuffer = new StringBuffer();
-        if (outputFileNamePrefix != null
-                && !outputFileNamePrefix.trim().isEmpty()) {
-            fileNameBuffer.append(outputFileNamePrefix);
-        }
+
+        fileNameBuffer.append(outputFileNamePrefix);
+
         if (!omitDialectFromFileName
                 || dialects.length > 1
-                || (isFileNamePrefixEmpty()
-                    && isFileNameSuffixEmpty())) {
+                || isFileNamePrefixEmpty() && isFileNameSuffixEmpty()) {
             fileNameBuffer.append(getDialectNameFromClassName(dialectClassName));
         }
-        if (outputFileNameSuffix != null
-                && !outputFileNameSuffix.trim().isEmpty()) {
-            fileNameBuffer.append(outputFileNameSuffix);
-        }
 
-//         return Paths.get(String.format(
-//            "%s/%s.sql", dirPath, dialect.name().toLowerCase(Locale.ENGLISH)));
+        fileNameBuffer.append(outputFileNameSuffix);
+
         return Paths.get(String.format(
             "%s/%s.sql", dirPath, fileNameBuffer.toString()));
     }
 
     private boolean isFileNamePrefixEmpty() {
         return outputFileNamePrefix == null
-                   || outputFileNamePrefix.trim().isEmpty();
+                   || isBlank(outputFileNamePrefix);
     }
 
     private boolean isFileNameSuffixEmpty() {
         return outputFileNameSuffix == null
-                   || outputFileNameSuffix.trim().isEmpty();
+                   || isBlank(outputFileNameSuffix);
+    }
+
+    private boolean isBlank(final String str) {
+
+        if (str.isEmpty()) {
+            return true;
+        }
+
+        final char[] characters = str.toCharArray();
+
+        for (final char character : characters) {
+            if (!Character.isWhitespace(character)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

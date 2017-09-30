@@ -38,7 +38,6 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.EnumSet;
-import java.util.Locale;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
