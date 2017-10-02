@@ -37,6 +37,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.EnumSet;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -109,6 +110,17 @@ public class DdlGeneratorHibernate51 implements DdlGenerator {
         }
 
         mojo.writeOutputFile(dialectClassName, tmpDir);
+
+        try {
+            Files
+                .walk(tmpDir)
+                .sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
+        } catch (IOException ex) {
+            throw new MojoFailureException("Failed to clean up temporary files.",
+                                           ex);
+        }
     }
 
     @Override
@@ -119,60 +131,6 @@ public class DdlGeneratorHibernate51 implements DdlGenerator {
 
         generateDdl(dialect.getDialectClassName(), entityClasses, mojo);
 
-//        final StandardServiceRegistryBuilder registryBuilder
-//                                                 = new StandardServiceRegistryBuilder();
-//        processPersistenceXml(registryBuilder,
-//                              mojo.getPersistenceXml(),
-//                              mojo.getLog());
-//
-//        if (mojo.isCreateDropStatements()) {
-//            registryBuilder.applySetting("hibernate.hbm2ddl.auto",
-//                                         "create-drop");
-//        } else {
-//            registryBuilder.applySetting("hibernate.hbm2ddl.auto", "create");
-//        }
-//
-//        registryBuilder.applySetting("hibernate.dialect",
-//                                     dialect.getDialectClass());
-//
-//        final StandardServiceRegistry standardRegistry = registryBuilder.build();
-//
-//        final MetadataSources metadataSources = new MetadataSources(
-//            standardRegistry);
-//
-//        for (final Class<?> entityClass : entityClasses) {
-//            metadataSources.addAnnotatedClass(entityClass);
-//        }
-//
-//        final SchemaExport export = new SchemaExport();
-//        export.setDelimiter(";");
-//
-//        final Path tmpDir;
-//        try {
-//            tmpDir = Files.createTempDirectory("maven-hibernate5-ddl-plugin");
-//        } catch (IOException ex) {
-//            throw new MojoFailureException("Failed to create work dir.", ex);
-//        }
-//
-//        final Metadata metadata = metadataSources.buildMetadata();
-//
-//        export.setOutputFile(String.format(
-//            "%s/%s.sql",
-//            tmpDir.toString(),
-//            dialect.name().toLowerCase(
-//                Locale.ENGLISH)));
-//        export.setFormat(true);
-//        if (mojo.isCreateDropStatements()) {
-//            export.execute(EnumSet.of(TargetType.SCRIPT),
-//                           SchemaExport.Action.BOTH,
-//                           metadata);
-//        } else {
-//            export.execute(EnumSet.of(TargetType.SCRIPT),
-//                           SchemaExport.Action.CREATE,
-//                           metadata);
-//        }
-//
-//        mojo.writeOutputFile(dialect, tmpDir);
     }
 
     /**
