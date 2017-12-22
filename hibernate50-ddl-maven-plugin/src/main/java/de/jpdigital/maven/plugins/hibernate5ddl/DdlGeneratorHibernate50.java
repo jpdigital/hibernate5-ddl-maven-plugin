@@ -89,7 +89,7 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
 
         final Path tmpDir;
         try {
-            tmpDir = Files.createTempDirectory("maven-hibernate5-ddl-plugin");
+            tmpDir = Files.createTempDirectory("hibernate5-ddl-maven-plugin");
         } catch (IOException ex) {
             throw new MojoFailureException("Failed to create work dir.", ex);
         }
