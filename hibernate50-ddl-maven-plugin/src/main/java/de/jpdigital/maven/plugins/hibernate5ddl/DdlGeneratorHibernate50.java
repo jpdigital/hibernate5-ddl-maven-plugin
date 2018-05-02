@@ -37,7 +37,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -59,9 +61,7 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
 
         final StandardServiceRegistryBuilder registryBuilder
                                                  = new StandardServiceRegistryBuilder();
-        processPersistenceXml(registryBuilder,
-                              mojo.getPersistenceXml(),
-                              mojo.getLog());
+        processPersistenceXml(registryBuilder, mojo);
 
         if (mojo.isCreateDropStatements()) {
             registryBuilder.applySetting("hibernate.hbm2ddl.auto",
@@ -140,8 +140,10 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
      */
     private void processPersistenceXml(
         final StandardServiceRegistryBuilder registryBuilder,
-        final File persistenceXml,
-        final Log log) {
+        final GenerateDdlMojo mojo) {
+
+        final Log log = mojo.getLog();
+        final File persistenceXml = mojo.getPersistenceXml();
 
         if (persistenceXml != null) {
 
@@ -155,9 +157,13 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
 
                     parser = SAXParserFactory.newInstance().newSAXParser();
 
-                    parser.parse(inputStream,
-                                 new PersistenceXmlHandler(registryBuilder,
-                                                           log));
+                    parser.parse(
+                        inputStream,
+                        new PersistenceXmlHandler(
+                            registryBuilder,
+                            log,
+                            new HashSet<>(Arrays
+                                .asList(mojo.getPersistencePropertiesToUse()))));
 
                 } catch (IOException ex) {
                     log.error("Failed to open persistence.xml. "
@@ -183,15 +189,18 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
     private static class PersistenceXmlHandler extends DefaultHandler {
 
         private final transient StandardServiceRegistryBuilder registryBuilder;
+        private final transient Set<String> propertiesToUse;
 
         private final transient Log log;
 
         public PersistenceXmlHandler(
             final StandardServiceRegistryBuilder registryBuilder,
-            final Log log) {
+            final Log log,
+            final Set<String> propertiesToUse) {
 
             this.registryBuilder = registryBuilder;
             this.log = log;
+            this.propertiesToUse = propertiesToUse;
         }
 
         @Override
@@ -205,7 +214,9 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
                 localName,
                 qName));
 
-            if ("property".equals(qName)) {
+            if ("property".equals(qName)
+                    && propertiesToUse.contains(attributes.getValue("name"))) {
+
                 final String propertyName = attributes.getValue("name");
                 final String propertyValue = attributes.getValue("value");
 

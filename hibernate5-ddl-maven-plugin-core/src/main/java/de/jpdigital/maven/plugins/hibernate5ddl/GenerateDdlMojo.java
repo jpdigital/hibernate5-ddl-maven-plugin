@@ -47,6 +47,12 @@ import java.util.Set;
 @SuppressWarnings({"PMD.LongVariable"})
 public class GenerateDdlMojo extends AbstractMojo {
 
+    private final static String[] DEFAULT_PROPERTIES_TO_USE = new String[]{
+        "format_sql",
+        "format_sql",
+        "hibernate.id.new_generator_mappings",
+        "org.hibernate.envers.audit_strategy",};
+
     /**
      * Location of the output file.
      */
@@ -115,6 +121,9 @@ public class GenerateDdlMojo extends AbstractMojo {
         defaultValue = "${basedir}/src/main/resources/META-INF/persistence.xml",
         required = false)
     private File persistenceXml;
+
+    @Parameter(required = false)
+    private String[] persistencePropertiesToUse;
 
     @Parameter(defaultValue = "${project}", readonly = true)
     private transient MavenProject project;
@@ -249,12 +258,36 @@ public class GenerateDdlMojo extends AbstractMojo {
         this.persistenceXml = persistenceXml;
     }
 
+    public String[] getPersistencePropertiesToUse() {
+        if (persistencePropertiesToUse == null
+                || persistencePropertiesToUse.length == 0) {
+
+            return Arrays.copyOf(DEFAULT_PROPERTIES_TO_USE,
+                                 DEFAULT_PROPERTIES_TO_USE.length);
+        } else {
+            return Arrays.copyOf(persistencePropertiesToUse,
+                                 persistencePropertiesToUse.length);
+        }
+    }
+
+    public void setPersistencePropertiesToUse(
+        final String... persistencePropertiesToUse) {
+
+        if (persistencePropertiesToUse == null) {
+            this.persistencePropertiesToUse = null;
+        } else {
+            this.persistencePropertiesToUse = Arrays
+                .copyOf(persistencePropertiesToUse,
+                        persistencePropertiesToUse.length);
+        }
+    }
+
     /**
-     * Helper method which reads the dialects from the parameter and converts them
-     * into instances of the {@link Dialect} enumeration.
-     * 
+     * Helper method which reads the dialects from the parameter and converts
+     * them into instances of the {@link Dialect} enumeration.
+     *
      * @return A list of all dialects to use
-     * 
+     *
      * @throws MojoFailureException If an error occurs.
      */
     private Set<Dialect> convertDialects() throws MojoFailureException {
@@ -309,13 +342,13 @@ public class GenerateDdlMojo extends AbstractMojo {
         throws MojoFailureException {
 
         final OutputFileWriter writer = new OutputFileWriter(outputDirectory);
-        writer.setOmitDialectFromFileName(omitDialectFromFileName 
-                                          && dialects.length == 1);
+        writer.setOmitDialectFromFileName(omitDialectFromFileName
+                                              && dialects.length == 1);
         writer.setOutputFileNamePrefix(outputFileNamePrefix);
         writer.setOutputFileNameSuffix(outputFileNameSuffix);
-        
+
         writer.writeOutputFile(dialectClassName, tmpDir);
-        
+
     }
 
     public String getDialectNameFromClassName(final String dialectClassName) {
@@ -332,4 +365,5 @@ public class GenerateDdlMojo extends AbstractMojo {
                 .toLowerCase(Locale.ROOT);
         }
     }
+
 }
