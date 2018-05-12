@@ -49,7 +49,7 @@ public class GenerateDdlMojo extends AbstractMojo {
 
     private final static String[] DEFAULT_PROPERTIES_TO_USE = new String[]{
         "format_sql",
-        "format_sql",
+        "use_sql_comments",
         "hibernate.id.new_generator_mappings",
         "org.hibernate.envers.audit_strategy",};
 
