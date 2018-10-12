@@ -34,6 +34,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 
 /**
@@ -109,9 +110,11 @@ final class EntityFinder {
     }
 
     /**
-     * Finds all entity classes in the package for which the instance of this
-     * class was created.. The entity classes must be annotated with the
-     * {@link Entity} annotation. The method uses the
+     * Finds all entity classes and all converter classes
+     * in the package for which the instance of this
+     * class was created. The entity classes must be annotated with the
+     * {@link Entity} annotation, the converter classes must be annotated with 
+     * the {@link Converter} annotation. The method uses the
      * <a href="https://code.google.com/p/reflections/">Reflections library</a>
      * for finding the entity classes.
      *
@@ -128,7 +131,11 @@ final class EntityFinder {
         for (final Class<?> entityClass : classesWithEntity) {
             entityClasses.add(entityClass);
         }
-
+        final Set<Class<?>> classesWithConverter = reflections
+                .getTypesAnnotatedWith(Converter.class);
+        for (final Class<?> entityClass : classesWithConverter) {
+            entityClasses.add(entityClass);
+        }
         return entityClasses;
     }
 
