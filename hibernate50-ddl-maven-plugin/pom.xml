@@ -121,11 +121,15 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
+            <version>2.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
+            <scope>test</scope>
         </dependency>
+        
     </dependencies>
     
     <build>
@@ -158,7 +162,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.2</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -183,7 +187,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0-M1</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-javadoc-plugin</id>
@@ -220,7 +224,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20</version>
+                <version>3.0.0-M3</version>
                 <configuration>
                     <trimStackTrace>false</trimStackTrace>
                 </configuration>
@@ -249,7 +253,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.8</version>
+                <version>3.11.0</version>
                 <configuration>
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
@@ -280,7 +284,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.6</version>
+                <version>3.7.1</version>
                 <configuration>
                 </configuration>
             </plugin>
@@ -292,12 +296,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
-                <version>3.5</version>
+                <version>3.6.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.0.1</version>
                 <configuration>
                     <links>
                         <link>http://docs.oracle.com/javase/7/docs/api/</link>
@@ -318,12 +322,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.5</version>
+                <version>3.0.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.20</version>
+                <version>3.0.0-M3</version>
                 <configuration>
                     <trimStackTrace>false</trimStackTrace>
                 </configuration>
@@ -346,42 +350,22 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.3</version>
+                <version>3.1.10</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.8</version>
+                <version>3.11.0</version>
                 <configuration>
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
                     <targetJdk>1.8</targetJdk>
-                    <rulesets>
-                        <ruleset>/rulesets/java/basic.xml</ruleset>
-                        <ruleset>/rulesets/java/braces.xml</ruleset>
-                        <ruleset>/rulesets/java/clone.xml</ruleset>
-                        <ruleset>/rulesets/java/codesize.xml</ruleset>
-                        <ruleset>/rulesets/java/design.xml</ruleset>
-                        <ruleset>/rulesets/java/empty.xml</ruleset>
-                        <ruleset>/rulesets/java/finalizers.xml</ruleset>
-                        <ruleset>/rulesets/java/imports.xml</ruleset>
-                        <ruleset>/rulesets/java/javabeans.xml</ruleset>
-                        <ruleset>/rulesets/java/junit.xml</ruleset>
-                        <ruleset>/rulesets/java/naming.xml</ruleset>
-                        <ruleset>/rulesets/java/optimizations.xml</ruleset>
-                        <ruleset>/rulesets/java/strictexception.xml</ruleset>
-                        <ruleset>/rulesets/java/strings.xml</ruleset>
-                        <ruleset>/rulesets/java/sunsecure.xml</ruleset>
-                        <ruleset>/rulesets/java/typeresolution.xml</ruleset>
-                        <ruleset>/rulesets/java/unnecessary.xml</ruleset>
-                        <ruleset>/rulesets/java/unusedcode.xml</ruleset>
-                    </rulesets>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.9</version>
+                <version>3.0.0</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -403,7 +387,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-invoker-plugin</artifactId>
-                        <version>3.0.0</version>
+                        <version>3.1.0</version>
                         <configuration>
                             <debug>true</debug>
                             <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
@@ -440,7 +424,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-plugin-plugin</artifactId>
-                        <version>3.5</version>
+                        <version>3.6.0</version>
                         <configuration>
                             <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                         </configuration>
@@ -462,7 +446,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.6.1</version>
+                        <version>3.8.0</version>
                         <configuration>
                             <source>1.8</source>
                             <target>1.8</target>
@@ -474,7 +458,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.20</version>
+                        <version>3.0.0-M3</version>
                         <configuration>
                             <trimStackTrace>false</trimStackTrace>
                         </configuration>
@@ -503,38 +487,18 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-pmd-plugin</artifactId>
-                        <version>3.8</version>
+                        <version>3.11.0</version>
                         <configuration>
                             <linkXref>true</linkXref>
                             <sourceEncoding>utf-8</sourceEncoding>
                             <targetJdk>1.8</targetJdk>
-                            <rulesets>
-                                <ruleset>/rulesets/java/basic.xml</ruleset>
-                                <ruleset>/rulesets/java/braces.xml</ruleset>
-                                <ruleset>/rulesets/java/clone.xml</ruleset>
-                                <ruleset>/rulesets/java/codesize.xml</ruleset>
-                                <ruleset>/rulesets/java/design.xml</ruleset>
-                                <ruleset>/rulesets/java/empty.xml</ruleset>
-                                <ruleset>/rulesets/java/finalizers.xml</ruleset>
-                                <ruleset>/rulesets/java/imports.xml</ruleset>
-                                <ruleset>/rulesets/java/javabeans.xml</ruleset>
-                                <ruleset>/rulesets/java/junit.xml</ruleset>
-                                <ruleset>/rulesets/java/naming.xml</ruleset>
-                                <ruleset>/rulesets/java/optimizations.xml</ruleset>
-                                <ruleset>/rulesets/java/strictexception.xml</ruleset>
-                                <ruleset>/rulesets/java/strings.xml</ruleset>
-                                <ruleset>/rulesets/java/sunsecure.xml</ruleset>
-                                <ruleset>/rulesets/java/typeresolution.xml</ruleset>
-                                <ruleset>/rulesets/java/unnecessary.xml</ruleset>
-                                <ruleset>/rulesets/java/unusedcode.xml</ruleset>
-                            </rulesets>
                         </configuration>
                     </plugin>
             
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-site-plugin</artifactId>
-                        <version>3.6</version>
+                        <version>3.7.1</version>
                         <configuration>
                         </configuration>
                     </plugin>
@@ -557,7 +521,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.4</version>
+                        <version>3.0.1</version>
                         <configuration>
                             <links>
                                 <link>http://docs.oracle.com/javase/7/docs/api/</link>
@@ -610,7 +574,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-plugin-plugin</artifactId>
-                        <version>3.5</version>
+                        <version>3.6.0</version>
                         <configuration>
                             <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                         </configuration>
@@ -632,7 +596,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.6.1</version>
+                        <version>3.8.0</version>
                         <configuration>
                             <source>1.8</source>
                             <target>1.8</target>
@@ -644,7 +608,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.20</version>
+                        <version>3.0.0-M3</version>
                         <configuration>
                             <trimStackTrace>false</trimStackTrace>
                         </configuration>
@@ -673,38 +637,18 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-pmd-plugin</artifactId>
-                        <version>3.8</version>
+                        <version>3.11.0</version>
                         <configuration>
                             <linkXref>true</linkXref>
                             <sourceEncoding>utf-8</sourceEncoding>
                             <targetJdk>1.8</targetJdk>
-                            <rulesets>
-                                <ruleset>/rulesets/java/basic.xml</ruleset>
-                                <ruleset>/rulesets/java/braces.xml</ruleset>
-                                <ruleset>/rulesets/java/clone.xml</ruleset>
-                                <ruleset>/rulesets/java/codesize.xml</ruleset>
-                                <ruleset>/rulesets/java/design.xml</ruleset>
-                                <ruleset>/rulesets/java/empty.xml</ruleset>
-                                <ruleset>/rulesets/java/finalizers.xml</ruleset>
-                                <ruleset>/rulesets/java/imports.xml</ruleset>
-                                <ruleset>/rulesets/java/javabeans.xml</ruleset>
-                                <ruleset>/rulesets/java/junit.xml</ruleset>
-                                <ruleset>/rulesets/java/naming.xml</ruleset>
-                                <ruleset>/rulesets/java/optimizations.xml</ruleset>
-                                <ruleset>/rulesets/java/strictexception.xml</ruleset>
-                                <ruleset>/rulesets/java/strings.xml</ruleset>
-                                <ruleset>/rulesets/java/sunsecure.xml</ruleset>
-                                <ruleset>/rulesets/java/typeresolution.xml</ruleset>
-                                <ruleset>/rulesets/java/unnecessary.xml</ruleset>
-                                <ruleset>/rulesets/java/unusedcode.xml</ruleset>
-                            </rulesets>
                         </configuration>
                     </plugin>
             
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-site-plugin</artifactId>
-                        <version>3.6</version>
+                        <version>3.7.1</version>
                         <configuration>
                         </configuration>
                     </plugin>
@@ -736,12 +680,12 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-plugin-plugin</artifactId>
-                        <version>3.5</version>
+                        <version>3.6.0</version>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.4</version>
+                        <version>3.0.1</version>
                         <configuration>
                             <links>
                                 <link>http://docs.oracle.com/javase/7/docs/api/</link>
@@ -762,12 +706,12 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jxr-plugin</artifactId>
-                        <version>2.5</version>
+                        <version>3.0.0</version>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-report-plugin</artifactId>
-                        <version>2.20</version>
+                        <version>3.0.0-M3</version>
                         <configuration>
                             <trimStackTrace>false</trimStackTrace>
                         </configuration>
@@ -790,42 +734,22 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>3.1.3</version>
+                        <version>3.1.10</version>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-pmd-plugin</artifactId>
-                        <version>3.8</version>
+                        <version>3.11.0</version>
                         <configuration>
                             <linkXref>true</linkXref>
                             <sourceEncoding>utf-8</sourceEncoding>
                             <targetJdk>1.8</targetJdk>
-                            <rulesets>
-                                <ruleset>/rulesets/java/basic.xml</ruleset>
-                                <ruleset>/rulesets/java/braces.xml</ruleset>
-                                <ruleset>/rulesets/java/clone.xml</ruleset>
-                                <ruleset>/rulesets/java/codesize.xml</ruleset>
-                                <ruleset>/rulesets/java/design.xml</ruleset>
-                                <ruleset>/rulesets/java/empty.xml</ruleset>
-                                <ruleset>/rulesets/java/finalizers.xml</ruleset>
-                                <ruleset>/rulesets/java/imports.xml</ruleset>
-                                <ruleset>/rulesets/java/javabeans.xml</ruleset>
-                                <ruleset>/rulesets/java/junit.xml</ruleset>
-                                <ruleset>/rulesets/java/naming.xml</ruleset>
-                                <ruleset>/rulesets/java/optimizations.xml</ruleset>
-                                <ruleset>/rulesets/java/strictexception.xml</ruleset>
-                                <ruleset>/rulesets/java/strings.xml</ruleset>
-                                <ruleset>/rulesets/java/sunsecure.xml</ruleset>
-                                <ruleset>/rulesets/java/typeresolution.xml</ruleset>
-                                <ruleset>/rulesets/java/unnecessary.xml</ruleset>
-                                <ruleset>/rulesets/java/unusedcode.xml</ruleset>
-                            </rulesets>
                         </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-project-info-reports-plugin</artifactId>
-                        <version>2.9</version>
+                        <version>3.0.0</version>
                         <reportSets>
                             <reportSet>
                                 <reports>
