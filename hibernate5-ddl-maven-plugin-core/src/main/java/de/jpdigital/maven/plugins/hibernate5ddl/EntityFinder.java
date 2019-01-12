@@ -110,15 +110,12 @@ final class EntityFinder {
 
     /**
      * Finds all entity classes in the package for which the instance of this
-     * class was created.. The entity classes must be annotated with the
+     * class was created. The entity classes must be annotated with the
      * {@link Entity} annotation. The method uses the
      * <a href="https://code.google.com/p/reflections/">Reflections library</a>
      * for finding the entity classes.
-     *
-     * @param packageName   The packages in which the entities are found.
-     * @param entityClasses A set in which the entity classes are stored.
-     *
-     * @throws MojoFailureException if something goes wrong in the method.
+     * 
+     * @return An {@link Set} with all entity classes.
      */
     public Set<Class<?>> findEntities() {
         final Set<Class<?>> entityClasses = new HashSet<>();

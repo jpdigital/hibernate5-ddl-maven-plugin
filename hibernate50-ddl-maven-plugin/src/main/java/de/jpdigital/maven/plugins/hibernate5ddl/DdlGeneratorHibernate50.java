@@ -134,9 +134,7 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
      *
      * @param registryBuilder {@link StandardServiceRegistryBuilder} from
      *                        Hibernate.
-     * @param persistenceXml  The {@code persistence.xml} file to process
-     * @param log             Maven {@link Log} instance to use for printing
-     *                        what is done.
+     * @param mojo The plugin Mojo.
      */
     private void processPersistenceXml(
         final StandardServiceRegistryBuilder registryBuilder,
@@ -184,7 +182,7 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
 
     /**
      * A SAX Handler for processing the {@code persistence.xml} file. Used by
-     * {@link #processPersistenceXml(org.hibernate.boot.registry.StandardServiceRegistryBuilder, java.io.File, org.apache.maven.plugin.logging.Log)}.
+     * {@link #processPersistenceXml(org.hibernate.boot.registry.StandardServiceRegistryBuilder, de.jpdigital.maven.plugins.hibernate5ddl.GenerateDdlMojo)}.
      */
     private static class PersistenceXmlHandler extends DefaultHandler {
 
