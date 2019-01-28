@@ -98,8 +98,13 @@
         
         <dependency>
             <groupId>org.hibernate</groupId>
+<<<<<<< HEAD
             <artifactId>hibernate-entitymanager</artifactId>
             <version>5.2.17.Final</version>
+=======
+            <artifactId>hibernate-core</artifactId>
+            <version>5.2.10.Final</version>
+>>>>>>> b6ca554a501dc59c2679ba947d256cea49b711ef
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
