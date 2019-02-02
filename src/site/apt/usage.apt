@@ -63,43 +63,10 @@ Usage
     of the dialect. The class has must be available on the class path at build 
     time. Custom dialects are supported since version 2.1.
 
-    The second parameter are the packages which contain the entity classes.
+    The second parameter are the packages which contain the entity classes. 
 
-    If you use Envers in your project you have to add a third parameter to 
-    create the additional tables required by Envers:
-
-+------------------------------------------------------------------------------+
-<project>
-    [...]
-    <build>
-        [...]
-        <plugin>
-            <groupId>de.jpdigital</groupId>
-            <artifactId>hibernate5-ddl-maven-plugin-hibernate52</artifactId> <!-- Change to match your Hibernate version -->
-            <version>2.0.0</version> <!-- Change to latest version available -->
-            <configuration>
-                <dialects>
-                    <param>postgresql9</param>
-                </dialects>
-                <useEnvers>true</useEnvers>
-                <packages>
-                    <param>org.example.entities</param>
-                </packages>
-            </configuration>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>gen-ddl</goal>
-                    </goals>
-                    <phase>process-classes</phase>
-                </execution>
-            </executions>
-        </plugin>
-        [...]
-    </build>
-    [...]
-</project>
-+------------------------------------------------------------------------------+
+    If you are using Envers in some of your entities no additional configuration
+    is necessary. The usage of Envers is automatically detected by Hibernate.
 
 * Other parameters
 
