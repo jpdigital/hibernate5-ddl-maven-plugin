@@ -171,7 +171,10 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.0.1</version>
                 <configuration>
+                    <!--<additionalOptions>add-modules ALL-MODULE-PATH</additionalOptions>-->
+                    <detectLinks>true</detectLinks>
                     <doclint>none</doclint>
+                    <source>8</source>
                 </configuration>
                 <executions>
                     <execution>
@@ -247,21 +250,25 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.0.1</version>
                 <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <author>true</author>
+                    <breakiterator>true</breakiterator>
+                    <charset>UTF-8</charset>
+                    <docencoding>UTF-8</docencoding>
+                    <docfilessubdirs>true</docfilessubdirs>
+                    <doclint>none</doclint>
+                    <encoding>UTF-8</encoding>
+                    <detectLinks>true</detectLinks>
+                    <keywords>true</keywords>
+                    <!--                
                     <links>
                         <link>http://docs.oracle.com/javase/7/docs/api/</link>
                         <link>http://docs.jboss.org/hibernate/orm/4.3/javadocs/</link>
                     </links>
+                    -->
                     <show>private</show>
-                    <docfilessubdirs>true</docfilessubdirs>
-                    <charset>UTF-8</charset>
-                    <encoding>UTF-8</encoding>
-                    <docencoding>UTF-8</docencoding>
-                    <breakiterator>true</breakiterator>
+                    <source>8</source>
                     <version>true</version>
-                    <author>true</author>
-                    <keywords>true</keywords>
-                    <doclint>none</doclint>
-                    <additionalparam>-Xdoclint:none</additionalparam>
                 </configuration>
             </plugin>
             <plugin>
@@ -432,21 +439,25 @@
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>3.0.1</version>
                         <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                            <author>true</author>
+                            <breakiterator>true</breakiterator>
+                            <charset>UTF-8</charset>
+                            <docencoding>UTF-8</docencoding>
+                            <docfilessubdirs>true</docfilessubdirs>
+                            <doclint>none</doclint>
+                            <encoding>UTF-8</encoding>
+                            <detectLinks>true</detectLinks>
+                            <keywords>true</keywords>
+                            <!--                
                             <links>
                                 <link>http://docs.oracle.com/javase/7/docs/api/</link>
                                 <link>http://docs.jboss.org/hibernate/orm/4.3/javadocs/</link>
                             </links>
+                            -->
                             <show>private</show>
-                            <docfilessubdirs>true</docfilessubdirs>
-                            <charset>UTF-8</charset>
-                            <encoding>UTF-8</encoding>
-                            <docencoding>UTF-8</docencoding>
-                            <breakiterator>true</breakiterator>
+                            <source>8</source>
                             <version>true</version>
-                            <author>true</author>
-                            <keywords>true</keywords>
-                            <doclint>none</doclint>
-                            <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
                         <executions>
                             <execution>
@@ -576,20 +587,25 @@
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>3.0.1</version>
                         <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                            <author>true</author>
+                            <breakiterator>true</breakiterator>
+                            <charset>UTF-8</charset>
+                            <docencoding>UTF-8</docencoding>
+                            <docfilessubdirs>true</docfilessubdirs>
+                            <doclint>none</doclint>
+                            <encoding>UTF-8</encoding>
+                            <detectLinks>true</detectLinks>
+                            <keywords>true</keywords>
+                            <!--                
                             <links>
                                 <link>http://docs.oracle.com/javase/7/docs/api/</link>
                                 <link>http://docs.jboss.org/hibernate/orm/4.3/javadocs/</link>
                             </links>
+                            -->
                             <show>private</show>
-                            <docfilessubdirs>true</docfilessubdirs>
-                            <charset>UTF-8</charset>
-                            <encoding>UTF-8</encoding>
-                            <docencoding>UTF-8</docencoding>
-                            <breakiterator>true</breakiterator>
+                            <source>8</source>
                             <version>true</version>
-                            <author>true</author>
-                            <keywords>true</keywords>
-                            <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
                     </plugin>
                     <plugin>
