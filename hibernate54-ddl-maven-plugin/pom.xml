@@ -10,9 +10,9 @@
     </parent>
     
     <groupId>de.jpdigital</groupId>
-    <artifactId>hibernate51-ddl-maven-plugin</artifactId>
+    <artifactId>hibernate54-ddl-maven-plugin</artifactId>
     <version>2.3.0-SNAPSHOT</version>
-    <name>Maven DDL generator plugin for Hibernate 5.1</name>
+    <name>Maven DDL generator plugin for Hibernate 5.4</name>
     <packaging>maven-plugin</packaging>
     
     <url>https://github.com/jpdigital/hibernate5-ddl-maven-plugin</url>
@@ -99,23 +99,13 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.1.16.Final</version>
+            <version>5.4.1.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-envers</artifactId>
-            <version>5.1.17.Final</version>
+            <version>5.4.1.Final</version>
         </dependency>
-        
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-        </dependency>
-
         
         <dependency>
             <groupId>junit</groupId>
@@ -125,7 +115,7 @@
     </dependencies>
     
     <build>
-        <finalName>hibernate51-ddl-maven-plugin</finalName>
+        <finalName>hibernate54-ddl-maven-plugin</finalName>
         
         <plugins>
             <plugin>
@@ -181,6 +171,8 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.0.1</version>
                 <configuration>
+                    <!--<additionalOptions>add-modules ALL-MODULE-PATH</additionalOptions>-->
+                    <detectLinks>true</detectLinks>
                     <doclint>none</doclint>
                     <source>8</source>
                 </configuration>
@@ -266,8 +258,9 @@
                     <docfilessubdirs>true</docfilessubdirs>
                     <doclint>none</doclint>
                     <encoding>UTF-8</encoding>
+                    <detectLinks>true</detectLinks>
                     <keywords>true</keywords>
-                    <!--
+                    <!--                
                     <links>
                         <link>http://docs.oracle.com/javase/7/docs/api/</link>
                         <link>http://docs.jboss.org/hibernate/orm/4.3/javadocs/</link>
@@ -454,8 +447,9 @@
                             <docfilessubdirs>true</docfilessubdirs>
                             <doclint>none</doclint>
                             <encoding>UTF-8</encoding>
+                            <detectLinks>true</detectLinks>
                             <keywords>true</keywords>
-                            <!--
+                            <!--                
                             <links>
                                 <link>http://docs.oracle.com/javase/7/docs/api/</link>
                                 <link>http://docs.jboss.org/hibernate/orm/4.3/javadocs/</link>
@@ -566,7 +560,7 @@
                         <configuration>
                             <message>Updated project site for ${project.version}</message>
                             <repositoryName>hibernate5-ddl-maven-plugin</repositoryName>
-                            <path>hibernate51-ddl-maven-plugin</path>
+                            <path>hibernate54-ddl-maven-plugin</path>
                         </configuration>
                         <executions>
                             <execution>
@@ -601,8 +595,9 @@
                             <docfilessubdirs>true</docfilessubdirs>
                             <doclint>none</doclint>
                             <encoding>UTF-8</encoding>
+                            <detectLinks>true</detectLinks>
                             <keywords>true</keywords>
-                            <!--
+                            <!--                
                             <links>
                                 <link>http://docs.oracle.com/javase/7/docs/api/</link>
                                 <link>http://docs.jboss.org/hibernate/orm/4.3/javadocs/</link>

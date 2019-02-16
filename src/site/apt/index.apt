@@ -16,8 +16,8 @@ The Maven DDL plugin for Hibernate 5
     build against the most current Hibernate versions. The version of 
     Hibernate is part the artifact name. For example the 
     hibernate50-ddl-maven-plugin uses the latest version of the 5.0 branch of 
-    Hibernate. It is recommended to use the plugin for the same version branch as the Hibernate
-    version you project uses. 
+    Hibernate. It is recommended to use the plugin for the same version branch 
+as the Hibernate version you project uses. 
 
     The goals of this plugin are described at the Goals page. The Usage page
     provides informations about how the plugin is used.

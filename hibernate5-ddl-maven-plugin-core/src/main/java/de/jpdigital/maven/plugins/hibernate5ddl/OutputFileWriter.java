@@ -140,8 +140,6 @@ class OutputFileWriter {
     /**
      * Helper for creating the output directory if it does not exist.
      *
-     * @return A {@link Path} object describing the output directory.
-     *
      * @throws MojoFailureException If The creation of the output directory
      *                              fails.
      */

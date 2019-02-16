@@ -30,8 +30,8 @@ import org.apache.maven.plugin.logging.Log;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.hibernate.tool.schema.TargetType;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -39,6 +39,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.HashSet;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -47,11 +48,11 @@ import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Implementation of the {@link DdlGenerator} interface for Hibernate
- * {@literal 5.0}.
+ * {@literal 5.1}.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
-public class DdlGeneratorHibernate50 implements DdlGenerator {
+public class DdlGeneratorHibernate52 implements DdlGenerator {
 
     @Override
     public void generateDdl(final String dialectClassName,
@@ -81,10 +82,7 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
             metadataSources.addAnnotatedClass(entityClass);
         }
 
-        final Metadata metadata = metadataSources.buildMetadata();
-
-        final SchemaExport export = new SchemaExport(
-            (MetadataImplementor) metadata, true);
+        final SchemaExport export = new SchemaExport();
         export.setDelimiter(";");
 
         final Path tmpDir;
@@ -94,15 +92,22 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
             throw new MojoFailureException("Failed to create work dir.", ex);
         }
 
+        final Metadata metadata = metadataSources.buildMetadata();
+
+        export.setManageNamespaces(true);
         export.setOutputFile(String.format(
             "%s/%s.sql",
             tmpDir.toString(),
             mojo.getDialectNameFromClassName(dialectClassName)));
         export.setFormat(true);
         if (mojo.isCreateDropStatements()) {
-            export.execute(true, false, false, false);
+            export.execute(EnumSet.of(TargetType.SCRIPT),
+                           SchemaExport.Action.BOTH,
+                           metadata);
         } else {
-            export.execute(true, false, false, true);
+            export.execute(EnumSet.of(TargetType.SCRIPT),
+                           SchemaExport.Action.CREATE,
+                           metadata);
         }
 
         mojo.writeOutputFile(dialectClassName, tmpDir);
@@ -126,7 +131,6 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
         throws MojoFailureException {
 
         generateDdl(dialect.getDialectClassName(), entityClasses, mojo);
-
     }
 
     /**
@@ -134,7 +138,9 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
      *
      * @param registryBuilder {@link StandardServiceRegistryBuilder} from
      *                        Hibernate.
-     * @param mojo The plugin Mojo.
+     * @param persistenceXml  The {@code persistence.xml} file to process
+     * @param log             Maven {@link Log} instance to use for printing
+     *                        what is done.
      */
     private void processPersistenceXml(
         final StandardServiceRegistryBuilder registryBuilder,
@@ -147,7 +153,7 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
 
             if (Files.exists(persistenceXml.toPath())) {
                 try (final InputStream inputStream = new FileInputStream(
-                    persistenceXml)) {
+                    mojo.getPersistenceXml())) {
                     log.info("persistence.xml found, "
                                  + "looking for properties...");
 
@@ -159,7 +165,7 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
                         inputStream,
                         new PersistenceXmlHandler(
                             registryBuilder,
-                            log,
+                            mojo.getLog(),
                             new HashSet<>(Arrays
                                 .asList(mojo.getPersistencePropertiesToUse()))));
 
@@ -182,7 +188,7 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
 
     /**
      * A SAX Handler for processing the {@code persistence.xml} file. Used by
-     * {@link #processPersistenceXml(org.hibernate.boot.registry.StandardServiceRegistryBuilder, de.jpdigital.maven.plugins.hibernate5ddl.GenerateDdlMojo)}.
+     * {@link #processPersistenceXml(org.hibernate.boot.registry.StandardServiceRegistryBuilder, java.io.File, org.apache.maven.plugin.logging.Log)}.
      */
     private static class PersistenceXmlHandler extends DefaultHandler {
 

@@ -11,8 +11,6 @@
     <groupId>de.jpdigital</groupId>
     <artifactId>hibernate5-ddl-maven-plugin-core</artifactId>
     <version>2.3.0-SNAPSHOT</version>
-    <!--<version>1.0.1-hibernate-5.1.2.Final</version>-->
-    <!--<version>1.0.1-hibernate-5.2.4.Final</version>-->
     <packaging>jar</packaging>
 
     <name>Maven DDL generator plugin for Hibernate 5 Core</name>
@@ -115,18 +113,11 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-library</artifactId>
-        </dependency>
+        
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>javax.persistence</artifactId>
-            <version>2.1.0</version>
+            <version>2.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
@@ -167,7 +158,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -192,7 +183,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0-M1</version>
+                <version>3.0.1</version>
+                <configuration>
+                    <doclint>none</doclint>
+                    <source>8</source>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadoc-plugin</id>
@@ -229,67 +224,26 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20.1</version>
+                <version>3.0.0-M3</version>
                 <configuration>
                     <trimStackTrace>false</trimStackTrace>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <configuration>
-                    <instrumentation>
-                        <ignores>
-                            <ignore>de.jpdigital.maven.plugins.hibernate5ddl.HelpMojo</ignore>
-                        </ignores>
-                        <excludes>
-                            <exclude>de/jpdigital/maven/plugins/hibernate5ddl/HelpMojo*.class</exclude>
-                        </excludes>
-                    </instrumentation>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.8</version>
+                <version>3.11.0</version>
                 <configuration>
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
                     <targetJdk>1.8</targetJdk>
-                    <rulesets>
-                        <ruleset>/rulesets/java/basic.xml</ruleset>
-                        <ruleset>/rulesets/java/braces.xml</ruleset>
-                        <ruleset>/rulesets/java/clone.xml</ruleset>
-                        <ruleset>/rulesets/java/codesize.xml</ruleset>
-                        <ruleset>/rulesets/java/design.xml</ruleset>
-                        <ruleset>/rulesets/java/empty.xml</ruleset>
-                        <ruleset>/rulesets/java/finalizers.xml</ruleset>
-                        <ruleset>/rulesets/java/imports.xml</ruleset>
-                        <ruleset>/rulesets/java/javabeans.xml</ruleset>
-                        <ruleset>/rulesets/java/junit.xml</ruleset>
-                        <ruleset>/rulesets/java/naming.xml</ruleset>
-                        <ruleset>/rulesets/java/optimizations.xml</ruleset>
-                        <ruleset>/rulesets/java/strictexception.xml</ruleset>
-                        <ruleset>/rulesets/java/strings.xml</ruleset>
-                        <ruleset>/rulesets/java/sunsecure.xml</ruleset>
-                        <ruleset>/rulesets/java/typeresolution.xml</ruleset>
-                        <ruleset>/rulesets/java/unnecessary.xml</ruleset>
-                        <ruleset>/rulesets/java/unusedcode.xml</ruleset>
-                    </rulesets>
                 </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.6</version>
+                <version>3.7.1</version>
                 <configuration>
                 </configuration>
             </plugin>
@@ -302,101 +256,70 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
-                <version>3.5</version>
+                <version>3.6.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.0.1</version>
                 <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <author>true</author>
+                    <breakiterator>true</breakiterator>
+                    <docfilessubdirs>true</docfilessubdirs>
+                    <doclint>none</doclint>
+                    <charset>UTF-8</charset>
+                                        <docencoding>UTF-8</docencoding>
+                    <encoding>UTF-8</encoding>
+                    <keywords>true</keywords>
+                    <!--
                     <links>
                         <link>http://docs.oracle.com/javase/7/docs/api/</link>
                     </links>
+                    -->
                     <show>private</show>
-                    <docfilessubdirs>true</docfilessubdirs>
-                    <charset>UTF-8</charset>
-                    <encoding>UTF-8</encoding>
-                    <docencoding>UTF-8</docencoding>
-                    <breakiterator>true</breakiterator>
+                    <source>8</source>
                     <version>true</version>
-                    <author>true</author>
-                    <keywords>true</keywords>
-                    <additionalparam>-Xdoclint:none</additionalparam>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.5</version>
+                <version>3.0.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.20</version>
+                <version>3.0.0-M3</version>
                 <configuration>
                     <trimStackTrace>false</trimStackTrace>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <instrumentation>
-                        <ignores>
-                            <ignore>de.jpdigital.maven.plugins.hibernate5ddl.HelpMojo</ignore>
-                        </ignores>
-                        <excludes>
-                            <exclude>de/jpdigital/maven/plugins/hibernate5ddl/HelpMojo*.class</exclude>
-                        </excludes>
-                    </instrumentation>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.3</version>
+                <version>3.1.10</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.8</version>
+                <version>3.11.0</version>
                 <configuration>
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
                     <targetJdk>1.8</targetJdk>
-                    <rulesets>
-                        <ruleset>/rulesets/java/basic.xml</ruleset>
-                        <ruleset>/rulesets/java/braces.xml</ruleset>
-                        <ruleset>/rulesets/java/clone.xml</ruleset>
-                        <ruleset>/rulesets/java/codesize.xml</ruleset>
-                        <ruleset>/rulesets/java/design.xml</ruleset>
-                        <ruleset>/rulesets/java/empty.xml</ruleset>
-                        <ruleset>/rulesets/java/finalizers.xml</ruleset>
-                        <ruleset>/rulesets/java/imports.xml</ruleset>
-                        <ruleset>/rulesets/java/javabeans.xml</ruleset>
-                        <ruleset>/rulesets/java/junit.xml</ruleset>
-                        <ruleset>/rulesets/java/naming.xml</ruleset>
-                        <ruleset>/rulesets/java/optimizations.xml</ruleset>
-                        <ruleset>/rulesets/java/strictexception.xml</ruleset>
-                        <ruleset>/rulesets/java/strings.xml</ruleset>
-                        <ruleset>/rulesets/java/sunsecure.xml</ruleset>
-                        <ruleset>/rulesets/java/typeresolution.xml</ruleset>
-                        <ruleset>/rulesets/java/unnecessary.xml</ruleset>
-                        <ruleset>/rulesets/java/unusedcode.xml</ruleset>
-                    </rulesets>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.9</version>
+                <version>3.0.0</version>
                 <reportSets>
                     <reportSet>
                         <reports>
                             <report>dependencies</report>
                             <report>scm</report>
-                            <report>license</report>
+                            <report>licenses</report>
                         </reports>
                     </reportSet>
                 </reportSets>
@@ -412,7 +335,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-plugin-plugin</artifactId>
-                        <version>3.5</version>
+                        <version>3.6.0</version>
                         <configuration>
                             <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                         </configuration>
@@ -434,7 +357,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.6.1</version>
+                        <version>3.8.0</version>
                         <configuration>
                             <source>1.7</source>
                             <target>1.7</target>
@@ -446,60 +369,19 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.20</version>
+                        <version>3.0.0-M3</version>
                         <configuration>
                             <trimStackTrace>false</trimStackTrace>
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>cobertura-maven-plugin</artifactId>
-                        <configuration>
-                            <instrumentation>
-                                <ignores>
-                                    <ignore>de.jpdigital.maven.plugins.hibernate5ddl.HelpMojo</ignore>
-                                </ignores>
-                                <excludes>
-                                    <exclude>de/jpdigital/maven/plugins/hibernate5ddl/HelpMojo*.class</exclude>
-                                </excludes>
-                            </instrumentation>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>clean</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-pmd-plugin</artifactId>
-                        <version>3.8</version>
+                        <version>3.11.0</version>
                         <configuration>
                             <linkXref>true</linkXref>
                             <sourceEncoding>utf-8</sourceEncoding>
                             <targetJdk>1.7</targetJdk>
-                            <rulesets>
-                                <ruleset>/rulesets/java/basic.xml</ruleset>
-                                <ruleset>/rulesets/java/braces.xml</ruleset>
-                                <ruleset>/rulesets/java/clone.xml</ruleset>
-                                <ruleset>/rulesets/java/codesize.xml</ruleset>
-                                <ruleset>/rulesets/java/design.xml</ruleset>
-                                <ruleset>/rulesets/java/empty.xml</ruleset>
-                                <ruleset>/rulesets/java/finalizers.xml</ruleset>
-                                <ruleset>/rulesets/java/imports.xml</ruleset>
-                                <ruleset>/rulesets/java/javabeans.xml</ruleset>
-                                <ruleset>/rulesets/java/junit.xml</ruleset>
-                                <ruleset>/rulesets/java/naming.xml</ruleset>
-                                <ruleset>/rulesets/java/optimizations.xml</ruleset>
-                                <ruleset>/rulesets/java/strictexception.xml</ruleset>
-                                <ruleset>/rulesets/java/strings.xml</ruleset>
-                                <ruleset>/rulesets/java/sunsecure.xml</ruleset>
-                                <ruleset>/rulesets/java/typeresolution.xml</ruleset>
-                                <ruleset>/rulesets/java/unnecessary.xml</ruleset>
-                                <ruleset>/rulesets/java/unusedcode.xml</ruleset>
-                            </rulesets>
                         </configuration>
                     </plugin>
             
