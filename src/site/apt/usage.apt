@@ -91,6 +91,9 @@ Usage
     file. If both <<<outputFileNamePrefix>>> and <<<outputFileNameSuffix>>> their
     values are concatenated.
 
+    * <<<includeTestClasses>>> If set to true entities classes in src/test are
+    are included into the generated schema.
+
     * Starting with version 2.2 only specific properties from the 
     <<<persistence.xml>>> file are passed to hibernate. This properties can be
     configured using <<<persistencePropertiesToUse>>> parameter. Only properties
@@ -130,7 +133,7 @@ Usage
 
 * Maven repository
 
-    The plugin is available from the Maven Central repository, therefore so
+    The plugin is available from the Maven Central repository, therefore no
     special configuration is needed.
 
 * Include generated SQL scripts into project archive

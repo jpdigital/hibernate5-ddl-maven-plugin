@@ -69,16 +69,21 @@ final class EntityFinder {
     @SuppressWarnings("unchecked")
     public static EntityFinder forPackage(final MavenProject project,
                                           final Log log,
-                                          final String packageName)
+                                          final String packageName,
+                                          final boolean includeTestClasses)
         throws MojoFailureException {
+        
         final Reflections reflections;
         if (project == null) {
             reflections = new Reflections(
                 ClasspathHelper.forPackage(packageName));
         } else {
-            final List<String> classPathElems;
+            final List<String> classPathElems = new ArrayList<>();
             try {
-                classPathElems = project.getCompileClasspathElements();
+                classPathElems.addAll(project.getCompileClasspathElements());
+                if (includeTestClasses) {
+                    classPathElems.addAll(project.getTestClasspathElements());
+                }
             } catch (DependencyResolutionRequiredException ex) {
                 throw new MojoFailureException(
                     "Failed to resolve project classpath.", ex);

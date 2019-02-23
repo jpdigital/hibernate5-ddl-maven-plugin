@@ -93,6 +93,12 @@ public class GenerateDdlMojo extends AbstractMojo {
     private String[] packages;
 
     /**
+     * Set to {@code true} to include classes in {@code src/test}.
+     */
+    @Parameter(required = false)
+    private boolean includeTestClasses;
+
+    /**
      * Database dialects for which create scripts shall be generated. For
      * available dialects refer to the documentation the {@link Dialect}
      * enumeration.
@@ -154,8 +160,9 @@ public class GenerateDdlMojo extends AbstractMojo {
         //Find the entity classes in the packages.
         final Set<Class<?>> entityClasses = new HashSet<>();
         for (final String packageName : packages) {
-            final Set<Class<?>> packageEntities = EntityFinder.forPackage(
-                project, getLog(), packageName).findEntities();
+            final Set<Class<?>> packageEntities = EntityFinder
+                .forPackage(project, getLog(), packageName, includeTestClasses)
+                .findEntities();
             entityClasses.addAll(packageEntities);
         }
         getLog().info(String.format("Found %d entities.",
