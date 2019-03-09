@@ -30,7 +30,7 @@ import java.util.Locale;
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
-@SuppressWarnings("PMD.LongVariable")
+@SuppressWarnings({"PMD.LongVariable", "PMD.DataClass"})
 class OutputFileWriter {
 
     private File outputDirectory;

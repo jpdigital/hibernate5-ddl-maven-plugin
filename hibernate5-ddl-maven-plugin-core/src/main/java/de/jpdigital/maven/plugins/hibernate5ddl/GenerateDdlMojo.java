@@ -44,7 +44,7 @@ import java.util.Set;
       defaultPhase = LifecyclePhase.PROCESS_CLASSES,
       requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME,
       threadSafe = true)
-@SuppressWarnings({"PMD.LongVariable"})
+@SuppressWarnings({"PMD.LongVariable", "PMD.DataClass"})
 public class GenerateDdlMojo extends AbstractMojo {
 
     private final static String[] DEFAULT_PROPERTIES_TO_USE = new String[]{
@@ -142,6 +142,7 @@ public class GenerateDdlMojo extends AbstractMojo {
      *                                executed.
      */
     @Override
+    @SuppressWarnings({"PMD.CyclomaticComplexity"})
     public void execute() throws MojoExecutionException, MojoFailureException {
         final File outputDir = outputDirectory;
 
@@ -287,6 +288,14 @@ public class GenerateDdlMojo extends AbstractMojo {
                 .copyOf(persistencePropertiesToUse,
                         persistencePropertiesToUse.length);
         }
+    }
+
+    public boolean isIncludeTestClasses() {
+        return includeTestClasses;
+    }
+
+    public void setIncludeTestClasses(final boolean includeTestClasses) {
+        this.includeTestClasses = includeTestClasses;
     }
 
     /**

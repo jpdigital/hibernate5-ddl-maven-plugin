@@ -232,6 +232,9 @@
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
                     <targetJdk>1.8</targetJdk>
+                    <excludeRoots>
+                        <excludeRoot>target/generated-sources/plugin</excludeRoot>
+                    </excludeRoots>
                 </configuration>
             </plugin>
 
@@ -303,6 +306,9 @@
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
                     <targetJdk>1.8</targetJdk>
+                    <excludeRoots>
+                        <excludeRoot>target/generated-sources/plugin</excludeRoot>
+                    </excludeRoots>
                 </configuration>
             </plugin>
             <plugin>
@@ -414,6 +420,9 @@
                             <linkXref>true</linkXref>
                             <sourceEncoding>utf-8</sourceEncoding>
                             <targetJdk>1.8</targetJdk>
+                            <excludeRoots>
+                                <excludeRoot>target/generated-sources/plugin</excludeRoot>
+                            </excludeRoots>
                         </configuration>
                     </plugin>
             
@@ -547,6 +556,9 @@
                             <linkXref>true</linkXref>
                             <sourceEncoding>utf-8</sourceEncoding>
                             <targetJdk>1.8</targetJdk>
+                            <excludeRoots>
+                                <excludeRoot>target/generated-sources/plugin</excludeRoot>
+                            </excludeRoots>
                         </configuration>
                     </plugin>
             
@@ -638,6 +650,9 @@
                             <linkXref>true</linkXref>
                             <sourceEncoding>utf-8</sourceEncoding>
                             <targetJdk>1.8</targetJdk>
+                            <excludeRoots>
+                                <excludeRoot>target/generated-sources/plugin</excludeRoot>
+                            </excludeRoots>
                         </configuration>
                     </plugin>
                     <plugin>

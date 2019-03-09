@@ -146,7 +146,7 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
         if (persistenceXml != null) {
 
             if (Files.exists(persistenceXml.toPath())) {
-                try (final InputStream inputStream = new FileInputStream(
+                try (InputStream inputStream = new FileInputStream(
                     persistenceXml)) {
                     log.info("persistence.xml found, "
                                  + "looking for properties...");

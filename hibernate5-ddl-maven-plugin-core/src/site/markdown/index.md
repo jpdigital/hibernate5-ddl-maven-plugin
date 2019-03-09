@@ -1,13 +1,5 @@
-    ----------------------------------
-    DDL Generator for Hibernate 5 Core
-    ----------------------------------
-    Jens Pelzetter
-    ----------------------------------
-    2017-05-07
-    ----------------------------------
-    
-The Core Module
+# The Core Module
 
-    This module provides several shared component which are identical between
-    the several variants of the plugin. The Mojo class -the central part of a 
-    Maven plugin - is also part of this module. 
+This module provides several shared component which are identical between
+the several variants of the plugin. The Mojo class -the central part of a 
+Maven plugin - is also part of this module. 

@@ -66,7 +66,7 @@ final class EntityFinder {
      *                              by the {@code EntityFinder} can't be
      *                              created.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "PMD.LongVariable"})
     public static EntityFinder forPackage(final MavenProject project,
                                           final Log log,
                                           final String packageName,
@@ -125,6 +125,7 @@ final class EntityFinder {
      * 
      * @return An {@link Set} with all entity classes.
      */
+    @SuppressWarnings({"PMD.LongVariable"})
     public Set<Class<?>> findEntities() {
         final Set<Class<?>> entityClasses = new HashSet<>();
 
@@ -181,7 +182,7 @@ final class EntityFinder {
         public ClassLoader run() {
 
             final URLClassLoader classLoader = new URLClassLoader(
-                classPathUrls.toArray(new URL[classPathUrls.size()]),
+                classPathUrls.toArray(new URL[0]),
                 Thread.currentThread().getContextClassLoader());
             Thread.currentThread().setContextClassLoader(classLoader);
 

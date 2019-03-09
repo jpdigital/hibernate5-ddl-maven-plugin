@@ -123,7 +123,7 @@ public enum Dialect {
      *
      * @param dialectClass The dialect class for the specific dialect.
      */
-    private Dialect(final String dialectClass) {
+    Dialect(final String dialectClass) {
         this.dialectClassName = dialectClass;
     }
 
