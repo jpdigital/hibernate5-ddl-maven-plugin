@@ -23,6 +23,12 @@ the following plugin variants work only with Java 8:
 * hibernate53-ddl-maven-plugin
 * hibernate54-ddl-maven-plugin
 
+## Reporting issues
+
+If you have any issues please report them on Github: https://github.com/jpdigital/hibernate5-ddl-maven-plugin/issues 
+In most cases it is really helpful if include an example demostrating the issue. Please note that issues
+without an example may be closed *without* any comment.
+
 ## News
 
 ### 2018-05-16: Version 2.2.0
