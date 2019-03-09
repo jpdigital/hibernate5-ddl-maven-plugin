@@ -21,6 +21,7 @@ the following plugin variants work only with Java 8:
 * hibernate51-ddl-maven-plugin
 * hibernate52-ddl-maven-plugin
 * hibernate53-ddl-maven-plugin
+* hibernate54-ddl-maven-plugin
 
 ## News
 
