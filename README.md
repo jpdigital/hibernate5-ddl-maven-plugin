@@ -29,6 +29,11 @@ If you have any issues please report them on Github: https://github.com/jpdigita
 In most cases it is really helpful if include an example demostrating the issue. Please note that issues
 without an example may be closed *without* any comment.
 
+## Supporting the project
+
+If you find this project helpful please you can support the project using 
+[Paypal](https://paypal.me/jenspelzetter).
+
 ## News
 
 ### 2018-05-16: Version 2.2.0

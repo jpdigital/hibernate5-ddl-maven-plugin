@@ -20,4 +20,6 @@ Please note that this plugin is *not* an official Hibernate tool. It was
 created because I needed 
 the functionality provided by this plugin for several of my own projects.
 
+Please you find this project useful and want to support it you can do this 
+using [Paypal](https://paypal.me/jenspelzetter).
 
