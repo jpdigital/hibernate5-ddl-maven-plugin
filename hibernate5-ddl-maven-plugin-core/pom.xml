@@ -245,8 +245,7 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.7.1</version>
                 <configuration>
-                    <skip>true</skip>
-                    <skipDeploy>true</skipDeploy>
+             
                 </configuration>
             </plugin>
             
@@ -271,7 +270,7 @@
                     <docfilessubdirs>true</docfilessubdirs>
                     <doclint>none</doclint>
                     <charset>UTF-8</charset>
-                                        <docencoding>UTF-8</docencoding>
+                    <docencoding>UTF-8</docencoding>
                     <encoding>UTF-8</encoding>
                     <keywords>true</keywords>
                     <!--
@@ -330,6 +329,23 @@
     </reporting>
 
     <profiles>
+        
+        <profile>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.7.1</version>
+                        <configuration>
+                            <skip>true</skip>
+                            <skipDeploy>true</skipDeploy>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
         <profile>
             <id>gh-page</id>
             <build>
