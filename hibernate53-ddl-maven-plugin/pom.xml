@@ -431,6 +431,8 @@
                         <artifactId>maven-site-plugin</artifactId>
                         <version>3.7.1</version>
                         <configuration>
+                            <skip>true</skip>
+                            <skipDeploy>true</skipDeploy>
                         </configuration>
                     </plugin>
             
