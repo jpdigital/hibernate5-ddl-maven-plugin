@@ -20,7 +20,7 @@
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_comment"> * GNU General Public License for more details.</em>
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_comment"> * You should have received a copy of the GNU General Public License</em>
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> * along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/&gt;" target="alexandria_uri">http://www.gnu.org/licenses/&gt;</a>.</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> * along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/&gt;." target="alexandria_uri">http://www.gnu.org/licenses/&gt;.</a></em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">package</strong> de.jpdigital.maven.plugins.hibernate5ddl.tests.entities;
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  
@@ -40,7 +40,7 @@
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  @Entity
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  @Table(name = <span class="jxr_string">"persons"</span>)
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/Person.html">Person</a> <strong class="jxr_keyword">implements</strong> Serializable {
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="Person" href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/Person.html#Person">Person</a> <strong class="jxr_keyword">implements</strong> Serializable {
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -6805988424810784605L;
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  
@@ -57,13 +57,13 @@
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      @Column(name = <span class="jxr_string">"given_name"</span>)
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">private</strong> String givenName;
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      @Embedded
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/TextMixin.html">TextMixin</a> description;
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">private</strong> <a name="TextMixin" href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/TextMixin.html#TextMixin">TextMixin</a> description;
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/Person.html">Person</a>() {
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> <a name="Person" href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/Person.html#Person">Person</a>() {
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          <em class="jxr_comment">//Nothing</em>
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>      }
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/Person.html">Person</a>(<strong class="jxr_keyword">final</strong> String surname, <strong class="jxr_keyword">final</strong> String givenName) {
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">public</strong> <a name="Person" href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/Person.html#Person">Person</a>(<strong class="jxr_keyword">final</strong> String surname, <strong class="jxr_keyword">final</strong> String givenName) {
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">this</strong>.surname = surname;
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          <strong class="jxr_keyword">this</strong>.givenName = givenName;
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>      }
@@ -108,11 +108,11 @@
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>         <strong class="jxr_keyword">this</strong>.givenName = givenName;
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>     }
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>     
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/TextMixin.html">TextMixin</a> getDescription() {
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>     <strong class="jxr_keyword">public</strong> <a name="TextMixin" href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/TextMixin.html#TextMixin">TextMixin</a> getDescription() {
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>         <strong class="jxr_keyword">return</strong> description;
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>     }
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>     
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setDescription(<strong class="jxr_keyword">final</strong> <a href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/TextMixin.html">TextMixin</a> description) {
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setDescription(<strong class="jxr_keyword">final</strong> <a name="TextMixin" href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/TextMixin.html#TextMixin">TextMixin</a> description) {
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>         <strong class="jxr_keyword">this</strong>.description = description;
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>     }
 <a class="jxr_linenumber" name="L110" href="#L110">110</a> 
@@ -134,7 +134,7 @@
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>         <strong class="jxr_keyword">if</strong> (getClass() != obj.getClass()) {
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>             <strong class="jxr_keyword">return</strong> false;
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>         }
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/Person.html">Person</a> other = (Person) obj;
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>         <strong class="jxr_keyword">final</strong> <a name="Person"<a name="Person" href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/Person.html#Person">Person</a>"../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/Person.html#Person">Person</a> other = (<a name="Person" href="../../../../../../../de/jpdigital/maven/plugins/hibernate5ddl/tests/entities/Person.html#Person">Person</a>) obj;
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>         <strong class="jxr_keyword">if</strong> (!Objects.equals(<strong class="jxr_keyword">this</strong>.prefix, other.getPrefix())) {
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>             <strong class="jxr_keyword">return</strong> false;
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>         }
@@ -153,6 +153,6 @@
 <a class="jxr_linenumber" name="L145" href="#L145">145</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2016&#x2013;2018 <a href="http://www.jp-digital.de">Jens Pelzetter</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2016&#x2013;2019 <a href="http://www.jp-digital.de">Jens Pelzetter</a>. All rights reserved.</div>
 </body>
 </html>

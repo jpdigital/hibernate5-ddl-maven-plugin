@@ -20,7 +20,7 @@
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_comment"> * GNU General Public License for more details.</em>
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_comment"> * You should have received a copy of the GNU General Public License</em>
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> * along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/&gt;" target="alexandria_uri">http://www.gnu.org/licenses/&gt;</a>.</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> * along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/&gt;." target="alexandria_uri">http://www.gnu.org/licenses/&gt;.</a></em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">package</strong> de.jpdigital.maven.plugins.hibernate5ddl;
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  
@@ -40,7 +40,7 @@
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * @author &lt;a href="<a href="mailto:jens.pelzetter@googlemail.com" target="alexandria_uri">mailto:jens.pelzetter@googlemail.com</a>"&gt;Jens Pelzetter&lt;/a&gt;</em>
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGenerator.html">DdlGenerator</a> {
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a name="DdlGenerator" href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGenerator.html#DdlGenerator">DdlGenerator</a> {
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">     * Generates a SQL DDL file for a specific SQL dialect.</em>
@@ -55,9 +55,9 @@
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment">     * @see Dialect</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">void</strong> generateDdl(<a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/Dialect.html">Dialect</a> dialect,
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">void</strong> generateDdl(<a name="Dialect" href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/Dialect.html#Dialect">Dialect</a> dialect,
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>                       Set&lt;Class&lt;?&gt;&gt; entityClasses,
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>                       <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/GenerateDdlMojo.html">GenerateDdlMojo</a> mojo)
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>                       GenerateDdlMojo mojo)
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>          <strong class="jxr_keyword">throws</strong> MojoFailureException;
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>      <em class="jxr_javadoccomment">/**</em>
@@ -76,12 +76,12 @@
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">void</strong> generateDdl(String dialect,
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>                       Set&lt;Class&lt;?&gt;&gt; entityClasses,
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>                       <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/GenerateDdlMojo.html">GenerateDdlMojo</a> mojo)
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>                       GenerateDdlMojo mojo)
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">throws</strong> MojoFailureException;
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2016&#x2013;2018 <a href="http://www.jp-digital.de">Jens Pelzetter</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2016&#x2013;2019 <a href="http://www.jp-digital.de">Jens Pelzetter</a>. All rights reserved.</div>
 </body>
 </html>

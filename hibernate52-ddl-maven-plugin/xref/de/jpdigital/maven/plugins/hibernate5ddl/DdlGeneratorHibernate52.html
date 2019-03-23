@@ -20,7 +20,7 @@
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_comment"> * GNU General Public License for more details.</em>
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_comment"> * You should have received a copy of the GNU General Public License</em>
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> * along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/&gt;" target="alexandria_uri">http://www.gnu.org/licenses/&gt;</a>.</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> * along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/&gt;." target="alexandria_uri">http://www.gnu.org/licenses/&gt;.</a></em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">package</strong> de.jpdigital.maven.plugins.hibernate5ddl;
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  
@@ -60,7 +60,7 @@
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_javadoccomment"> * @author &lt;a href="<a href="mailto:jens.pelzetter@googlemail.com" target="alexandria_uri">mailto:jens.pelzetter@googlemail.com</a>"&gt;Jens Pelzetter&lt;/a&gt;</em>
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate52.html">DdlGeneratorHibernate52</a> <strong class="jxr_keyword">implements</strong> DdlGenerator {
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="DdlGeneratorHibernate52" href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate52.html#DdlGeneratorHibernate52">DdlGeneratorHibernate52</a> <strong class="jxr_keyword">implements</strong> DdlGenerator {
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>      @Override
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> generateDdl(<strong class="jxr_keyword">final</strong> String dialectClassName,
@@ -160,7 +160,7 @@
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>         <strong class="jxr_keyword">if</strong> (persistenceXml != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L153" href="#L153">153</a> 
 <a class="jxr_linenumber" name="L154" href="#L154">154</a>             <strong class="jxr_keyword">if</strong> (Files.exists(persistenceXml.toPath())) {
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>                 <strong class="jxr_keyword">try</strong> (<strong class="jxr_keyword">final</strong> InputStream inputStream = <strong class="jxr_keyword">new</strong> FileInputStream(
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>                 <strong class="jxr_keyword">try</strong> (InputStream inputStream = <strong class="jxr_keyword">new</strong> FileInputStream(
 <a class="jxr_linenumber" name="L156" href="#L156">156</a>                     mojo.getPersistenceXml())) {
 <a class="jxr_linenumber" name="L157" href="#L157">157</a>                     log.info(<span class="jxr_string">"persistence.xml found, "</span>
 <a class="jxr_linenumber" name="L158" href="#L158">158</a>                                  + <span class="jxr_string">"looking for properties..."</span>);
@@ -171,7 +171,7 @@
 <a class="jxr_linenumber" name="L163" href="#L163">163</a> 
 <a class="jxr_linenumber" name="L164" href="#L164">164</a>                     parser.parse(
 <a class="jxr_linenumber" name="L165" href="#L165">165</a>                         inputStream,
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>                         <strong class="jxr_keyword">new</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate52.html">PersistenceXmlHandler</a>(
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>                         <strong class="jxr_keyword">new</strong> PersistenceXmlHandler(
 <a class="jxr_linenumber" name="L167" href="#L167">167</a>                             registryBuilder,
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>                             mojo.getLog(),
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>                             <strong class="jxr_keyword">new</strong> HashSet&lt;&gt;(Arrays
@@ -198,14 +198,14 @@
 <a class="jxr_linenumber" name="L190" href="#L190">190</a> <em class="jxr_javadoccomment">     * A SAX Handler for processing the {@code persistence.xml} file. Used by</em>
 <a class="jxr_linenumber" name="L191" href="#L191">191</a> <em class="jxr_javadoccomment">     * {@link #processPersistenceXml(org.hibernate.boot.registry.StandardServiceRegistryBuilder, java.io.File, org.apache.maven.plugin.logging.Log)}.</em>
 <a class="jxr_linenumber" name="L192" href="#L192">192</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L193" href="#L193">193</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate52.html">PersistenceXmlHandler</a> <strong class="jxr_keyword">extends</strong> DefaultHandler {
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> PersistenceXmlHandler <strong class="jxr_keyword">extends</strong> DefaultHandler {
 <a class="jxr_linenumber" name="L194" href="#L194">194</a> 
 <a class="jxr_linenumber" name="L195" href="#L195">195</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> StandardServiceRegistryBuilder registryBuilder;
 <a class="jxr_linenumber" name="L196" href="#L196">196</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> Set&lt;String&gt; propertiesToUse;
 <a class="jxr_linenumber" name="L197" href="#L197">197</a> 
 <a class="jxr_linenumber" name="L198" href="#L198">198</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> Log log;
 <a class="jxr_linenumber" name="L199" href="#L199">199</a> 
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../../de/jpdigital/maven/plugins/hibernate5ddl/DdlGeneratorHibernate52.html">PersistenceXmlHandler</a>(
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>         <strong class="jxr_keyword">public</strong> PersistenceXmlHandler(
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>             <strong class="jxr_keyword">final</strong> StandardServiceRegistryBuilder registryBuilder,
 <a class="jxr_linenumber" name="L202" href="#L202">202</a>             <strong class="jxr_keyword">final</strong> Log log,
 <a class="jxr_linenumber" name="L203" href="#L203">203</a>             <strong class="jxr_keyword">final</strong> Set&lt;String&gt; propertiesToUse) {
@@ -248,6 +248,6 @@
 <a class="jxr_linenumber" name="L240" href="#L240">240</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2016&#x2013;2018 <a href="http://www.jp-digital.de">Jens Pelzetter</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2016&#x2013;2019 <a href="http://www.jp-digital.de">Jens Pelzetter</a>. All rights reserved.</div>
 </body>
 </html>
