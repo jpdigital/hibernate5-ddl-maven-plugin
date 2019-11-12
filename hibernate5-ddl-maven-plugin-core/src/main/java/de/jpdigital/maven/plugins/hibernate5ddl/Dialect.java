@@ -42,7 +42,7 @@ public enum Dialect {
     DB2400("org.hibernate.dialect.DB2400Dialect"),
     DB2_AS400("org.hibernate.dialect.DB2400Dialect"),
     DB2_OS390("org.hibernate.dialect.DB2390Dialect"),
-    DERBY("org.hibernate.dialect.DertyDialect.class.getName()"),
+    DERBY("org.hibernate.dialect.DerbyDialect.class.getName()"),
     DERBY_10_5("org.hibernate.dialect.DerbyTenFiveDialect"),
     DERBY_10_6("org.hibernate.dialect.DerbyTenSixDialect"),
     DERBY_10_7("org.hibernate.dialect.DerbyTenSevenDialect"),
