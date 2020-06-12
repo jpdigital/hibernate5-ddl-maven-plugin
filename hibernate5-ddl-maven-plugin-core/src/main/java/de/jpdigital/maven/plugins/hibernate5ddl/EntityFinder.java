@@ -39,7 +39,7 @@ import javax.persistence.Entity;
 
 /**
  * Helper class for finding the entity classes. An instance of this class is
- * created using the {@link #forPackage(MavenProject, Log, String)} method.
+ * created using the {@link EntityFinder#forPackage(org.apache.maven.project.MavenProject, org.apache.maven.plugin.logging.Log, java.lang.String, boolean)} method.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
