@@ -113,7 +113,7 @@ public class DdlMojoTest {
 
     /**
      * Check that no Exception is thrown when a file that does not exist is
-     * injected into {@link GenerateDdlMojo#persistenceXml and then executed.
+     * injected into {@link GenerateDdlMojo#persistenceXml} and then executed.
      *
      * @throws org.apache.maven.plugin.MojoExecutionException
      * @throws org.apache.maven.plugin.MojoFailureException
