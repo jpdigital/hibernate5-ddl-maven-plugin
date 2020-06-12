@@ -41,11 +41,7 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
     </distributionManagement>
-
-    <prerequisites>
-        <maven>3.0.4</maven>
-    </prerequisites>
-
+    
     <inceptionYear>2016</inceptionYear>
     
     <licenses>
@@ -236,33 +232,6 @@
                         <linkXref>true</linkXref>
                         <sourceEncoding>utf-8</sourceEncoding>
                         <targetJdk>1.8</targetJdk>
-                        <rulesets>
-<!--                            <ruleset>/category/java/bestpractices.xml</ruleset>
-                            <ruleset>/caregory/java/codestyle.xml</ruleset>
-                            <ruleset>/caregory/java/design.xml</ruleset>
-                            <ruleset>/caregory/java/codestyle.xml</ruleset>
-                            <ruleset>/caregory/java/documentation.xml</ruleset>
-                            <ruleset>/caregory/java/errorprone.xml</ruleset>-->
-                            
-                            <!--<ruleset>/rulesets/java/basic.xml</ruleset>-->
-<!--                            <ruleset>/rulesets/java/braces.xml</ruleset>
-                            <ruleset>/rulesets/java/clone.xml</ruleset>
-                            <ruleset>/rulesets/java/codesize.xml</ruleset>
-                            <ruleset>/rulesets/java/design.xml</ruleset>
-                            <ruleset>/rulesets/java/empty.xml</ruleset>
-                            <ruleset>/rulesets/java/finalizers.xml</ruleset>
-                            <ruleset>/rulesets/java/imports.xml</ruleset>
-                            <ruleset>/rulesets/java/javabeans.xml</ruleset>
-                            <ruleset>/rulesets/java/junit.xml</ruleset>
-                            <ruleset>/rulesets/java/naming.xml</ruleset>
-                            <ruleset>/rulesets/java/optimizations.xml</ruleset>
-                            <ruleset>/rulesets/java/strictexception.xml</ruleset>
-                            <ruleset>/rulesets/java/strings.xml</ruleset>
-                            <ruleset>/rulesets/java/sunsecure.xml</ruleset>
-                            <ruleset>/rulesets/java/typeresolution.xml</ruleset>
-                            <ruleset>/rulesets/java/unnecessary.xml</ruleset>
-                            <ruleset>/rulesets/java/unusedcode.xml</ruleset>-->
-                        </rulesets>
                     </configuration>
                 </plugin>
                 
@@ -361,6 +330,12 @@
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>4.0.0</version>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-invoker-plugin</artifactId>
+                    <version>3.2.1</version>
                 </plugin>
                 
             </plugins>

@@ -39,10 +39,6 @@
         </repository>
     </distributionManagement>
 
-    <prerequisites>
-        <maven>3.0.4</maven>
-    </prerequisites>
-
     <inceptionYear>2016</inceptionYear>
     
     <licenses>
@@ -152,12 +148,12 @@
                             <goal>descriptor</goal>
                         </goals>
                     </execution>
-                    <execution>
+<!--                    <execution>
                         <id>help-goal</id>
                         <goals>
                             <goal>helpmojo</goal>
                         </goals>
-                    </execution>
+                    </execution>-->
                 </executions>
             </plugin>
             <plugin>

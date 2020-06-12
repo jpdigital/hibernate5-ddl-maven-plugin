@@ -79,7 +79,7 @@ public class GenerateDdlMojo extends AbstractMojo {
     /**
      * If set to true <strong>and</strong> if only one dialect is configured
      * <strong>and</strong> either {@link #outputFileNamePrefix} or
-     * {@link outputFileNameSuffix} are set the dialect name will be omitted
+     * {@link #outputFileNameSuffix} are set the dialect name will be omitted
      * from the name of the DDL file.
      */
     @Parameter(required = false)
