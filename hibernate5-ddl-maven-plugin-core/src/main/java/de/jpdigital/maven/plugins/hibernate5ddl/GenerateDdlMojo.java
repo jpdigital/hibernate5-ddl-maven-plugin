@@ -28,8 +28,10 @@ import org.apache.maven.project.MavenProject;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
 
@@ -57,7 +59,7 @@ public class GenerateDdlMojo extends AbstractMojo {
      * Location of the output file.
      */
     @Parameter(defaultValue
-                   = "${project.build.directory}/generated-resources/sql/ddl/auto",
+        = "${project.build.directory}/generated-resources/sql/ddl/auto",
                property = "outputDir",
                required = true)
     private File outputDirectory;
@@ -125,14 +127,22 @@ public class GenerateDdlMojo extends AbstractMojo {
      */
     @Parameter(
         defaultValue = "${basedir}/src/main/resources/META-INF/persistence.xml",
-        required = false)
+        required = false
+    )
     private File persistenceXml;
 
     @Parameter(required = false)
     private String[] persistencePropertiesToUse;
 
+    @Parameter(required = false)
+    private Map<String, String> persistenceProperties;
+
     @Parameter(defaultValue = "${project}", readonly = true)
     private transient MavenProject project;
+
+    public GenerateDdlMojo() {
+        this.persistenceProperties = new HashMap<>();
+    }
 
     /**
      * The Mojo's execute method.
@@ -146,15 +156,17 @@ public class GenerateDdlMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         final File outputDir = outputDirectory;
 
-        getLog().info(String.format("Generating DDL SQL files in %s.",
-                                    outputDir.getAbsolutePath()));
+        getLog().info(String.format(
+            "Generating DDL SQL files in %s.", outputDir.getAbsolutePath())
+        );
 
         //Check if the output directory exists.
         if (!outputDir.exists()) {
             final boolean result = outputDir.mkdirs();
             if (!result) {
                 throw new MojoFailureException(
-                    "Failed to create output directory for SQL DDL files.");
+                    "Failed to create output directory for SQL DDL files."
+                );
             }
         }
 
@@ -166,8 +178,29 @@ public class GenerateDdlMojo extends AbstractMojo {
                 .findEntities();
             entityClasses.addAll(packageEntities);
         }
-        getLog().info(String.format("Found %d entities.",
-                                    entityClasses.size()));
+        getLog().info(
+            String.format(
+                "Found %d entities.", entityClasses.size()
+            )
+        );
+
+        if (getPersistenceProperties().isEmpty()) {
+            getLog().info("No persistence properties set in POM.");
+        } else {
+            getLog().info("Persistence properties set in POM:");
+            getPersistenceProperties()
+                .entrySet()
+                .stream()
+                .forEach(
+                    property -> getLog().info(
+                        String.format(
+                            "\t%s = %s",
+                            property.getKey(),
+                            property.getValue()
+                        )
+                    )
+                );
+        }
 
         // Find the DDL generator implementation to use.
         final ServiceLoader<DdlGenerator> serviceLoader = ServiceLoader
@@ -176,9 +209,12 @@ public class GenerateDdlMojo extends AbstractMojo {
         if (serviceLoader.iterator().hasNext()) {
             ddlGenerator = serviceLoader.iterator().next();
         } else {
-            throw new MojoFailureException(String.format(
-                "No implementation of '%s' is available.",
-                DdlGenerator.class.getName()));
+            throw new MojoFailureException(
+                String.format(
+                    "No implementation of '%s' is available.",
+                    DdlGenerator.class.getName()
+                )
+            );
         }
 
         for (final Dialect dialect : convertDialects()) {
@@ -288,6 +324,16 @@ public class GenerateDdlMojo extends AbstractMojo {
                 .copyOf(persistencePropertiesToUse,
                         persistencePropertiesToUse.length);
         }
+    }
+
+    public Map<String, String> getPersistenceProperties() {
+        return new HashMap<>(persistenceProperties);
+    }
+
+    public void setPersistenceProperties(
+        final Map<String, String> persistenceProperties
+    ) {
+        this.persistenceProperties = new HashMap<>(persistenceProperties);
     }
 
     public boolean isIncludeTestClasses() {
