@@ -87,11 +87,6 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
                 )
                 .filter(
                     property -> !property.getKey().equals(
-                        "hibernate.hbm2ddl.auto"
-                    )
-                )
-                .filter(
-                    property -> !property.getKey().equals(
                         "hibernate.dialect"
                     )
                 )
