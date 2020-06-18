@@ -21,7 +21,10 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -39,7 +42,9 @@ import javax.persistence.Entity;
 
 /**
  * Helper class for finding the entity classes. An instance of this class is
- * created using the {@link EntityFinder#forPackage(org.apache.maven.project.MavenProject, org.apache.maven.plugin.logging.Log, java.lang.String, boolean)} method.
+ * created using the
+ * {@link EntityFinder#forPackage(org.apache.maven.project.MavenProject, org.apache.maven.plugin.logging.Log, java.lang.String, boolean)}
+ * method.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
@@ -72,7 +77,7 @@ final class EntityFinder {
                                           final String packageName,
                                           final boolean includeTestClasses)
         throws MojoFailureException {
-        
+
         final Reflections reflections;
         if (project == null) {
             reflections = new Reflections(
@@ -107,7 +112,21 @@ final class EntityFinder {
                 .doPrivileged(new ClassLoaderCreator(classPathUrls));
 
             reflections = new Reflections(
-                ClasspathHelper.forPackage(packageName, classLoader));
+                new ConfigurationBuilder()
+                    .setUrls(
+                        ClasspathHelper.forPackage(
+                            packageName, classLoader
+                        )
+                    )
+                    .setScanners(
+                        new SubTypesScanner(),
+                        new TypeAnnotationsScanner()
+                    )
+            );
+//            reflections = new Reflections(
+//                ClasspathHelper.forPackage(packageName, classLoader),
+//                new TypeAnnotationsScanner()
+//            );
 
         }
 
@@ -115,14 +134,13 @@ final class EntityFinder {
     }
 
     /**
-     * Finds all entity classes and all converter classes
-     * in the package for which the instance of this
-     * class was created. The entity classes must be annotated with the
-     * {@link Entity} annotation, the converter classes must be annotated with 
-     * the {@link Converter} annotation. The method uses the
+     * Finds all entity classes and all converter classes in the package for
+     * which the instance of this class was created. The entity classes must be
+     * annotated with the {@link Entity} annotation, the converter classes must
+     * be annotated with the {@link Converter} annotation. The method uses the
      * <a href="https://code.google.com/p/reflections/">Reflections library</a>
      * for finding the entity classes.
-     * 
+     *
      * @return An {@link Set} with all entity classes.
      */
     @SuppressWarnings({"PMD.LongVariable"})
@@ -135,7 +153,7 @@ final class EntityFinder {
             entityClasses.add(entityClass);
         }
         final Set<Class<?>> classesWithConverter = reflections
-                .getTypesAnnotatedWith(Converter.class);
+            .getTypesAnnotatedWith(Converter.class);
         for (final Class<?> entityClass : classesWithConverter) {
             entityClasses.add(entityClass);
         }

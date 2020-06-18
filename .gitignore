@@ -11,3 +11,4 @@
 *.releaseBackupi
 
 *.log
+/hibernate5-ddl-maven-plugin-core/nbproject/

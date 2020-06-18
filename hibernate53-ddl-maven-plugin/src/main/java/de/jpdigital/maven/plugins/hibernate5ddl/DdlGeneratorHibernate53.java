@@ -41,6 +41,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -72,6 +74,43 @@ public class DdlGeneratorHibernate53 implements DdlGenerator {
         }
 
         registryBuilder.applySetting("hibernate.dialect", dialectClassName);
+
+        if (!mojo.getPersistenceProperties().isEmpty()) {
+            mojo.getLog().info("Applying persistence properties set in POM...");
+            final Map<String, String> properties = mojo
+                .getPersistenceProperties()
+                .entrySet()
+                .stream()
+                .filter(
+                    property -> !property.getKey().equals(
+                        "hibernate.hbm2ddl.auto"
+                    )
+                )
+                .filter(
+                    property -> !property.getKey().equals(
+                        "hibernate.dialect"
+                    )
+                )
+                .collect(
+                    Collectors.toMap(
+                        property -> property.getKey(),
+                        property -> property.getValue()
+                    )
+                );
+
+            for (final Map.Entry<String, String> property : properties
+                .entrySet()) {
+                mojo.getLog().info(
+                    String.format(
+                        "Setting peristence property %s = %s",
+                        property.getKey(),
+                        property.getValue()
+                    )
+                );
+            }
+
+            registryBuilder.applySettings(properties);
+        }
 
         final StandardServiceRegistry standardRegistry = registryBuilder.build();
 
