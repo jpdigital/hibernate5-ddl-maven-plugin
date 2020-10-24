@@ -16,30 +16,37 @@
  */
 package de.jpdigital.maven.plugins.hibernate5ddl;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Locale;
-
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.project.MavenProject;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mockito;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -53,11 +60,13 @@ public class DdlMojoTest {
      * Directory to place the test files in
      */
     private static final String TEST_DIR = "target/test/ddl/test";
+
     /**
      * Path to a mock {@code persistence.xml} file.
      */
     private static final String TEST_PERSISTENCE_XML
-                                    = "src/test/resources/test-persistence.xml";
+        = "src/test/resources/test-persistence.xml";
+
     /**
      * An instance of the Mojo under test.
      */
@@ -80,6 +89,24 @@ public class DdlMojoTest {
     @Before
     public void setUp() {
         mojo = new GenerateDdlMojo();
+        final MavenProject project = Mockito.mock(MavenProject.class);
+        final String[] compileClassPathElements = {
+            "/com/google",
+            "/com/google/common",
+            "/com/google/common/collect",
+            "/de/jpdigital/maven.plugins/hibernate5ddl",
+            "/de/jpdigital/maven.plugins/hibernate5ddl.entities",
+            "/de/jpdigital/maven.plugins/hibernate5ddl.entities2"
+        };
+        try {
+            Mockito.when(project.getCompileClasspathElements()).thenReturn(
+                Arrays.asList(compileClassPathElements)
+            );
+        } catch (DependencyResolutionRequiredException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        mojo.setProject(project);
     }
 
     /**
@@ -127,11 +154,11 @@ public class DdlMojoTest {
 
         mojo.setOutputDirectory(new File(TEST_DIR));
 
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-        mojo.setPackages(packages);
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] dialects = new String[]{
             "mysql5"
@@ -159,11 +186,11 @@ public class DdlMojoTest {
                                      IOException {
         mojo.setOutputDirectory(new File(TEST_DIR));
 
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-        mojo.setPackages(packages);
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] dialects = new String[]{
             "hsql",
@@ -238,11 +265,11 @@ public class DdlMojoTest {
                                              IOException {
         mojo.setOutputDirectory(new File(TEST_DIR));
 
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-        mojo.setPackages(packages);
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] dialects = new String[]{
             "hsql",
@@ -318,11 +345,11 @@ public class DdlMojoTest {
                                             IOException {
         mojo.setOutputDirectory(new File(TEST_DIR));
 
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-        mojo.setPackages(packages);
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] dialects = new String[]{
             "hsql",
@@ -391,11 +418,11 @@ public class DdlMojoTest {
                                                     IOException {
         mojo.setOutputDirectory(new File(TEST_DIR));
 
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-        mojo.setPackages(packages);
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] dialects = new String[]{
             "hsql",
@@ -468,17 +495,16 @@ public class DdlMojoTest {
      *                                (expected here)
      */
     @Test(expected
-              = MojoFailureException.class)
+        = MojoFailureException.class)
     public void illegalDialect() throws MojoExecutionException,
                                         MojoFailureException {
         mojo.setOutputDirectory(new File(TEST_DIR));
 
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-
-        mojo.setPackages(packages);
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] dialects = new String[]{
             "fooDB"
@@ -492,11 +518,11 @@ public class DdlMojoTest {
     public void checkOutputDirGetter() {
         mojo.setOutputDirectory(new File(TEST_DIR));
 
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-        mojo.setPackages(packages);
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] dialects = new String[]{
             "hsql",
@@ -519,11 +545,11 @@ public class DdlMojoTest {
     public void checkPackagesGetter() {
         mojo.setOutputDirectory(new File(TEST_DIR));
 
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-        mojo.setPackages(packages);
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] dialects = new String[]{
             "hsql",
@@ -550,11 +576,11 @@ public class DdlMojoTest {
     public void checkDialectsGetter() {
         mojo.setOutputDirectory(new File(TEST_DIR));
 
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-        mojo.setPackages(packages);
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] dialects = new String[]{
             "hsql",
@@ -673,11 +699,11 @@ public class DdlMojoTest {
                                                        InterruptedException {
         mojo.setOutputDirectory(new File(TEST_DIR));
 
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-        mojo.setPackages(packages);
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] dialects = new String[]{
             "hsql",
@@ -735,11 +761,11 @@ public class DdlMojoTest {
                                                        IOException {
         mojo.setOutputDirectory(new File(TEST_DIR));
 
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-        mojo.setPackages(packages);
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] dialects = new String[]{
             "hsql",
@@ -764,8 +790,6 @@ public class DdlMojoTest {
                         StandardOpenOption.APPEND);
             timestamps.put(dialect, file.lastModified());
         }
-
-        mojo.setPackages(packages);
 
         Thread.sleep(2500);
         mojo.execute();
@@ -801,12 +825,12 @@ public class DdlMojoTest {
                                                      IOException {
 
         mojo.setOutputDirectory(new File(TEST_DIR));
-
-        final String[] packages = new String[]{
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
-            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
-        };
-        mojo.setPackages(packages);
+//
+//        final String[] packages = new String[]{
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities",
+//            "de.jpdigital.maven.plugins.hibernate5ddl.tests.entities2"
+//        };
+//        mojo.setPackages(packages);
 
         final String[] customDialects = new String[]{
             "org.hibernate.dialect.PostgreSQL92Dialect"
