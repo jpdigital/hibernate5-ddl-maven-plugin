@@ -171,13 +171,17 @@ public class GenerateDdlMojo extends AbstractMojo {
         }
 
         //Find the entity classes in the packages.
-        final Set<Class<?>> entityClasses = new HashSet<>();
-        for (final String packageName : packages) {
-            final Set<Class<?>> packageEntities = EntityFinder
-                .forPackage(project, getLog(), packageName, includeTestClasses)
-                .findEntities();
-            entityClasses.addAll(packageEntities);
-        }
+//        final Set<Class<?>> entityClasses = new HashSet<>();
+//        for (final String packageName : packages) {
+//            final Set<Class<?>> packageEntities = EntityFinder
+//                .forPackage(project, getLog(), packageName, includeTestClasses)
+//                .findEntities();
+//            entityClasses.addAll(packageEntities);
+//        }
+        final Set<Class<?>> entityClasses =  EntityFinder
+            .forClassPath(project, getLog(), includeTestClasses)
+            .findEntities();
+        
         getLog().info(
             String.format(
                 "Found %d entities.", entityClasses.size()
@@ -334,6 +338,14 @@ public class GenerateDdlMojo extends AbstractMojo {
         final Map<String, String> persistenceProperties
     ) {
         this.persistenceProperties = new HashMap<>(persistenceProperties);
+    }
+    
+    protected MavenProject getProject() {
+        return project;
+    }
+    
+    protected void setProject(final MavenProject project) {
+        this.project = project;
     }
 
     public boolean isIncludeTestClasses() {

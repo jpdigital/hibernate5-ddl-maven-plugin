@@ -35,6 +35,7 @@ import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Converter;
@@ -54,6 +55,62 @@ final class EntityFinder {
 
     private EntityFinder(final Reflections reflections) {
         this.reflections = reflections;
+    }
+
+    public static EntityFinder forClassPath(
+        final MavenProject project,
+        final Log log,
+        final boolean includeTestClasses
+    ) throws MojoFailureException {
+        final Reflections reflections;
+
+        Objects.requireNonNull(project, "Parameter project is null");
+        
+        final List<String> classPathElements = new ArrayList<>();
+        try {
+            classPathElements.addAll(project.getCompileClasspathElements());
+            if (includeTestClasses) {
+                classPathElements.addAll(project.getTestClasspathElements());
+            }
+        } catch (DependencyResolutionRequiredException ex) {
+            throw new MojoFailureException(
+                "Failed to resolve project classpath.", ex
+            );
+        }
+
+        final List<URL> classPathUrls = new ArrayList<>();
+        for (final String classPathElem : classPathElements) {
+            log.info(
+                String.format(
+                    "Adding classpath elemement '%s'...", classPathElem
+                )
+            );
+            classPathUrls.add(classPathElemToUrl(classPathElem));
+        }
+
+        log.info("Classpath URLs:");
+        for (final URL url : classPathUrls) {
+            log.info(String.format("\t%s", url.toString()));
+        }
+
+        //Here we have to do some classloader magic to ensure that the 
+        //Reflections instance uses the correct class loader. Which is the 
+        //one that has access to the compiled classes
+        final ClassLoader classLoader = AccessController.doPrivileged(
+            new ClassLoaderCreator(classPathUrls)
+        );
+
+        reflections = new Reflections(
+            new ConfigurationBuilder()
+                .setUrls(
+                    ClasspathHelper.forClassLoader(classLoader)
+                )
+                .setScanners(
+                    new SubTypesScanner(),
+                    new TypeAnnotationsScanner()
+                )
+        );
+        return new EntityFinder(reflections);
     }
 
     /**
@@ -81,23 +138,28 @@ final class EntityFinder {
         final Reflections reflections;
         if (project == null) {
             reflections = new Reflections(
-                ClasspathHelper.forPackage(packageName));
+                ClasspathHelper.forPackage(packageName)
+            );
         } else {
-            final List<String> classPathElems = new ArrayList<>();
+            final List<String> classPathElements = new ArrayList<>();
             try {
-                classPathElems.addAll(project.getCompileClasspathElements());
+                classPathElements.addAll(project.getCompileClasspathElements());
                 if (includeTestClasses) {
-                    classPathElems.addAll(project.getTestClasspathElements());
+                    classPathElements.addAll(project.getTestClasspathElements());
                 }
             } catch (DependencyResolutionRequiredException ex) {
                 throw new MojoFailureException(
-                    "Failed to resolve project classpath.", ex);
+                    "Failed to resolve project classpath.", ex
+                );
             }
             final List<URL> classPathUrls = new ArrayList<>();
-            for (final String classPathElem : classPathElems) {
-                log.info(String.format("Adding classpath elemement '%s'...",
-                                       classPathElem));
-                classPathUrls.add(classPathElemToUrl(classPathElem));
+            for (final String classPathElement : classPathElements) {
+                log.info(
+                    String.format(
+                        "Adding classpath elemement '%s'...", classPathElement
+                    )
+                );
+                classPathUrls.add(classPathElemToUrl(classPathElement));
             }
 
             log.info("Classpath URLs:");
@@ -108,8 +170,9 @@ final class EntityFinder {
             //Here we have to do some classloader magic to ensure that the 
             //Reflections instance uses the correct class loader. Which is the 
             //one which has access to the compiled classes
-            final ClassLoader classLoader = AccessController
-                .doPrivileged(new ClassLoaderCreator(classPathUrls));
+            final ClassLoader classLoader = AccessController.doPrivileged(
+                new ClassLoaderCreator(classPathUrls)
+            );
 
             reflections = new Reflections(
                 new ConfigurationBuilder()
@@ -123,11 +186,6 @@ final class EntityFinder {
                         new TypeAnnotationsScanner()
                     )
             );
-//            reflections = new Reflections(
-//                ClasspathHelper.forPackage(packageName, classLoader),
-//                new TypeAnnotationsScanner()
-//            );
-
         }
 
         return new EntityFinder(reflections);
@@ -143,7 +201,8 @@ final class EntityFinder {
      *
      * @return An {@link Set} with all entity classes.
      */
-    @SuppressWarnings({"PMD.LongVariable"})
+    @SuppressWarnings(
+        {"PMD.LongVariable"})
     public Set<Class<?>> findEntities() {
         final Set<Class<?>> entityClasses = new HashSet<>();
 
@@ -180,11 +239,14 @@ final class EntityFinder {
             throw new MojoFailureException(
                 String.format(
                     "Failed to convert classpath element '%s' to an URL.",
-                    classPathElem),
-                ex);
+                    classPathElem
+                ),
+                ex
+            );
         }
 
         return url;
+
     }
 
     private static class ClassLoaderCreator implements
@@ -201,7 +263,8 @@ final class EntityFinder {
 
             final URLClassLoader classLoader = new URLClassLoader(
                 classPathUrls.toArray(new URL[0]),
-                Thread.currentThread().getContextClassLoader());
+                Thread.currentThread().getContextClassLoader()
+            );
             Thread.currentThread().setContextClassLoader(classLoader);
 
             return classLoader;
