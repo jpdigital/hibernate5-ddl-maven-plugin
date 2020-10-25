@@ -60,6 +60,7 @@
                         <hibernate.id.new_generator_mappings>true</hibernate.id.new_generator_mappings>
                         <hibernate.globally_quoted_identifiers>false</hibernate.globally_quoted_identifiers>
                     </persistenceProperties>
+                    <createDropStatements>true</createDropStatements>
                     <useEnvers>false</useEnvers>
                 </configuration>
                 <executions>
