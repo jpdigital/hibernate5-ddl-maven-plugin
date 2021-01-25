@@ -14,7 +14,7 @@ To use the plugin add it the the build plugins in your POM:
     <build>
         [...]
         <plugin>
-            <groupId>de.jpdigital</groupId>
+            <groupId>com.github.fabio-bonfante</groupId>
             <artifactId>hibernate5-ddl-maven-plugin-hibernate52</artifactId> <!-- Change to match your Hibernate version -->
             <version>2.0.0</version> <!-- Change to latest version available -->
             <configuration>
@@ -103,7 +103,7 @@ file(s) using several parameters:
     <build>
         [...]
         <plugin>
-            <groupId>de.jpdigital</groupId>
+            <groupId>com.github.fabio-bonfante</groupId>
             <artifactId>hibernate5-ddl-maven-plugin-hibernate52</artifactId> <!-- Change to match your Hibernate version -->
             <version>2.2.0</version> <!-- Change to latest version available -->
             <configuration>
