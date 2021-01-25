@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-        <groupId>com.github.fabio-bonfante</groupId>
+        <groupId>com.github.fabio-bonfante.hibernate5-ddl-maven-plugin</groupId>
         <artifactId>hibernate5-ddl-maven-plugin</artifactId>
-        <version>2.4.0-RC2</version>
+        <version>2.4.0-RC3</version>
     </parent>
     
-    <groupId>com.github.fabio-bonfante</groupId>
+    <groupId>com.github.fabio-bonfante.hibernate5-ddl-maven-plugin</groupId>
     <artifactId>hibernate51-ddl-maven-plugin</artifactId>
-    <version>2.4.0-RC2</version>
+    <version>2.4.0-RC3</version>
     <name>Maven DDL generator plugin for Hibernate 5.1</name>
     <packaging>maven-plugin</packaging>
     
@@ -81,9 +81,9 @@
     
     <dependencies>
         <dependency>
-            <groupId>com.github.fabio-bonfante</groupId>
+            <groupId>com.github.fabio-bonfante.hibernate5-ddl-maven-plugin</groupId>
             <artifactId>hibernate5-ddl-maven-plugin-core</artifactId>
-            <version>2.4.0-RC2</version>
+            <version>2.4.0-RC3</version>
         </dependency>
         
         <dependency>

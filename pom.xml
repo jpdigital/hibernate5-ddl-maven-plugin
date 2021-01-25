@@ -3,9 +3,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.fabio-bonfante</groupId>
+    <groupId>com.github.fabio-bonfante.hibernate5-ddl-maven-plugin</groupId>
     <artifactId>hibernate5-ddl-maven-plugin</artifactId>
-    <version>2.4.0-RC2</version>
+    <version>2.4.0-RC3</version>
     <packaging>pom</packaging>
 
     <name>Maven DDL generator plugin for Hibernate 5</name>
