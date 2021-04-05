@@ -25,6 +25,7 @@ import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
+import org.reflections.util.FilterBuilder;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -65,7 +66,7 @@ final class EntityFinder {
         final Reflections reflections;
 
         Objects.requireNonNull(project, "Parameter project is null");
-        
+
         final List<String> classPathElements = new ArrayList<>();
         try {
             classPathElements.addAll(project.getCompileClasspathElements());
@@ -138,7 +139,17 @@ final class EntityFinder {
         final Reflections reflections;
         if (project == null) {
             reflections = new Reflections(
-                ClasspathHelper.forPackage(packageName)
+                new ConfigurationBuilder()
+                    .setUrls(
+                        ClasspathHelper.forPackage(packageName)
+                    )
+                    .filterInputsBy(
+                        new FilterBuilder().includePackage(packageName)
+                    )
+                    .setScanners(
+                        new SubTypesScanner(),
+                        new TypeAnnotationsScanner()
+                    )
             );
         } else {
             final List<String> classPathElements = new ArrayList<>();
@@ -180,6 +191,9 @@ final class EntityFinder {
                         ClasspathHelper.forPackage(
                             packageName, classLoader
                         )
+                    )
+                    .filterInputsBy(
+                        new FilterBuilder().includePackage(packageName)
                     )
                     .setScanners(
                         new SubTypesScanner(),
