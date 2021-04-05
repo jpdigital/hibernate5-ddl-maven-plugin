@@ -38,6 +38,7 @@ public interface DdlGenerator {
      * Generates a SQL DDL file for a specific SQL dialect.
      *
      * @param dialect       The SQL dialect to use.
+     * @param packages      Package with package level Hibernate annotations.
      * @param entityClasses The entity classes for which SQL DDL statements will
      *                      be created.
      * @param mojo          The {@link GenerateDdlMojo} which calls the method.
@@ -47,17 +48,20 @@ public interface DdlGenerator {
      *
      * @see Dialect
      */
-    void generateDdl(Dialect dialect,
-                     Set<Class<?>> entityClasses,
-                     GenerateDdlMojo mojo)
-        throws MojoFailureException;
+    void generateDdl(
+        Dialect dialect,
+        Set<Package> packages,
+        Set<Class<?>> entityClasses,
+        GenerateDdlMojo mojo
+    ) throws MojoFailureException;
 
     /**
-     * Generates a SQL DDL file for a specific SQL dialect. This method accepts
-     * a string a is called by {@link GenerateDdlMojo} for processing custom
+     * Generates a SQL DDL file for a specific SQL dialect.This method accepts a
+     * string a is called by {@link GenerateDdlMojo} for processing custom
      * dialects.
      *
      * @param dialect       The SQL dialect to use.
+     * @param packages      Package with package level Hibernate annotations.
      * @param entityClasses The entity classes for which SQL DDL statements will
      *                      be created.
      * @param mojo          The {@link GenerateDdlMojo} which calls the method.
@@ -66,9 +70,11 @@ public interface DdlGenerator {
      *                              file.
      *
      */
-    void generateDdl(String dialect,
-                     Set<Class<?>> entityClasses,
-                     GenerateDdlMojo mojo)
-        throws MojoFailureException;
+    void generateDdl(
+        String dialect,
+        Set<Package> packages,
+        Set<Class<?>> entityClasses,
+        GenerateDdlMojo mojo
+    ) throws MojoFailureException;
 
 }
