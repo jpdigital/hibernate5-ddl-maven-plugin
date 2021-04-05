@@ -40,9 +40,14 @@ for (def dialect : dialects) {
             )
         }
 
-        if (!ddlScript.toLowerCase().contains(
-            String.format("drop table if exists %s", table)
-        )) {
+        if (
+            !ddlScript.toLowerCase().contains(
+                String.format("drop table if exists %s", table)
+            ) 
+            && !ddlScript.toLowerCase().contains(
+                String.format("drop table %s if exists", table)
+            )
+        ) {
             throw new RuntimeException(
                 String.format(
                     "DDL script %s does not contain a drop statement for table '%s'.",

@@ -91,7 +91,7 @@ public class GenerateDdlMojo extends AbstractMojo {
      * Packages containing the entity files for which the SQL DDL scripts shall
      * be generated.
      */
-    @Parameter(required = true)
+    @Parameter(required = false)
     private String[] packages;
 
     /**
@@ -170,18 +170,23 @@ public class GenerateDdlMojo extends AbstractMojo {
             }
         }
 
-        //Find the entity classes in the packages.
-//        final Set<Class<?>> entityClasses = new HashSet<>();
-//        for (final String packageName : packages) {
-//            final Set<Class<?>> packageEntities = EntityFinder
-//                .forPackage(project, getLog(), packageName, includeTestClasses)
-//                .findEntities();
-//            entityClasses.addAll(packageEntities);
-//        }
-        final Set<Class<?>> entityClasses =  EntityFinder
-            .forClassPath(project, getLog(), includeTestClasses)
-            .findEntities();
-        
+        final Set<Class<?>> entityClasses;
+        if (packages == null || packages.length == 0) {
+            entityClasses = EntityFinder
+                .forClassPath(project, getLog(), includeTestClasses)
+                .findEntities();
+        } else {
+            // Find the entity classes in the packages.
+            entityClasses = new HashSet<>();
+            for (final String packageName : packages) {
+                final Set<Class<?>> packageEntities = EntityFinder
+                    .forPackage(
+                        project, getLog(), packageName, includeTestClasses
+                    ).findEntities();
+                entityClasses.addAll(packageEntities);
+            }
+        }
+
         getLog().info(
             String.format(
                 "Found %d entities.", entityClasses.size()
@@ -339,11 +344,11 @@ public class GenerateDdlMojo extends AbstractMojo {
     ) {
         this.persistenceProperties = new HashMap<>(persistenceProperties);
     }
-    
+
     protected MavenProject getProject() {
         return project;
     }
-    
+
     protected void setProject(final MavenProject project) {
         this.project = project;
     }

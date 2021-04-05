@@ -132,11 +132,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-invoker-plugin</artifactId>
                 <configuration>
+                    <debug>true</debug>
                     <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
                     <settingsFile>src/it/settings.xml</settingsFile>
                     <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
                     <goals>clean package</goals>
                     <postBuildHookScript>verify</postBuildHookScript>
+                    <filterProperties>
+                        <hibernateVersion>5.4.22.Final</hibernateVersion>
+                        <ddlPluginArtifactId>hibernate54-ddl-maven-plugin</ddlPluginArtifactId>
+                    </filterProperties>
                 </configuration>
                 <executions>
                     <execution>

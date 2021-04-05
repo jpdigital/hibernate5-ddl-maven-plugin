@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.jpdigital.plugins.hibernate5ddl.tests</groupId>
-    <artifactId>ddl-it</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>only-configured-packages</artifactId>
+    <version>1.0.0</version>
 
-    <name>DDL Integration Test</name>
+    <name>Include only entities from configured packages Test</name>
 
     <url>https://github.com/jpdigital/hibernate5-ddl-maven-plugin</url>
 
@@ -19,18 +19,12 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <!-- <version>5.4.22.Final</version> -->
             <version>@hibernateVersion@</version>
         </dependency>
-        <!-- <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-envers</artifactId>
-            <version>5.4.22.Final</version>
-        </dependency> -->
 
         <dependency>
             <groupId>junit</groupId>
@@ -53,12 +47,14 @@
                         <param>mysql5</param>
                         <param>POSTGRESQL9</param>
                     </dialects>
+                    <packages>
+                        <param>de.jpdigital.maven.plugins.hibernate5ddl.tests.onlyconfiguredpackages.entities1</param>
+                    </packages>
                     <includeTestClasses>true</includeTestClasses>
                     <persistenceProperties>
                         <hibernate.id.new_generator_mappings>true</hibernate.id.new_generator_mappings>
                         <hibernate.globally_quoted_identifiers>false</hibernate.globally_quoted_identifiers>
                     </persistenceProperties>
-                    <createDropStatements>true</createDropStatements>
                     <useEnvers>false</useEnvers>
                 </configuration>
                 <executions>
@@ -72,5 +68,7 @@
             </plugin>
         </plugins>
     </build>
-    
+
 </project>
+
+
