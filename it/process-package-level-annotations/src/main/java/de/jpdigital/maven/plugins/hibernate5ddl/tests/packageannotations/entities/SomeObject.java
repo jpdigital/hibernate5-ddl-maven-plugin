@@ -16,6 +16,7 @@
  */
 package de.jpdigital.maven.plugins.hibernate5ddl.tests.packageannotations.entities;
 
+import de.jpdigital.maven.plugins.hibernate5ddl.tests.packageannotations.types.BitSetType;
 import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
@@ -27,6 +28,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import de.jpdigital.maven.plugins.hibernate5ddl.tests.packageannotations.types.BitSetType;
+//import org.hibernate.annotations.TypeDef;
+//import org.hibernate.annotations.TypeDefs;
+//
+
+import java.util.BitSet;
+
+
+//@TypeDefs(
+//    {
+//        @TypeDef(
+//            name = "bitset",
+//            defaultForType = BitSet.class,
+//            typeClass = BitSetType.class
+//        )
+//    }
+//)
 @Entity
 @Table(name = "some_objects")
 public class SomeObject implements Serializable {
@@ -37,7 +55,7 @@ public class SomeObject implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long objectId;
     
-    @Type(type = "bitset")
+    @Type(type = "de.jpdigital.maven.plugins.hibernate5ddl.tests.packageannotations.types.BitSetType")
     private BitSet bitSet;
 
     public long getObjectId() {

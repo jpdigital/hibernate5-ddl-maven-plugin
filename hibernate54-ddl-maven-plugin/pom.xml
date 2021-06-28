@@ -142,6 +142,7 @@
                         <hibernateVersion>5.4.30.Final</hibernateVersion>
                         <ddlPluginArtifactId>hibernate54-ddl-maven-plugin</ddlPluginArtifactId>
                     </filterProperties>
+                    <streamLogsOnFailures>true</streamLogsOnFailures>
                 </configuration>
                 <executions>
                     <execution>

@@ -16,6 +16,8 @@ public class BitSetType
     implements DiscriminatorType<BitSet> {
 
     public static final BitSetType INSTANCE = new BitSetType();
+    
+    public static final String BIT_SET_TYPE = BitSetType.class.getName();
 
     private static final long serialVersionUID = 1L;
 

@@ -50,7 +50,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Implementation of the {@link DdlGenerator} interface for Hibernate
- * {@literal 5.1}.
+ * {@literal 5.4}.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
