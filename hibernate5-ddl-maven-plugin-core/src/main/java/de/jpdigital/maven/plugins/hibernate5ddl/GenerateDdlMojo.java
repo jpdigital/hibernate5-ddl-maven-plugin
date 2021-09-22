@@ -156,8 +156,10 @@ public class GenerateDdlMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         final File outputDir = outputDirectory;
 
-        getLog().info(String.format(
-            "Generating DDL SQL files in %s.", outputDir.getAbsolutePath())
+        getLog().info(
+            String.format(
+                "Generating DDL SQL files in %s.", outputDir.getAbsolutePath()
+            )
         );
 
         //Check if the output directory exists.
@@ -171,19 +173,27 @@ public class GenerateDdlMojo extends AbstractMojo {
         }
 
         final Set<Class<?>> entityClasses;
+        final Set<Package> annotatedPackages;
         if (packages == null || packages.length == 0) {
-            entityClasses = EntityFinder
-                .forClassPath(project, getLog(), includeTestClasses)
-                .findEntities();
+            final EntityFinder entityFinder = EntityFinder.forClassPath(
+                project, getLog(), includeTestClasses
+            );
+            entityClasses = entityFinder.findEntities();
+            annotatedPackages = entityFinder.findPackages();
         } else {
             // Find the entity classes in the packages.
             entityClasses = new HashSet<>();
+            annotatedPackages = new HashSet<>();
             for (final String packageName : packages) {
-                final Set<Class<?>> packageEntities = EntityFinder
-                    .forPackage(
-                        project, getLog(), packageName, includeTestClasses
-                    ).findEntities();
+                final EntityFinder entityFinder = EntityFinder.forPackage(
+                    project, getLog(), packageName, includeTestClasses
+                );
+                final Set<Class<?>> packageEntities = entityFinder
+                    .findEntities();
+                final Set<Package> packagesWithAnnotations = entityFinder
+                    .findPackages();
                 entityClasses.addAll(packageEntities);
+                annotatedPackages.addAll(packagesWithAnnotations);
             }
         }
 
@@ -192,6 +202,13 @@ public class GenerateDdlMojo extends AbstractMojo {
                 "Found %d entities.", entityClasses.size()
             )
         );
+        if (annotatedPackages != null && !annotatedPackages.isEmpty()) {
+            getLog().info(
+                String.format(
+                    "Found %d annotated packages.", annotatedPackages.size()
+                )
+            );
+        }
 
         if (getPersistenceProperties().isEmpty()) {
             getLog().info("No persistence properties set in POM.");
@@ -227,12 +244,16 @@ public class GenerateDdlMojo extends AbstractMojo {
         }
 
         for (final Dialect dialect : convertDialects()) {
-            ddlGenerator.generateDdl(dialect, entityClasses, this);
+            ddlGenerator.generateDdl(
+                dialect, annotatedPackages, entityClasses, this
+            );
         }
 
         if (customDialects != null) {
             for (final String customDialect : customDialects) {
-                ddlGenerator.generateDdl(customDialect, entityClasses, this);
+                ddlGenerator.generateDdl(
+                    customDialect, annotatedPackages, entityClasses, this
+                );
             }
         }
     }

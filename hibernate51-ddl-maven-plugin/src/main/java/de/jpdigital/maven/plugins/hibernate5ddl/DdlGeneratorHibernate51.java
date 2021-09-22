@@ -58,6 +58,7 @@ public class DdlGeneratorHibernate51 implements DdlGenerator {
 
     @Override
     public void generateDdl(final String dialectClassName,
+                            final Set<Package> packages,
                             final Set<Class<?>> entityClasses,
                             final GenerateDdlMojo mojo)
         throws MojoFailureException {
@@ -117,6 +118,14 @@ public class DdlGeneratorHibernate51 implements DdlGenerator {
         final MetadataSources metadataSources = new MetadataSources(
             standardRegistry);
 
+        if (packages.isEmpty()) {
+            System.err.println("No packages to process.");
+        }
+        for (final Package aPackage : packages) {
+            System.err.printf("will process package %s%n", aPackage.getName());
+            metadataSources.addPackage(aPackage);
+        }
+
         for (final Class<?> entityClass : entityClasses) {
             metadataSources.addAnnotatedClass(entityClass);
         }
@@ -164,12 +173,14 @@ public class DdlGeneratorHibernate51 implements DdlGenerator {
 
     @Override
     public void generateDdl(final Dialect dialect,
+                            final Set<Package> packages,
                             final Set<Class<?>> entityClasses,
                             final GenerateDdlMojo mojo)
         throws MojoFailureException {
 
-        generateDdl(dialect.getDialectClassName(), entityClasses, mojo);
-
+        generateDdl(
+            dialect.getDialectClassName(), packages, entityClasses, mojo
+        );
     }
 
     /**

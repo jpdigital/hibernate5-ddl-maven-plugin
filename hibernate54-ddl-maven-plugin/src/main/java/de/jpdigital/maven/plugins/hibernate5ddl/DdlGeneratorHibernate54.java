@@ -50,18 +50,19 @@ import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Implementation of the {@link DdlGenerator} interface for Hibernate
- * {@literal 5.1}.
+ * {@literal 5.4}.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class DdlGeneratorHibernate54 implements DdlGenerator {
 
     @Override
-    public void generateDdl(final String dialectClassName,
-                            final Set<Class<?>> entityClasses,
-                            final GenerateDdlMojo mojo)
-        throws MojoFailureException {
-
+    public void generateDdl(
+        final String dialectClassName,
+        final Set<Package> packages,
+        final Set<Class<?>> entityClasses,
+        final GenerateDdlMojo mojo
+    ) throws MojoFailureException {
         final StandardServiceRegistryBuilder registryBuilder
             = new StandardServiceRegistryBuilder();
         processPersistenceXml(registryBuilder, mojo);
@@ -109,15 +110,23 @@ public class DdlGeneratorHibernate54 implements DdlGenerator {
                     )
                 );
             }
-            
+
             registryBuilder.applySettings(properties);
         }
 
         final StandardServiceRegistry standardRegistry = registryBuilder.build();
 
         final MetadataSources metadataSources = new MetadataSources(
-            standardRegistry);
+            standardRegistry
+        );
 
+        if (packages.isEmpty()) {
+            System.err.println("No packages to process.");
+        }
+        for (final Package aPackage : packages) {
+            System.err.printf("will process package %s%n", aPackage.getName());
+            metadataSources.addPackage(aPackage);
+        }
         for (final Class<?> entityClass : entityClasses) {
             metadataSources.addAnnotatedClass(entityClass);
         }
@@ -135,19 +144,26 @@ public class DdlGeneratorHibernate54 implements DdlGenerator {
         final Metadata metadata = metadataSources.buildMetadata();
 
         export.setManageNamespaces(true);
-        export.setOutputFile(String.format(
-            "%s/%s.sql",
-            tmpDir.toString(),
-            mojo.getDialectNameFromClassName(dialectClassName)));
+        export.setOutputFile(
+            String.format(
+                "%s/%s.sql",
+                tmpDir.toString(),
+                mojo.getDialectNameFromClassName(dialectClassName)
+            )
+        );
         export.setFormat(true);
         if (mojo.isCreateDropStatements()) {
-            export.execute(EnumSet.of(TargetType.SCRIPT),
-                           SchemaExport.Action.BOTH,
-                           metadata);
+            export.execute(
+                EnumSet.of(TargetType.SCRIPT),
+                SchemaExport.Action.BOTH,
+                metadata
+            );
         } else {
-            export.execute(EnumSet.of(TargetType.SCRIPT),
-                           SchemaExport.Action.CREATE,
-                           metadata);
+            export.execute(
+                EnumSet.of(TargetType.SCRIPT),
+                SchemaExport.Action.CREATE,
+                metadata
+            );
         }
 
         mojo.writeOutputFile(dialectClassName, tmpDir);
@@ -165,12 +181,17 @@ public class DdlGeneratorHibernate54 implements DdlGenerator {
     }
 
     @Override
-    public void generateDdl(final Dialect dialect,
-                            final Set<Class<?>> entityClasses,
-                            final GenerateDdlMojo mojo)
+    public void generateDdl(
+        final Dialect dialect,
+        final Set<Package> packages,
+        final Set<Class<?>> entityClasses,
+        final GenerateDdlMojo mojo
+    )
         throws MojoFailureException {
 
-        generateDdl(dialect.getDialectClassName(), entityClasses, mojo);
+        generateDdl(
+            dialect.getDialectClassName(), packages, entityClasses, mojo
+        );
     }
 
     /**
@@ -183,44 +204,57 @@ public class DdlGeneratorHibernate54 implements DdlGenerator {
      */
     private void processPersistenceXml(
         final StandardServiceRegistryBuilder registryBuilder,
-        final GenerateDdlMojo mojo) {
-
+        final GenerateDdlMojo mojo
+    ) {
         final Log log = mojo.getLog();
         final File persistenceXml = mojo.getPersistenceXml();
 
         if (persistenceXml != null) {
-
             if (Files.exists(persistenceXml.toPath())) {
                 try (InputStream inputStream = new FileInputStream(
-                    mojo.getPersistenceXml())) {
-                    log.info("persistence.xml found, "
-                                 + "looking for properties...");
+                    mojo.getPersistenceXml()
+                )) {
+                    log.info(
+                        "persistence.xml found, looking for properties..."
+                    );
 
-                    final SAXParser parser;
-
-                    parser = SAXParserFactory.newInstance().newSAXParser();
+                    final SAXParser parser = SAXParserFactory
+                        .newInstance()
+                        .newSAXParser();
 
                     parser.parse(
                         inputStream,
                         new PersistenceXmlHandler(
                             registryBuilder,
                             mojo.getLog(),
-                            new HashSet<>(Arrays
-                                .asList(mojo.getPersistencePropertiesToUse()))));
+                            new HashSet<>(
+                                Arrays.asList(
+                                    mojo.getPersistencePropertiesToUse()
+                                )
+                            )
+                        )
+                    );
 
                 } catch (IOException ex) {
-                    log.error("Failed to open persistence.xml. "
-                                  + "Not processing properties.",
-                              ex);
+                    log.error(
+                        "Failed to open persistence.xml. "
+                            + "Not processing properties.",
+                        ex
+                    );
                 } catch (ParserConfigurationException | SAXException ex) {
-                    log.error("Error parsing persistence.xml. "
-                                  + "Not processing properties",
-                              ex);
+                    log.error(
+                        "Error parsing persistence.xml. "
+                            + "Not processing properties",
+                        ex
+                    );
                 }
             } else {
-                log.warn(String.format("persistence.xml file '%s' does "
-                                           + "not exist. Ignoring.",
-                                       persistenceXml.getPath()));
+                log.warn(
+                    String.format(
+                        "persistence.xml file '%s' does not exist. Ignoring.",
+                        persistenceXml.getPath()
+                    )
+                );
             }
         }
     }
@@ -240,23 +274,28 @@ public class DdlGeneratorHibernate54 implements DdlGenerator {
         public PersistenceXmlHandler(
             final StandardServiceRegistryBuilder registryBuilder,
             final Log log,
-            final Set<String> propertiesToUse) {
-
+            final Set<String> propertiesToUse
+        ) {
             this.registryBuilder = registryBuilder;
             this.log = log;
             this.propertiesToUse = propertiesToUse;
         }
 
         @Override
-        public void startElement(final String uri,
-                                 final String localName,
-                                 final String qName,
-                                 final Attributes attributes) {
-            log.info(String.format(
-                "Found element with uri = '%s', localName = '%s', qName = '%s'...",
-                uri,
-                localName,
-                qName));
+        public void startElement(
+            final String uri,
+            final String localName,
+            final String qName,
+            final Attributes attributes
+        ) {
+            log.info(
+                String.format(
+                    "Found element with uri = '%s', localName = '%s', qName = '%s'...",
+                    uri,
+                    localName,
+                    qName
+                )
+            );
 
             if ("property".equals(qName)
                     && propertiesToUse.contains(attributes.getValue("name"))) {
@@ -266,10 +305,13 @@ public class DdlGeneratorHibernate54 implements DdlGenerator {
 
                 if (propertyName != null && !propertyName.isEmpty()
                         && propertyValue != null && !propertyValue.isEmpty()) {
-                    log.info(String.format(
-                        "Found property %s = %s in persistence.xml",
-                        propertyName,
-                        propertyValue));
+                    log.info(
+                        String.format(
+                            "Found property %s = %s in persistence.xml",
+                            propertyName,
+                            propertyValue
+                        )
+                    );
                     registryBuilder.applySetting(propertyName, propertyValue);
                 }
             }

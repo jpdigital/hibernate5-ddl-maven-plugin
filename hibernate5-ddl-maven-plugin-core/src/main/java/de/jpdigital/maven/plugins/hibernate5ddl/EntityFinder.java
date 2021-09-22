@@ -34,10 +34,13 @@ import java.net.URLClassLoader;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Converter;
 import javax.persistence.Entity;
@@ -52,10 +55,43 @@ import javax.persistence.Entity;
  */
 final class EntityFinder {
 
+    /**
+     * Hibernate Annotations that only be applied on package level (in a
+     * {@code package-info.java} file).
+     */
+    private static final Set<String> PACKAGE_LEVEL_ANNOTATIONS = Collections
+        .unmodifiableSet(
+            new HashSet<String>(
+                Arrays.asList(
+                    new String[]{
+                        "org.hibernate.annotations.AnyMetaDef",
+                        "org.hibernate.annotations.AnyMetaDefs",
+                        "org.hibernate.annotations.FetchProfile",
+                        "org.hibernate.annotations.FetchProfile.FetchOverride",
+                        "org.hibernate.annotations.FetchProfiles",
+                        "org.hibernate.annotations.FilterDef",
+                        "org.hibernate.annotations.FilterDefs",
+                        "org.hibernate.annotations.GenericGenerator",
+                        "org.hibernate.annotations.GenericGenerators",
+                        "org.hibernate.annotations.NamedNativeQueries",
+                        "org.hibernate.annotations.NamedNativeQuery",
+                        "org.hibernate.annotations.NamedQueries",
+                        "org.hibernate.annotations.NamedQuery",
+                        "org.hibernate.annotations.TypeDef",
+                        "org.hibernate.annotations.TypeDefs"}
+                )
+            )
+        );
+
     private final transient Reflections reflections;
 
-    private EntityFinder(final Reflections reflections) {
+    private final ClassLoader classLoader;
+
+    private EntityFinder(
+        final Reflections reflections, final ClassLoader classLoader
+    ) {
         this.reflections = reflections;
+        this.classLoader = classLoader;
     }
 
     public static EntityFinder forClassPath(
@@ -111,7 +147,7 @@ final class EntityFinder {
                     new TypeAnnotationsScanner()
                 )
         );
-        return new EntityFinder(reflections);
+        return new EntityFinder(reflections, classLoader);
     }
 
     /**
@@ -130,13 +166,15 @@ final class EntityFinder {
      *                              created.
      */
     @SuppressWarnings({"unchecked", "PMD.LongVariable"})
-    public static EntityFinder forPackage(final MavenProject project,
-                                          final Log log,
-                                          final String packageName,
-                                          final boolean includeTestClasses)
-        throws MojoFailureException {
+    public static EntityFinder forPackage(
+        final MavenProject project,
+        final Log log,
+        final String packageName,
+        final boolean includeTestClasses
+    ) throws MojoFailureException {
 
         final Reflections reflections;
+        final ClassLoader classLoader;
         if (project == null) {
             reflections = new Reflections(
                 new ConfigurationBuilder()
@@ -151,6 +189,7 @@ final class EntityFinder {
                         new TypeAnnotationsScanner()
                     )
             );
+            classLoader = reflections.getClass().getClassLoader();
         } else {
             final List<String> classPathElements = new ArrayList<>();
             try {
@@ -181,7 +220,7 @@ final class EntityFinder {
             //Here we have to do some classloader magic to ensure that the 
             //Reflections instance uses the correct class loader. Which is the 
             //one which has access to the compiled classes
-            final ClassLoader classLoader = AccessController.doPrivileged(
+            classLoader = AccessController.doPrivileged(
                 new ClassLoaderCreator(classPathUrls)
             );
 
@@ -200,9 +239,10 @@ final class EntityFinder {
                         new TypeAnnotationsScanner()
                     )
             );
+
         }
 
-        return new EntityFinder(reflections);
+        return new EntityFinder(reflections, classLoader);
     }
 
     /**
@@ -234,6 +274,36 @@ final class EntityFinder {
     }
 
     /**
+     * Finds all packages with Hibernate annotations on the package level.
+     *
+     * @return A {@link Set} with all packages annoated with package level
+     *         Hiberannotations.
+     */
+    public Set<Package> findPackages() {
+//        final Configuration conf = Objects
+//            .requireNonNull(reflections)
+//            .getConfiguration();
+//        final ClassLoader[] classLoaders = Objects
+//            .requireNonNull(conf)
+//            .getClassLoaders();
+//        final Set<Package> allPackages = Arrays
+//            .stream(Objects.requireNonNull(classLoaders))
+//            .map(ClassLoader::getDefinedPackages)
+//            .flatMap(packages -> Arrays.stream(packages))
+//            .collect(Collectors.toSet());
+
+//        return allPackages
+//            .stream()
+        return Arrays
+            .stream(classLoader.getDefinedPackages())
+            .filter(
+                aPackage -> PACKAGE_LEVEL_ANNOTATIONS.contains(
+                    aPackage.getClass().getName()
+                )
+            ).collect(Collectors.toSet());
+    }
+
+    /**
      * Helper method for converting a fully qualified package name from the
      * string representation to a a URL.
      *
@@ -260,7 +330,6 @@ final class EntityFinder {
         }
 
         return url;
-
     }
 
     private static class ClassLoaderCreator implements
