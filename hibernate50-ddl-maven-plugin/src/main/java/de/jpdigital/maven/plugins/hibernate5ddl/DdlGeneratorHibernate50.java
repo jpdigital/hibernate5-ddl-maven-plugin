@@ -57,10 +57,10 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
 
     @Override
     public void generateDdl(final String dialectClassName,
+                            final Set<Package> packages,
                             final Set<Class<?>> entityClasses,
                             final GenerateDdlMojo mojo)
         throws MojoFailureException {
-
         final StandardServiceRegistryBuilder registryBuilder
             = new StandardServiceRegistryBuilder();
         processPersistenceXml(registryBuilder, mojo);
@@ -116,6 +116,13 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
         final MetadataSources metadataSources = new MetadataSources(
             standardRegistry);
 
+        if (packages.isEmpty()) {
+            System.err.println("No packages to process.");
+        }
+        for (final Package aPackage : packages) {
+            metadataSources.addPackage(aPackage);
+        }
+        
         for (final Class<?> entityClass : entityClasses) {
             metadataSources.addAnnotatedClass(entityClass);
         }
@@ -123,7 +130,8 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
         final Metadata metadata = metadataSources.buildMetadata();
 
         final SchemaExport export = new SchemaExport(
-            (MetadataImplementor) metadata, true);
+            (MetadataImplementor) metadata, true
+        );
         export.setDelimiter(";");
 
         final Path tmpDir;
@@ -160,12 +168,14 @@ public class DdlGeneratorHibernate50 implements DdlGenerator {
 
     @Override
     public void generateDdl(final Dialect dialect,
+                            final Set<Package> packages,
                             final Set<Class<?>> entityClasses,
                             final GenerateDdlMojo mojo)
         throws MojoFailureException {
 
-        generateDdl(dialect.getDialectClassName(), entityClasses, mojo);
-
+        generateDdl(
+            dialect.getDialectClassName(), packages, entityClasses, mojo
+        );
     }
 
     /**
