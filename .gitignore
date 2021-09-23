@@ -15,6 +15,7 @@
 /hibernate52-ddl-maven-plugin/target/
 /hibernate53-ddl-maven-plugin/target/
 /hibernate54-ddl-maven-plugin/target/
+/hibernate55-ddl-maven-plugin/target/
 *.releaseBackup
 
 
