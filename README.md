@@ -14,14 +14,7 @@ The different plugin variants embeded the latest version of the branch of
 Hibernate indicated by the artifact name of the plugin. For example the
 hibernate52-ddl-maven-plugin uses the latest version of the 5.2 branch.
 
-Only Hibernate 5.4 and later are compatible with Java 9 or newer. Therefore
-the following plugin variants work only with Java 8:
-
-* hibernate50-ddl-maven-plugin
-* hibernate51-ddl-maven-plugin
-* hibernate52-ddl-maven-plugin
-* hibernate53-ddl-maven-plugin
-* hibernate54-ddl-maven-plugin
+The plugin requires Java 8 or newer. 
 
 ## Reporting issues
 
