@@ -29,6 +29,12 @@ If you find this project helpful please you can support the project using
 
 ## News
 
+### 2021-09-25: Version 2.4.0
+
+The version updates the dependencies to the latest Hibernate versions, and adds
+support for Hibernate 5.5. Also, annotations in `package-info.java` files are
+now processed.
+
 ### 2018-05-16: Version 2.2.0
 
 Starting with this version only specific properties from the persistence.xml 
