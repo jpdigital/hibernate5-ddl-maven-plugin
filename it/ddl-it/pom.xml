@@ -10,7 +10,7 @@
 
     <name>DDL Integration Test</name>
 
-    <url>https://github.com/jpdigital/hibernate5-ddl-maven-plugin</url>
+    <url>git@github.com:jpdigital/hibernate5-ddl-maven-plugin.git</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

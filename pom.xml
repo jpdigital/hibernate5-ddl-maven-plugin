@@ -10,7 +10,7 @@
 
     <name>Maven DDL generator plugin for Hibernate 5</name>
 
-    <url>https://github.com/jpdigital/hibernate5-ddl-maven-plugin</url>
+    <url>git@github.com:jpdigital/hibernate5-ddl-maven-plugin.git</url>
 
     <issueManagement>
         <system>GitHub</system>
