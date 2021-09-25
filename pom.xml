@@ -5,12 +5,12 @@
 
     <groupId>de.jpdigital</groupId>
     <artifactId>hibernate5-ddl-maven-plugin</artifactId>
-    <version>2.4.0</version>
+    <version>2.4.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Maven DDL generator plugin for Hibernate 5</name>
 
-    <url>git@github.com:jpdigital/hibernate5-ddl-maven-plugin.git</url>
+    <url>https://github.com/jpdigital/hibernate5-ddl-maven-plugin</url>
 
     <issueManagement>
         <system>GitHub</system>
@@ -18,9 +18,7 @@
     </issueManagement>
     
     <scm>
-        <!--<connection>scm:git:git@github.com:jpdigital/hibernate5-ddl-maven-plugin</connection>
-        <developerConnection>scm:git:git@github.com:jpdigital/hibernate5-ddl-maven-plugin</developerConnection>-->
-        <connection>scm:git:https://github.com/jpdigital/hibernate5-ddl-maven-plugin</connection>
+        <connection>scm:git:git@github.com:jpdigital/hibernate5-ddl-maven-plugin.git</connection>
         <developerConnection>scm:git:https://github.com/jpdigital/hibernate5-ddl-maven-plugin</developerConnection>
         <url>git@github.com:jpdigital/hibernate5-ddl-maven-plugin</url>
         <tag>2.4.0</tag>
