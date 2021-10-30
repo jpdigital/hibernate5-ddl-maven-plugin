@@ -21,8 +21,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.scanners.TypeAnnotationsScanner;
+import org.reflections.scanners.Scanners;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
@@ -143,8 +142,8 @@ final class EntityFinder {
                     ClasspathHelper.forClassLoader(classLoader)
                 )
                 .setScanners(
-                    new SubTypesScanner(),
-                    new TypeAnnotationsScanner()
+                    Scanners.SubTypes,
+                    Scanners.TypesAnnotated
                 )
         );
         return new EntityFinder(reflections, classLoader);
@@ -185,8 +184,8 @@ final class EntityFinder {
                         new FilterBuilder().includePackage(packageName)
                     )
                     .setScanners(
-                        new SubTypesScanner(),
-                        new TypeAnnotationsScanner()
+                        Scanners.SubTypes,
+                        Scanners.TypesAnnotated
                     )
             );
             classLoader = reflections.getClass().getClassLoader();
@@ -235,8 +234,8 @@ final class EntityFinder {
                         new FilterBuilder().includePackage(packageName)
                     )
                     .setScanners(
-                        new SubTypesScanner(),
-                        new TypeAnnotationsScanner()
+                        Scanners.SubTypes,
+                        Scanners.TypesAnnotated
                     )
             );
 
