@@ -138,8 +138,8 @@
                     <goals>clean package</goals>
                     <postBuildHookScript>verify</postBuildHookScript>
                     <filterProperties>
-                        <hibernateVersion>5.5.7.Final</hibernateVersion>
-                        <ddlPluginArtifactId>hibernate55-ddl-maven-plugin</ddlPluginArtifactId>
+                        <hibernateVersion>5.6.1.Final</hibernateVersion>
+                        <ddlPluginArtifactId>hibernate56-ddl-maven-plugin</ddlPluginArtifactId>
                         <ddlPluginVersion>${project.version}</ddlPluginVersion>
                     </filterProperties>
                     <streamLogsOnFailures>true</streamLogsOnFailures>
