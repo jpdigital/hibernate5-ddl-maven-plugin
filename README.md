@@ -29,6 +29,12 @@ If you find this project helpful please you can support the project using
 
 ## News
 
+### 2021-11-13: Version 2.5.0 
+
+This release includes some updates for the dependencies, among all others an
+update of the Reflections library to the most current version 0.10.2. Version
+2.5.0 also adds a variant build against Hibernate 5.6. 
+
 ### 2021-09-25: Version 2.4.0
 
 The version updates the dependencies to the latest Hibernate versions, and adds
