@@ -1,4 +1,4 @@
 # Overview
 
-Provides the implementation of the plugin linked against Hibernate 5.4.
+Provides the implementation of the plugin linked against Hibernate 5.6.
 

@@ -25,15 +25,21 @@ using [Paypal](https://paypal.me/jenspelzetter).
 
 ## News
 
+### 2021-11-13: Version 2.5.0
+
+This release includes some updates for the dependencies, among all others an
+update of the Reflections library to the most current version 0.10.2. Version
+2.5.0 also adds a variant build against Hibernate 5.6. 
+
 ### 2021-09-25: Version 2.4.0
 
-The version updates the dependencies to the latest Hibernate versions, and adds
+This relase updates the dependencies to the latest Hibernate versions, and adds
 support for Hibernate 5.5. Also, annotations in `package-info.java` files are
 now processed.
 
 ### 2018-05-16: Version 2.2.0
 
-Starting with this version only specific properties from the persistence.xml 
+Starting with this release only specific properties from the persistence.xml 
 file are passed to Hibernate for creating the database schema. The properties
 can be customized. More details can be found in the documentation.
 
