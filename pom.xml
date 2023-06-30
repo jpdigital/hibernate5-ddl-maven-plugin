@@ -87,6 +87,8 @@
         <module>hibernate54-ddl-maven-plugin</module>
         <module>hibernate55-ddl-maven-plugin</module>
         <module>hibernate56-ddl-maven-plugin</module>
+        <module>hibernate60-ddl-maven-plugin</module>
+        <module>hibernate61-ddl-maven-plugin</module>
     </modules>
 
     <dependencyManagement>
