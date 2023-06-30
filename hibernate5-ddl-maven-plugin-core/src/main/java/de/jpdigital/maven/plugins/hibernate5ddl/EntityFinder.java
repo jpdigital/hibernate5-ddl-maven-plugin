@@ -247,8 +247,10 @@ final class EntityFinder {
     /**
      * Finds all entity classes and all converter classes in the package for
      * which the instance of this class was created. The entity classes must be
-     * annotated with the {@link Entity} annotation, the converter classes must
-     * be annotated with the {@link Converter} annotation. The method uses the
+     * annotated with the {@link Entity} or {@link jakarta.persistence.Entity}
+     * annotation, the converter classes must
+     * be annotated with the {@link Converter} or
+     * {@link jakarta.persistence.Converter} annotation. The method uses the
      * <a href="https://code.google.com/p/reflections/">Reflections library</a>
      * for finding the entity classes.
      *
@@ -264,9 +266,19 @@ final class EntityFinder {
         for (final Class<?> entityClass : classesWithEntity) {
             entityClasses.add(entityClass);
         }
+        final Set<Class<?>> classesWithJakartaEntity = reflections
+                .getTypesAnnotatedWith(jakarta.persistence.Entity.class);
+        for (final Class<?> entityClass : classesWithJakartaEntity) {
+            entityClasses.add(entityClass);
+        }
         final Set<Class<?>> classesWithConverter = reflections
             .getTypesAnnotatedWith(Converter.class);
         for (final Class<?> entityClass : classesWithConverter) {
+            entityClasses.add(entityClass);
+        }
+        final Set<Class<?>> classesWithJakartaConverter = reflections
+                .getTypesAnnotatedWith(jakarta.persistence.Converter.class);
+        for (final Class<?> entityClass : classesWithJakartaConverter) {
             entityClasses.add(entityClass);
         }
         return entityClasses;
