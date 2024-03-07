@@ -170,8 +170,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>11</source>
+                    <target>11</target>
                     <optimize>true</optimize>
                     <debug>true</debug>
                     <encoding>${project.build.sourceEncoding}</encoding>
@@ -194,7 +194,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <doclint>none</doclint>
-                    <source>8</source>
+                    <source>11</source>
                 </configuration>
                 <executions>
                     <execution>
@@ -241,7 +241,7 @@
                 <configuration>
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
-                    <targetJdk>1.8</targetJdk>
+                    <targetJdk>11</targetJdk>
                 </configuration>
             </plugin>
 
@@ -281,7 +281,7 @@
                     </links>
                     -->
                     <show>private</show>
-                    <source>8</source>
+                    <source>11</source>
                     <version>true</version>
                 </configuration>
             </plugin>
@@ -306,7 +306,7 @@
                 <configuration>
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
-                    <targetJdk>1.8</targetJdk>
+                    <targetJdk>11</targetJdk>
                 </configuration>
             </plugin>
             <plugin>
@@ -384,8 +384,8 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
                         <configuration>
-                            <source>1.8</source>
-                            <target>1.8</target>
+                            <source>11</source>
+                            <target>11</target>
                             <optimize>true</optimize>
                             <debug>true</debug>
                             <encoding>${project.build.sourceEncoding}</encoding>
@@ -404,7 +404,7 @@
                         <configuration>
                             <linkXref>true</linkXref>
                             <sourceEncoding>utf-8</sourceEncoding>
-                            <targetJdk>1.8</targetJdk>
+                            <targetJdk>11</targetJdk>
                         </configuration>
                     </plugin>
             
