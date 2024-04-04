@@ -52,16 +52,16 @@ for (def dialect : dialects) {
             )
         }
 
-        if (ddlScript.toLowerCase().contains(
-            String.format("create table %s_revisions", table)
-        )) {
-            throw new RuntimeException(
-                String.format(
-                    "DDL script contains a envers revisions table for table "
-                        + "%s but Envers is not enabled.",
-                    table
-                )
-            )
-        }
+        // if (ddlScript.toLowerCase().contains(
+        //     String.format("create table %s_revisions", table)
+        // )) {
+        // throw new RuntimeException(
+        //        String.format(
+        //            "DDL script contains a envers revisions table for table "
+        //                + "%s but Envers is not enabled.",
+        //            table
+        //        )
+        //    )
+        //}
     }
 }

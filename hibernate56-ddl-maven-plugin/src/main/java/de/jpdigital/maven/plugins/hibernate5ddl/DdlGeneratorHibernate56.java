@@ -54,7 +54,7 @@ import javax.xml.parsers.SAXParserFactory;
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
-public class DdlGeneratorHibernate54 implements DdlGenerator {
+public class DdlGeneratorHibernate56 implements DdlGenerator {
 
     @Override
     public void generateDdl(

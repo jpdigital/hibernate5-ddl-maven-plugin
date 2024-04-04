@@ -33,6 +33,6 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
       defaultPhase = LifecyclePhase.PROCESS_CLASSES,
       requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME,
       threadSafe = true)
-public class Hibernate54GenerateDdlMojo extends GenerateDdlMojo {
+public class Hibernate56GenerateDdlMojo extends GenerateDdlMojo {
     
 }
