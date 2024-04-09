@@ -16,6 +16,38 @@ hibernate52-ddl-maven-plugin uses the latest version of the 5.2 branch.
 
 The plugin requires Java 8 or newer. 
 
+## Building
+
+As usual with Maven:
+
+```
+mvn clean package
+```
+
+To install the plugin locally run
+
+```
+mvn clean package install
+```
+
+You will need an GPG key set up with Maven for signing the archive.
+
+For integration tests, the Maven Invoker plugin (see https://maven.apache.org/plugins/maven-invoker-plugin/)
+is used. Tu run the integration tests use:
+
+```
+mvn clean install integration-test
+```
+
+To run only a specific test use:
+
+```
+mvn clean package integration-test -Dinvoker.test="ddl-it"
+```
+
+In this example the test `ddl-it` is run. Replace the name of test with the test
+you want to run.
+
 ## Reporting issues
 
 If you have any issues please report them on Github: https://github.com/jpdigital/hibernate5-ddl-maven-plugin/issues 
