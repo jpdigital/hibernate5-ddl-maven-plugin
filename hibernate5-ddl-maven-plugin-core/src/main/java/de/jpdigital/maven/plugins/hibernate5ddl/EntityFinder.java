@@ -24,11 +24,6 @@ import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
-//import org.reflections.Reflections;
-//import org.reflections.scanners.Scanners;
-//import org.reflections.util.ClasspathHelper;
-//import org.reflections.util.ConfigurationBuilder;
-//import org.reflections.util.FilterBuilder;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -47,7 +42,6 @@ import java.util.stream.Collectors;
 
 import javax.persistence.Converter;
 import javax.persistence.Entity;
-import org.reflections.Reflections;
 
 /**
  * Helper class for finding the entity classes. An instance of this class is
@@ -87,18 +81,14 @@ final class EntityFinder {
             )
         );
 
-//    private final transient Reflections reflections;
-
     private final ClassLoader classLoader;
 
     private final ScanResult scanResult;
 
     private EntityFinder(
-//        final Reflections reflections,
         final ScanResult scanResult,
         final ClassLoader classLoader
     ) {
-//        this.reflections = reflections;
         this.scanResult = scanResult;
         this.classLoader = classLoader;
     }
@@ -108,8 +98,6 @@ final class EntityFinder {
         final Log log,
         final boolean includeTestClasses
     ) throws MojoFailureException {
-//        final Reflections reflections;
-
         Objects.requireNonNull(project, "Parameter project is null");
 
         final List<String> classPathElements = new ArrayList<>();
@@ -140,22 +128,11 @@ final class EntityFinder {
         }
 
         //Here we have to do some classloader magic to ensure that the 
-        //Reflections instance uses the correct class loader. Which is the 
+        //the correct class loader is used to find the entities. Which is the 
         //one that has access to the compiled classes
         final ClassLoader classLoader = AccessController.doPrivileged(
             new ClassLoaderCreator(classPathUrls)
         );
-
-//        reflections = new Reflections(
-//            new ConfigurationBuilder()
-//                .setUrls(
-//                    ClasspathHelper.forClassLoader(classLoader)
-//                )
-//                .setScanners(
-//                    Scanners.SubTypes,
-//                    Scanners.TypesAnnotated
-//                )
-//        );
 
         final ScanResult scanResult = new ClassGraph()
             .enableAllInfo()
@@ -163,8 +140,7 @@ final class EntityFinder {
             .scan();
 
         return new EntityFinder(
-//            reflections, 
-            scanResult, 
+            scanResult,
             classLoader
         );
     }
@@ -180,7 +156,7 @@ final class EntityFinder {
      *
      * @return An {@code EntityFinder} instance.
      *
-     * @throws MojoFailureException If the {@link Reflections} instance needed
+     * @throws MojoFailureException If the {@link ClassGraph} instance needed
      *                              by the {@code EntityFinder} can't be
      *                              created.
      */
@@ -191,31 +167,15 @@ final class EntityFinder {
         final String packageName,
         final boolean includeTestClasses
     ) throws MojoFailureException {
-//        final Reflections reflections;
         final ScanResult scanResult;
 
         final ClassLoader classLoader;
         if (project == null) {
-//            reflections = new Reflections(
-//                new ConfigurationBuilder()
-//                    .setUrls(
-//                        ClasspathHelper.forPackage(packageName)
-//                    )
-//                    .filterInputsBy(
-//                        new FilterBuilder().includePackage(packageName)
-//                    )
-//                    .setScanners(
-//                        Scanners.SubTypes,
-//                        Scanners.TypesAnnotated
-//                    )
-//            );
-//            classLoader = reflections.getClass().getClassLoader();
-
             scanResult = new ClassGraph()
                 .enableAllInfo()
                 .acceptPackages(packageName)
                 .scan();
-            
+
             classLoader = scanResult.getClass().getClassLoader();
         } else {
             final List<String> classPathElements = new ArrayList<>();
@@ -245,27 +205,11 @@ final class EntityFinder {
             }
 
             //Here we have to do some classloader magic to ensure that the 
-            //Reflections instance uses the correct class loader. Which is the 
-            //one which has access to the compiled classes
+            //the correct class loader is used to find the entity classes. 
+            //Which is the one which has access to the compiled classes
             classLoader = AccessController.doPrivileged(
                 new ClassLoaderCreator(classPathUrls)
             );
-
-//            reflections = new Reflections(
-//                new ConfigurationBuilder()
-//                    .setUrls(
-//                        ClasspathHelper.forPackage(
-//                            packageName, classLoader
-//                        )
-//                    )
-//                    .filterInputsBy(
-//                        new FilterBuilder().includePackage(packageName)
-//                    )
-//                    .setScanners(
-//                        Scanners.SubTypes,
-//                        Scanners.TypesAnnotated
-//                    )
-//            );
 
             scanResult = new ClassGraph()
                 .enableAllInfo()
@@ -275,8 +219,7 @@ final class EntityFinder {
         }
 
         return new EntityFinder(
-//            reflections,
-            scanResult, 
+            scanResult,
             classLoader
         );
     }
@@ -286,7 +229,7 @@ final class EntityFinder {
      * which the instance of this class was created. The entity classes must be
      * annotated with the {@link Entity} annotation, the converter classes must
      * be annotated with the {@link Converter} annotation. The method uses the
-     * <a href="https://code.google.com/p/reflections/">Reflections library</a>
+     * <a href="https://github.com/classgraph/classgraph">ClassGraph library</a>
      * for finding the entity classes.
      *
      * @return An {@link Set} with all entity classes.
@@ -295,16 +238,6 @@ final class EntityFinder {
     public Set<Class<?>> findEntities() {
         final Set<Class<?>> entityClasses = new HashSet<>();
 
-//        final Set<Class<?>> classesWithEntity = reflections
-//            .getTypesAnnotatedWith(Entity.class);
-//        for (final Class<?> entityClass : classesWithEntity) {
-//            entityClasses.add(entityClass);
-//        }
-//        final Set<Class<?>> classesWithConverter = reflections
-//            .getTypesAnnotatedWith(Converter.class);
-//        for (final Class<?> entityClass : classesWithConverter) {
-//            entityClasses.add(entityClass);
-//        }
         entityClasses.addAll(
             scanResult
                 .getClassesWithAnnotation(Entity.class)
@@ -312,13 +245,13 @@ final class EntityFinder {
                 .map(ClassInfo::loadClass)
                 .collect(Collectors.toSet())
         );
-        
+
         entityClasses.addAll(
             scanResult
-            .getClassesWithAnnotation(Converter.class)
-            .stream()
-            .map(ClassInfo::loadClass)
-            .collect(Collectors.toSet())
+                .getClassesWithAnnotation(Converter.class)
+                .stream()
+                .map(ClassInfo::loadClass)
+                .collect(Collectors.toSet())
         );
 
         return entityClasses;
@@ -331,22 +264,6 @@ final class EntityFinder {
      *         Hibernate annotations.
      */
     public Set<Package> findPackages() {
-//        final Configuration conf = Objects
-//            .requireNonNull(reflections)
-//            .getConfiguration();
-//        final ClassLoader[] classLoaders = Objects
-//            .requireNonNull(conf)
-//            .getClassLoaders();
-//        final Set<Package> allPackages = Arrays
-//            .stream(Objects.requireNonNull(classLoaders))
-//            .map(ClassLoader::getDefinedPackages)
-//            .flatMap(packages -> Arrays.stream(packages))
-//            .collect(Collectors.toSet());
-
-//        return allPackages
-//            .stream()
-
-      
         return scanResult
             .getPackageInfo()
             .filter(this::acceptPackagesWithPackageLevelAnnotations)
@@ -354,14 +271,6 @@ final class EntityFinder {
             .map(PackageInfo::getName)
             .map(name -> classLoader.getDefinedPackage(name))
             .collect(Collectors.toSet());
-        
-//        return Arrays
-//            .stream(classLoader.getDefinedPackages())
-//            .filter(
-//                aPackage -> PACKAGE_LEVEL_ANNOTATIONS.contains(
-//                    aPackage.getClass().getName()
-//                )
-//            ).collect(Collectors.toSet());
     }
 
     /**
@@ -415,16 +324,17 @@ final class EntityFinder {
         }
 
     }
-    
+
     private boolean acceptPackagesWithPackageLevelAnnotations(
         final PackageInfo packageInfo
     ) {
         boolean hasPackageLevelAnnotation = false;
-        
-        for(String packageLevelAnnotation : PACKAGE_LEVEL_ANNOTATIONS) {
-            hasPackageLevelAnnotation = hasPackageLevelAnnotation || packageInfo.hasAnnotation(packageLevelAnnotation);
+
+        for (String packageLevelAnnotation : PACKAGE_LEVEL_ANNOTATIONS) {
+            hasPackageLevelAnnotation = hasPackageLevelAnnotation || packageInfo
+                .hasAnnotation(packageLevelAnnotation);
         }
-        
+
         return hasPackageLevelAnnotation;
     }
 
