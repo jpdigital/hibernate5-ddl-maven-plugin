@@ -270,6 +270,7 @@ final class EntityFinder {
             scanResult = new ClassGraph()
                 .enableAllInfo()
                 .addClassLoader(classLoader)
+                .acceptPackages(packageName)
                 .scan();
         }
 
