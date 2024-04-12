@@ -61,6 +61,14 @@ If you find this project helpful please you can support the project using
 
 ## News
 
+### 2024-04-12: Version 3.0.0
+
+In this version support for Hibernate versions older than 5.6 has been dropped. 
+For Hibernate 6 please use the hibernate6-ddl-maven-plugin, which will be 
+released soon. This versions also update several dependencies, and replaces 
+the Reflections library used in previous versions for scanning the classpath
+with the [ClassGraph](https://github.com/classgraph/classgraph) library.
+
 ### 2021-11-13: Version 2.5.0 
 
 This release includes some updates for the dependencies, among all others an
